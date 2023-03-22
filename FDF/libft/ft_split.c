@@ -27,7 +27,7 @@ static int	clear(char **strs, int a)
 	return (0);
 }
 
-static int	ft_wordcount(char const *s, char c)
+int	ft_wordcount(char const *s, char c)
 {
 	int	wordcount;
 	int	i;

@@ -95,7 +95,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	return (s[i] = 0, free(s1), s1 = NULL, s);
 }
 
-int	ft_strlen(char *s)
+int	ft_strlen_gnl(char *s)
 {
 	int		i;
 

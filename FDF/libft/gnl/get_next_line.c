@@ -12,8 +12,7 @@
 
 #include "libft.h"
 
-
-int	ft_strchr(char *s, char c)
+int	ft_strchr_gnl(char *s, char c)
 {
 	int	i;
 
@@ -39,10 +38,10 @@ char	*ft_read(int fd, char *line)
 	{
 		i = read(fd, buffer, BUFFER_SIZE);
 		if (i == -1)
-			return (free(buffer), NULL);
+			return (NULL);
 		buffer[i] = '\0';
-		line = ft_strjoin(line, buffer);
-		if (ft_strchr(buffer, '\n'))
+		line = ft_strjoin_gnl(line, buffer);
+		if (ft_strchr_gnl(buffer, '\n'))
 			break ;
 	}
 	return (line);

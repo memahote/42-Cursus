@@ -52,6 +52,7 @@ void		ft_putnbr_fd(int n, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 char		**ft_split(char const *s, char c);
+int			ft_wordcount(char const *s, char c);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char const *s1, char const *s2);
@@ -88,11 +89,12 @@ int			ft_put_x(unsigned int nb, const char format);
 int			ft_base(unsigned long nb, char *base);
 
 //Gnl
-char		*ft_read(int fd, char *line);
 char		*get_next_line(int fd);
 char		*ft_extract(char *str);
 char		*ft_reset(char *str);
 char		*ft_strjoin_gnl(char *s1, char *s2);
+int			ft_strlen_gnl(char *s);
+int			ft_strchr_gnl(char *s, char c);
 
 
 #endif

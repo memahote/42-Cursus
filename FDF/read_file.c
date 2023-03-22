@@ -13,53 +13,39 @@
 #include "fdf.h"
 
 // return la longueur
-int get_height(char *file_name)
+void get_height(char *file_name, t_struct *data)
 {
-    int     height;
     int     fd;
-
-    height = 0;
-    fd = open(file_name, O_RDONLY);
-    while(get_next_line(fd))
-    {
-        height++;
-    }
-    close(fd);
-    return(height);
-}
-
-//return la largeur
-int get_width(char  *file_name)
-{
-    int     width;
-    int     fd;
-    int     i;
     char    *line;
 
-    width = 0;
+    data->height = 0;
     fd = open(file_name, O_RDONLY);
     line = get_next_line(fd);
-    while(line[i])
+    if (!line)
+		return ;
+    while(line != NULL)
     {
-        if(line[i] == ' ')
-            while(line[i] == ' ')
-                i++;
-        else
-        {
-            while(line[i] != ' ')
-                i++;
-            width++;
-        }
+        data->height++;
+        free(line);
+        line = get_next_line(fd);
     }
-    free(line);
     close(fd);
-    return (width);
 }
 
-void    fill_matrix(t_struct *data, char *line)
+void    fill_matrix(int *matrix_z, char *line)
 {
-    char    *high;
+    char    **coor;
     int     i;
+
+    coor = ft_split(line, ' ');
+    i = 0;
+    while(coor[i])
+    {
+        matrix_z[i] = ft_atoi(coor[i]);
+        free(coor[i]);
+        i++;
+    }
+    free(coor);
 }
 
 void    read_file(char  *file_name, t_struct *data)
@@ -69,8 +55,10 @@ void    read_file(char  *file_name, t_struct *data)
     int     i;
 
     i = 0;
-    data->height = get_height(file_name);
-    data->width  = get_width(file_name);
+    get_height(file_name, data);
+    fd = open(file_name, O_RDONLY);
+    line = get_next_line(fd);
+    data->width  = ft_wordcount(line, ' ');
     data->matrix_z = malloc(sizeof(int *) * (data->height + 1));
     while(i <= data->height)
     {
@@ -78,6 +66,14 @@ void    read_file(char  *file_name, t_struct *data)
         i++;
     }
     i = 0;
-    fd = fd = open(file_name, O_RDONLY);
-
+    while(line != NULL)
+    {
+        fill_matrix(data->matrix_z[i], line);
+        free(line);
+        i++;
+        line = get_next_line(fd);
+    }
+    free(line);
+    close(fd);
+    data->matrix_z[i] = 0;
 }
