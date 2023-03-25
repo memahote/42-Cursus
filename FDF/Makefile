@@ -21,7 +21,9 @@ SRC			=	fdf.c 			\
 				read_file.c		\
 				draw.c 			\
 				init.c clean.c	\
-				deal_key.c
+				deal_key.c		\
+				utils.c
+			
 					
 
 
@@ -32,11 +34,11 @@ OBJ_DIR		=	build/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
 CC			=	cc
-CC_FLAGS	=	-Wextra -Werror -Wall
+CC_FLAGS	=	-Wextra -Werror -Wall -lm
 
 MLX_DIR	=	mlx_linux/
 MLX_A	=	$(MLX_DIR)libmlx.a
-MLX_FLAG = -L $(MLXDIR) -lm -lmlx -lXext -lX11
+MLX_FLAG = -L $(MLXDIR) -lm  -lXext -lX11
 
 all: build_libft $(NAME)
 

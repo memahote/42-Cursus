@@ -38,6 +38,7 @@ void	free_all(t_struct *data)
 	i = 0;
 	while (i < data->height)
 		free(data->matrix_z[i++]);
+	ft_free_tab(data, data->height);
 	if (data->mlx_ptr && data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	if (data->mlx_ptr && data->image)

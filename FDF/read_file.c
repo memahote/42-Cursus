@@ -12,32 +12,38 @@
 
 #include "fdf.h"
 
-// return la longueur
-void get_height(char *file_name, t_struct *data)
+
+void get_height_width(char *file_name, t_struct *data)
 {
     int     fd;
     char    *line;
 
     data->height = 0;
     fd = open(file_name, O_RDONLY);
+    if (fd == -1)
+		exit (1);
     line = get_next_line(fd);
     if (!line)
-		return ;
+		return (close(fd), exit(1));
+    data->width  = ft_wordcount(line, ' ');
     while(line != NULL)
     {
         data->height++;
         free(line);
         line = get_next_line(fd);
     }
+    free(line);
     close(fd);
 }
 
-void    fill_matrix(int *matrix_z, char *line)
+int    fill_matrix(int *matrix_z, char *line)
 {
     char    **coor;
     int     i;
 
     coor = ft_split(line, ' ');
+    if (!coor)
+		return (0);
     i = 0;
     while(coor[i])
     {
@@ -46,6 +52,22 @@ void    fill_matrix(int *matrix_z, char *line)
         i++;
     }
     free(coor);
+    return (1);
+}
+
+void    malloc_width(t_struct *data)
+{
+    int     i;
+
+    i = -1;
+    if (!data->matrix_z)
+        exit(1);
+    while (++i < data->height)
+    {
+        data->matrix_z[i] = (int *)malloc(sizeof(int) * data->width);
+        if(!data->matrix_z[i])
+            ft_free_tab(data, i);
+    }
 }
 
 void    read_file(char  *file_name, t_struct *data)
@@ -55,25 +77,24 @@ void    read_file(char  *file_name, t_struct *data)
     int     i;
 
     i = 0;
-    get_height(file_name, data);
+    get_height_width(file_name, data);
+    data->matrix_z = (int **)malloc(sizeof(int *) * (data->height + 1));
+    malloc_width(data);
     fd = open(file_name, O_RDONLY);
+    if (fd == -1)
+		return (ft_free_tab(data, data->height - 1));
     line = get_next_line(fd);
-    data->width  = ft_wordcount(line, ' ');
-    data->matrix_z = malloc(sizeof(int *) * (data->height + 1));
-    while(i <= data->height)
-    {
-        data->matrix_z[i] = malloc(sizeof(int *) * (data->width + 1));
-        i++;
-    }
-    i = 0;
+    if (!line)
+        return (close(fd),free(line),ft_free_tab(data, data->height));
     while(line != NULL)
     {
-        fill_matrix(data->matrix_z[i], line);
+        if (fill_matrix(data->matrix_z[i], line) == 0)
+            return(free(line), close(fd), ft_free_tab(data, data->height));
         free(line);
-        i++;
         line = get_next_line(fd);
+        i++;
     }
     free(line);
     close(fd);
-    data->matrix_z[i] = 0;
+    data->matrix_z[i] = NULL;
 }

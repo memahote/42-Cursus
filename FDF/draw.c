@@ -12,69 +12,92 @@
 
 #include "fdf.h"
 
-void    isometric(float *x, float *y, int z)
+
+void    isometric(t_coor points, t_struct *data, int z, int z1)
 {
-    *x = (*x - *y) * cos(0.8);
-    *y = (*x + *y) * sin(0.8) - z;
+    points.x = (points.x - points.y) * cos(data->angle_x);
+    points.y = (points.x + points.y) * sin(data->angle_y) - z;
+    points.x1 = (points.x1 - points.y1) * cos(data->angle_x);
+	points.y1 = (points.x1 + points.y1) * sin(data->angle_y) - z1;
 }
 
-void    bresenham(float x, float y, float x1, float y1, t_struct *data)
+
+void    bresenham(t_coor points, t_struct *data)
 {
     float   x_steps;
     float   y_steps;
     int     Max;
-    int     z;
-    int     z1;
+    
 
-    z = data->matrix_z[(int)y][(int)x];
-    z1 = data->matrix_z[(int)y1][(int)x1];
-    //ZOOM
-    x *= data->zoom;
-    y *= data->zoom;
-    x1 *= data->zoom;
-    y1 *= data->zoom;
+    points.z = data->matrix_z[(int)points.y][(int)points.x] * data->depth;
+    points.z1 = data->matrix_z[(int)points.y1][(int)points.x1] * data->depth;
+    zoom(&points, data);
+    // if(data->iso == 1)
+    // {
+    //     isometric(points, data, points.z, points.z1);
+    // }
+    if (data->iso == 1)
+    {
+        points.x = (points.x - points.y) * cos(data->angle_x);
+        points.y = (points.x + points.y) * sin(data->angle_y) - points.z;
+        points.x1 = (points.x1 - points.y1) * cos(data->angle_x);
+	    points.y1 = (points.x1 + points.y1) * sin(data->angle_y) - points.z1;
+    }
+    shift(&points, data);
     //COLOR
-    data->color = (z || z1) ? RED : WHITE;
-    // //3D
-    isometric(&x, &y, z);
-    isometric(&x1, &y1, z1);
-    // // //shift
-    x += data->shift_x;
-    y += data->shift_y;
-    x1 += data->shift_x;
-    y1 += data->shift_y;
-
-    x_steps = x1 - x;
-    y_steps = y1 - y;
-    Max = MAX(Mod(x_steps), Mod(y_steps));
+    if (points.z || points.z1)
+        data->color = RED ;
+    else 
+        data->color = WHITE;
+    x_steps = points.x1 - points.x;
+    y_steps = points.y1 - points.y;
+    Max = max(mod(x_steps), mod(y_steps));
     x_steps /= Max;
     y_steps /= Max;
-    while((int)(x - x1) || (int)(y - y1))
+    while((int)(points.x - points.x1) || (int)(points.y - points.y1))
     {
-        mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, data->color);
-        x += x_steps;
-        y += y_steps;
+        mlx_pixel_put(data->mlx_ptr,data->win_ptr, points.x, points.y, data->color);
+        points.x += x_steps;
+        points.y += y_steps;
     }
+    
+}
+
+void    algo(t_coor points, t_struct *data, int status)
+{
+    if (status == 0)
+    {
+        points.x1 = points.x + 1;
+        points.y1 = points.y;
+    }
+    if (status == 1)
+    {
+        points.y1 = points.y + 1;
+        points.x1 = points.x;
+    }
+    bresenham(points, data);
 }
 
 void    draw(t_struct *data)
 {
-    int x;
-    int y;
+    t_coor  points;
 
-    y = 0;
-    while (y < data->height)
+    points.y = 0;
+    while (points.y < data->height)
     {
-        x = 0;
-        while (x < data->width)
+        points.x = 0;
+        while (points.x < data->width)
         {
-            if (x < data->width - 1)
-                bresenham(x, y, x + 1, y, data);
-            if (y < data->height - 1)
-                bresenham(x, y, x, y + 1, data);
-            x++;
+            if (points.x < data->width - 1)
+            {
+                algo(points, data, 0);
+            }
+            if (points.y < data->height - 1)
+            {
+                algo(points, data, 1);
+            }
+            points.x++;
         }
-        y++;
+        points.y++;
     }
-
 }
