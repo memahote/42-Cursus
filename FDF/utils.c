@@ -6,22 +6,11 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 13:44:14 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/25 11:35:34 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/26 19:22:46 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-void	my_mlx_pixel_put(t_struct *data, int x, int y, int color)
-{
-	int	*dst;
-
-	if (x > 1000 - 10 || y > 1000 - 10 || x < 10 || y < 10)
-		return ;
-	dst = (int *)data->addr;
-	dst[y * 1000 + x] = color;
-}
-
 
 int	mod(int x)
 {
@@ -52,4 +41,24 @@ void	shift(t_coor *points, t_struct *data)
 	points->y1 += data->shift_y;
 }
 
+void	draw_menu(t_struct *data)
+{
+	int		y;
+	void	*mlx;
+	void	*win;
+
+	y = 0;
+	mlx = data->mlx_ptr;
+	win = data->win_ptr;
+	mlx_string_put(mlx, win, 850, y += 20, WHITE, "************************");
+	mlx_string_put(mlx, win, 850, y += 20, WHITE, "*   Fil de Fer (FDF)   *");
+	mlx_string_put(mlx, win, 850, y += 20, WHITE, "************************");
+	mlx_string_put(mlx, win, 850, y += 20, WHITE, "*         Zoom:   +/-  *");
+	mlx_string_put(mlx, win, 850, y += 20, WHITE, "*         Move:    ^   *");
+    mlx_string_put(mlx, win, 850, y += 10, WHITE, "*                < v > *");
+    mlx_string_put(mlx, win, 850, y += 20, WHITE, "* Switch Proj :    A   *");
+    mlx_string_put(mlx, win, 850, y += 20, WHITE, "*     Rotation:   Q/W  *");
+    mlx_string_put(mlx, win, 850, y += 20, WHITE, "*        depth:   K/J  *");
+    mlx_string_put(mlx, win, 850, y += 20, WHITE, "************************");
+}
 

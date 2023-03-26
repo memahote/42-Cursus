@@ -34,40 +34,56 @@ OBJ_DIR		=	build/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
 CC			=	cc
-CC_FLAGS	=	-Wextra -Werror -Wall -lm
+CC_FLAGS	=	-Wextra -Werror -Wall 
 
 MLX_DIR	=	mlx_linux/
 MLX_A	=	$(MLX_DIR)libmlx.a
 MLX_FLAG = -L $(MLXDIR) -lm  -lXext -lX11
 
+
+Pink=\033[1;38;5;205m
+
+
+ascii=      ███████╗██████╗ ███████╗ \n\
+			██╔════╝██╔══██╗██╔════╝ \n\
+			█████╗  ██║  ██║█████╗   \n\
+			██╔══╝  ██║  ██║██╔══╝   \n\
+			██║     ██████╔╝██║      \n\
+			╚═╝     ╚═════╝ ╚═╝      \n
+
 all: build_libft $(NAME)
+	@echo "\033[31mCompiling \033[1mis done !\033[0;31m"
 
 $(NAME): $(OBJ) $(LIBFT_A) $(MLX_A) $(LIBFT_DIR)
-		$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT_A) $(MLX_A) $(MLX_FLAG) -o $@
+		@echo "\033[31mCompiling \033[1mobjects files\033[0;31m...\033[0m"
+		$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT_A) $(MLX_A) $(MLX_FLAG) -o $@ -lm -s
 	
 
 build_libft: $(LIBFT_DIR)
-		$(MAKE) -C $(LIBFT_DIR)
+		@echo " $(Pink)$(ascii)"
+		$(MAKE) -s -C $(LIBFT_DIR) 
 
 $(MLX_A): $(MLX_DIR)
-		$(MAKE) -C $(MLX_DIR)
+		$(MAKE) -s -C $(MLX_DIR) 
 
 $(OBJ): $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
-		mkdir -p $(@D)
+		mkdir -p $(@D) 
 		$(CC) $(CC_FLAGS) -I$(INC_DIR) -I$(LIBFT_INC) -I$(MLX_DIR) -c $< -o $@
 
 clean:
-		$(MAKE) clean -C $(LIBFT_DIR)
-		$(MAKE) clean -C $(MLX_DIR)
-		rm -rf $(OBJ_DIR)
+		@echo "\033[31mRemoving \033[1mobjects files\033[0;31m...\033[0m"
+		$(MAKE) clean -s -C $(LIBFT_DIR)
+		$(MAKE) clean -s -C $(MLX_DIR)
+		rm -rf $(OBJ_DIR) 
 
 fclean: clean
+		@echo "\033[31mAnd \033[1mexecutable file !\033[0;31m\033[0m"
 		rm -rf $(NAME)
-		$(MAKE) fclean -s -C $(LIBFT_DIR)
+		$(MAKE) fclean -s -C $(LIBFT_DIR) 
 		
 
 re: fclean all
 
-.SILENT :
+.SILENT : clean all fclean $(NAME) re $(SRCS:.c=.o)  build_libft $(OBJ) $(MLX_A)
 
 .PHONY: all clean fclean re build_libft

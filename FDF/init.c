@@ -15,9 +15,16 @@
 void    init_data(t_struct *data)
 {
     data->mlx_ptr = mlx_init();
-    data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, "FDF");
-    data->image = mlx_new_image(data->mlx_ptr, 1000, 1000);
-    data->addr = mlx_get_data_addr(data->image, &data->bits_per_pixel, 
+	  if (!data->mlx_ptr)
+		  return (ft_free_tab(data, data->height - 1));
+	  data->win_ptr = mlx_new_window(data->mlx_ptr, 1000, 1000, "FDF");
+	  if (!data->win_ptr)
+		return (ft_free_tab(data, data->height - 1));
+	  data->image = mlx_new_image(data->mlx_ptr, 1000, 1000);
+	  if (!data->image)
+		  return (mlx_destroy_window(data->mlx_ptr, data->win_ptr), \
+		        ft_free_tab(data, data->height - 1));
+	  data->addr = mlx_get_data_addr(data->image, &data->bits_per_pixel, \
 		&data->line_length, &data->endian);
     data->angle_x = 0.8;
     data->angle_y = 0.8;

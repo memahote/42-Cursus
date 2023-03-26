@@ -39,82 +39,20 @@ void	key_helper(int key, t_struct *t_data)
         t_data->zoom += 5;
 }
 
-
-// void	rotate(int key, t_struct *data)
-// {
-// 	if (key == 119)
-// 		data->angle_y -= 0.2;
-// 	if (key == 115)
-// 		data->angle_y += 0.2;
-// 	if (key == 116)
-// 		data->angle_x -= 0.2;
-// 	if (key == 117)
-// 		data->angle_x += 0.2;
-// 	mlx_destroy_image(data->mlx_ptr, data->image);
-// 	data->image = mlx_new_image(data->mlx_ptr, 1000, 1000);
-// 	data->addr = mlx_get_data_addr(data->image, &data->bits_per_pixel, 
-// 	&data->line_length, &data->endian);
-//     draw_menu(data);
-// 	draw(data);
-// 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
-// }
-
-// void	projection(int key, t_struct *data, t_coor *points)
-// {
-//     if (key == 97)
-//         data->coef_z += 0.1;
-//     if (key == 122)
-//      data->coef_z -= 0.1;
-//     if (key == 32)
-//     {
-//         points->x = points->y;
-//         points->y = points->x1;
-//     }
-// 	mlx_destroy_image(data->mlx_ptr, data->image);
-// 	data->image = mlx_new_image(data->mlx_ptr, 1000, 1000);
-// 	data->addr = mlx_get_data_addr(data->image, &data->bits_per_pixel, 
-// 	&data->line_length, &data->endian);
-//     draw_menu(data);
-// 	draw(data);
-// 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
-// }
-
-// void    zoom_key(int key, t_struct *data)
-// {
-//     if (key == 65453)
-//     {
-//         if (data->zoom < 10)
-//             data->zoom = 10;
-//         data->zoom -= 5;
-//     }
-//     if (key == 65451)
-//         data->zoom += 5;
-//     mlx_destroy_image(data->mlx_ptr, data->image);
-// 	data->image = mlx_new_image(data->mlx_ptr, 1000, 1000);
-// 	data->addr = mlx_get_data_addr(data->image, &data->bits_per_pixel, 
-// 	&data->line_length, &data->endian);
-//     draw_menu(data);
-// 	draw(data);
-// 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
-// }
-
-// void    move_key(int key, t_struct *data)
-// {
-//     if (key == 65362)
-//         data->shift_y -=10;
-//     if (key == 65364)
-//         data->shift_y +=10;
-//     if (key == 65361)
-//         data->shift_x -=10; 
-//     if (key == 65363)
-//          data->shift_x +=10;
-//     mlx_destroy_image(data->mlx_ptr, data->image);
-// 	data->image = mlx_new_image(data->mlx_ptr, 1000, 1000);
-// 	data->addr = mlx_get_data_addr(data->image, &data->bits_per_pixel, 
-// 	&data->line_length, &data->endian);
-//     draw_menu(data);
-// 	draw(data);
-// 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->image, 0, 0);
-// }
-
-
+int	deal_key(int key, t_struct *t_data)
+{
+	mlx_clear_window(t_data->mlx_ptr, t_data->win_ptr);
+	if (key == 65364)
+		t_data->shift_y += 20;
+	if (key == 65362 )
+		t_data->shift_y -= 20;
+	if (key == 65361)
+		t_data->shift_x -= 20;
+	if (key == 65363)
+		t_data->shift_x += 20;
+    if (key == 65307)
+        ft_free_tab(t_data, t_data->height);
+    key_helper(key, t_data);
+	draw(t_data);
+	return (0);
+}

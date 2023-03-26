@@ -13,13 +13,13 @@
 #include "fdf.h"
 
 
-void    isometric(t_coor points, t_struct *data, int z, int z1)
-{
-    points.x = (points.x - points.y) * cos(data->angle_x);
-    points.y = (points.x + points.y) * sin(data->angle_y) - z;
-    points.x1 = (points.x1 - points.y1) * cos(data->angle_x);
-	points.y1 = (points.x1 + points.y1) * sin(data->angle_y) - z1;
-}
+// void    isometric(t_coor points, t_struct *data, int z, int z1)
+// {
+//     points.x = (points.x - points.y) * cos(data->angle_x);
+//     points.y = (points.x + points.y) * sin(data->angle_y) - z;
+//     points.x1 = (points.x1 - points.y1) * cos(data->angle_x);
+// 	points.y1 = (points.x1 + points.y1) * sin(data->angle_y) - z1;
+// }
 
 
 void    bresenham(t_coor points, t_struct *data)
@@ -32,10 +32,6 @@ void    bresenham(t_coor points, t_struct *data)
     points.z = data->matrix_z[(int)points.y][(int)points.x] * data->depth;
     points.z1 = data->matrix_z[(int)points.y1][(int)points.x1] * data->depth;
     zoom(&points, data);
-    // if(data->iso == 1)
-    // {
-    //     isometric(points, data, points.z, points.z1);
-    // }
     if (data->iso == 1)
     {
         points.x = (points.x - points.y) * cos(data->angle_x);
@@ -44,9 +40,8 @@ void    bresenham(t_coor points, t_struct *data)
 	    points.y1 = (points.x1 + points.y1) * sin(data->angle_y) - points.z1;
     }
     shift(&points, data);
-    //COLOR
     if (points.z || points.z1)
-        data->color = RED ;
+        data->color = RED;
     else 
         data->color = WHITE;
     x_steps = points.x1 - points.x;
@@ -83,6 +78,8 @@ void    draw(t_struct *data)
     t_coor  points;
 
     points.y = 0;
+    // menu(data);
+    draw_menu(data);
     while (points.y < data->height)
     {
         points.x = 0;
