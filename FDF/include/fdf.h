@@ -18,6 +18,8 @@
 # define MENU_BACKGROUND 0x950740
 # define MINUS 65451
 # define PLUS 65453
+# define WIN_W 1000
+# define WIN_H 1000
 
 typedef struct s_struct
 {
@@ -55,7 +57,6 @@ typedef struct s_coor
     int     z1;
 }       t_coor;
 
-
 /*****read map*****/
 
 void    read_file(char  *file_name, t_struct *data);
@@ -67,13 +68,14 @@ void    init_data(t_struct *data);
 
 void    draw(t_struct *data);
 void    bresenham(t_coor points, t_struct *data);
-void    isometric(t_coor points, t_struct *data, int z, int z1);
+void    isometric(t_coor *points, t_struct *data, int z, int z1);
 void    algo(t_coor points, t_struct *data, int status);
 
 /*****deal keys*****/
 
 int	    deal_key(int key, t_struct *t_data);
 void	key_helper(int key, t_struct *t_data);
+int	    mouse(int mouse, int x, int y, t_struct *t_data); 
 
 
 /*****init*****/

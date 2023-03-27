@@ -42,11 +42,11 @@ all	: $(NAME)
 
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -g3 $(IFLAGS) -c $< -o $@
 
 $(NAME)	: $(OBJ)
 	ar -r $(NAME) $(OBJ)
-	ranlib $(NAME)
+	ranlib $(NAME) 
 	cp $(NAME) $(NAME_UNAME)
 
 check: all
@@ -62,5 +62,6 @@ show:
 
 clean	:
 	rm -rf $(OBJ_DIR)/ $(NAME) $(NAME_UNAME) *~ core *.core
+
 
 .PHONY: all check show clean

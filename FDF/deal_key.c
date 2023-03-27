@@ -6,11 +6,27 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/02 20:16:16 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/02 20:16:16 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/27 09:34:25 by memahote         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	mouse(int mouse, int x, int y, t_struct *t_data)
+{
+	mlx_clear_window(t_data->mlx_ptr, t_data->win_ptr);
+	if (mouse == 5)
+		t_data->zoom += 1;
+	if (mouse == 4)
+		t_data->zoom -= 1;
+	if (mouse == 1)
+	{
+		t_data->shift_x = x;
+		t_data->shift_y = y;
+	}
+	draw(t_data);
+	return (0);
+}
 
 void	key_helper(int key, t_struct *t_data)
 {
@@ -29,14 +45,14 @@ void	key_helper(int key, t_struct *t_data)
 		t_data->depth += 1;
 	if (key == 106)
 		t_data->depth -= 1;
-    if (key == 65453)
-    {
-        if (t_data->zoom < 10)
-            t_data->zoom = 10;
-        t_data->zoom -= 5;
-    }
-    if (key == 65451)
-        t_data->zoom += 5;
+	if (key == 65453)
+	{
+		if (t_data->zoom < 10)
+			t_data->zoom = 10;
+		t_data->zoom -= 5;
+	}
+	if (key == 65451)
+		t_data->zoom += 5;
 }
 
 int	deal_key(int key, t_struct *t_data)
@@ -44,15 +60,15 @@ int	deal_key(int key, t_struct *t_data)
 	mlx_clear_window(t_data->mlx_ptr, t_data->win_ptr);
 	if (key == 65364)
 		t_data->shift_y += 20;
-	if (key == 65362 )
+	if (key == 65362)
 		t_data->shift_y -= 20;
 	if (key == 65361)
 		t_data->shift_x -= 20;
 	if (key == 65363)
 		t_data->shift_x += 20;
-    if (key == 65307)
-        ft_free_tab(t_data, t_data->height);
-    key_helper(key, t_data);
+	if (key == 65307)
+		ft_free_tab(t_data, t_data->height);
+	key_helper(key, t_data);
 	draw(t_data);
 	return (0);
 }
