@@ -12,7 +12,6 @@
 
 #include    "pushswap.h"
 
-//create an array from the stack a 
 int		*array_of_stack(t_list *stack)
 {
 	int		*st;

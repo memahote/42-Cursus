@@ -12,11 +12,10 @@
 
 #include "pushswap.h"
 
-void    ft_free(t_struct **data)
+void    ft_free(t_struct *data)
 {
-   
-        if((*data)->stack_a)
-            free((*data)->stack_a );
-        free((*data));
+        if(data->stack_a)
+            free(data->stack_a );
+        free(data);
     
 }

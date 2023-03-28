@@ -6,13 +6,12 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:15:30 by memahote          #+#    #+#             */
-/*   Updated: 2023/01/16 14:30:56 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/28 17:51:15 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-// check if arguments are valid
 int	is_int(char *str)
 {
 	int i;
@@ -20,7 +19,7 @@ int	is_int(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '-' && ft_isdigit(str[i + 1]))
+		if ((str[i] == '-' || str[i] == '+')  && ft_isdigit(str[i + 1]))
 			i++;
 		while (ft_isdigit(str[i]))
 			i++;

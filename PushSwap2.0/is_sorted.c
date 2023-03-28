@@ -12,7 +12,6 @@
 
 #include "pushswap.h"
 
-// check if the stack is sorted
 int	is_sorted(t_list *stack)
 {
 	while (stack -> next != NULL)

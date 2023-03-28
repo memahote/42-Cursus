@@ -12,7 +12,6 @@
 
 #include "pushswap.h"
 
-// search if the biggest element is on stack b and return his index
 int	find_biggest(t_struct **data)
 {
 	int		i;

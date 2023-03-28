@@ -12,7 +12,6 @@
 
 #include "pushswap.h"
 
-// search the index of the smallest element
 int	find_index_smallest(t_list **stack)
 {
 	int     i;

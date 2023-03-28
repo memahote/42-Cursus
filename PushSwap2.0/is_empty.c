@@ -12,7 +12,6 @@
 
 #include "pushswap.h"
 
-// check if the stack is empty
 int	is_empty(t_list **stack)
 {
 	if ((*stack) == NULL)

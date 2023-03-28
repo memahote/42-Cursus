@@ -13,9 +13,9 @@
 #include "pushswap.h"
 
 // print error message and free the stuct
-void    ft_print_error(t_struct **data)
+void    ft_print_error(t_struct *data)
 {
 		ft_putstr_fd("Error\n", 2);
-		ft_free(&(*data));
+		ft_free(data);
     	exit(EXIT_FAILURE);
 }

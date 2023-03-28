@@ -6,80 +6,68 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:27:53 by memahote          #+#    #+#             */
-/*   Updated: 2023/01/16 14:28:35 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/28 18:10:33 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-
-static void	clear_tab(char **strs, int i)
+void	one_arg_filling(char **argv, t_struct *data)
 {
-	if (strs[i])
-	{
-		while (i >= 0)
-		{
-			free(strs[i]);
-			i--;
-		}
-		free(strs);
-	}
-}
-
-// fill the stack a and check if argument are valid
-void	fill_st_a( char **argv, int argc, t_struct **data)
-{
-	char	**tab;
 	int		i;
 	int		j;
-
-	if (argc > 2)
+	char	**tab;
+	
+	i = 0;
+	tab = ft_split(argv[i], ' ');
+	j = 0;
+	while (tab[j])
 	{
-		i = 1;
-		while (argv[i])
+		if (is_int(tab[j]) == 0)
 		{
-			tab = ft_split(argv[i], ' ');
-			j = 0;
-			while (tab[j])
-			{
-				if (is_int(tab[j]) == 0)
-				{
-					clear_tab(tab, j);
-					ft_print_error(&(*data));
-				}
-				(*data)->stack_a = addback((*data)->stack_a,ft_atol(tab[j]));
-				free(tab[j]);
-				j++;
-			}
-			free(tab);
-			i++;
+			ft_putstr_fd("Error\n", 2);
+			exit(EXIT_FAILURE);
 		}
+		data->stack_a = addback(data->stack_a,ft_atol(tab[j]));
+		j++;
 	}
-	else 
-	{
-		i = 1;
-		while (argv[i])
-		{
-			tab = ft_split(argv[i], ' ');
-			j = 0;
-			while (tab[j])
-			{
-				if (is_int(tab[j]) == 0)
-				{
-					clear_tab(tab, j);
-					ft_print_error(&(*data));
-				}
-				(*data)->stack_a = addback((*data)->stack_a,ft_atol(tab[j]));
-				j++;
-			}
-			clear_tab(tab, j);
-			i++;
-		}
-	}
-	if ((*data)->stack_a == NULL)
-		ft_print_error(&(*data));
-	check_duplicate(&(*data));
+	free(tab);
+	i++;
 }
 
-// pas de leaks pour 559 3 sdf9
+void	mult_arg_filling(char **argv, t_struct *data)
+{
+	int		i;
+	int		j;
+	char	**tab;
 
+	i = 1;
+	while (argv[i])
+	{
+		tab = ft_split(argv[i], ' ');
+		j = 0;
+		while (tab[j])
+		{
+			if (is_int(tab[j]) == 0)
+			{
+				ft_putstr_fd("Error\n", 2);
+				exit(EXIT_FAILURE);
+			}
+			data->stack_a = addback(data->stack_a,ft_atol(tab[j]));
+			j++;
+		}
+		free(tab);
+		i++;
+	}
+}
+
+void	fill_st_a(int argc, char **argv, t_struct *data)
+{
+	if (argc > 2)
+		mult_arg_filling(argv, data);
+	else
+		one_arg_filling(argv, data);
+	if (!data->stack_a)
+		ft_print_error(data);
+	check_duplicate(data);
+}
