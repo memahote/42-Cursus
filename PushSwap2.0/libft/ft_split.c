@@ -6,13 +6,13 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:45:22 by memahote          #+#    #+#             */
-/*   Updated: 2022/11/18 13:04:39 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 10:44:14 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	clear(char **strs, int a)
+int	clear(char **strs, int a)
 {
 	if (!strs[a])
 	{

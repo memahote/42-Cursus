@@ -12,10 +12,24 @@
 
 #include "pushswap.h"
 
+static void ft_free_list(t_list *list)
+{
+    t_list  *temp;
+
+    while (list)
+    {
+        temp = list->next;
+        free(list);
+        list = temp;
+    }
+}
+
 void    ft_free(t_struct *data)
 {
         if(data->stack_a)
-            free(data->stack_a );
+            ft_free_list(data->stack_a);
+        if(data->stack_b)
+            ft_free_list(data->stack_b);
+        free(data->sta);
         free(data);
-    
 }

@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:02:56 by memahote          #+#    #+#             */
-/*   Updated: 2023/01/16 14:22:08 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 12:04:50 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_list		*ft_lstnew(int content);
 int			ft_lstsize(t_list **lst);
 t_list		*ft_lstlast(t_list *lst);
 void		ft_lstadd_front(t_list **alst, t_list *new);
-void		ft_lstadd_back(t_list *alst, t_list *new);
+t_list		*ft_lstadd_back(t_list *alst, t_list *new);
 void		ft_lstdelone(t_list *lst, void (*del)(void*));
 void		ft_lstclear(t_list **lst, void (*del)(void*));
 void		ft_lstiter(t_list *lst, void (*f)(void*));
@@ -83,5 +83,4 @@ t_list		*delfirst(t_list *stack);
 void		dellast(t_list *stack);
 t_list		*addback(t_list *stack, int value);
 t_list		*addtop(t_list *stack, t_list *stack2);
-
 #endif

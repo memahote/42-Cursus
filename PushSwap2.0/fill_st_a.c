@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:27:53 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/28 18:10:33 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/30 15:02:58 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 void	one_arg_filling(char **argv, t_struct *data)
 {
-	int		i;
 	int		j;
 	char	**tab;
 	
-	i = 0;
-	tab = ft_split(argv[i], ' ');
+	tab = ft_split(argv[1], ' ');
 	j = 0;
 	while (tab[j])
 	{
 		if (is_int(tab[j]) == 0)
 		{
-			ft_putstr_fd("Error\n", 2);
-			exit(EXIT_FAILURE);
+			free(tab[j]);
+			free(tab);
+			ft_print_error(data);
 		}
-		data->stack_a = addback(data->stack_a,ft_atol(tab[j]));
+		data->stack_a = addback(data->stack_a, ft_atol(tab[j]));
+		free(tab[j]);
 		j++;
 	}
 	free(tab);
-	i++;
+	tab = NULL;
 }
 
 void	mult_arg_filling(char **argv, t_struct *data)
@@ -50,10 +50,12 @@ void	mult_arg_filling(char **argv, t_struct *data)
 		{
 			if (is_int(tab[j]) == 0)
 			{
-				ft_putstr_fd("Error\n", 2);
-				exit(EXIT_FAILURE);
+				free(tab[j]);
+				free(tab);
+				ft_print_error(data);
 			}
-			data->stack_a = addback(data->stack_a,ft_atol(tab[j]));
+			data->stack_a = addback(data->stack_a, ft_atol(tab[j]));
+			free(tab[j]);
 			j++;
 		}
 		free(tab);

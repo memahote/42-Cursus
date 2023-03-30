@@ -95,6 +95,4 @@ char		*ft_reset(char *str);
 char		*ft_strjoin_gnl(char *s1, char *s2);
 int			ft_strlen_gnl(char *s);
 int			ft_strchr_gnl(char *s, char c);
-
-
 #endif

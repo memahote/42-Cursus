@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fdf.h                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/29 13:16:49 by memahote          #+#    #+#             */
+/*   Updated: 2023/03/29 13:16:49 by memahote         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FDF_H
 # define FDF_H
 
@@ -69,6 +81,7 @@ void    init_data(t_struct *data);
 void    draw(t_struct *data);
 void    bresenham(t_coor points, t_struct *data);
 void    isometric(t_coor *points, t_struct *data, int z, int z1);
+void	choose_color(t_coor *points, t_struct *data);
 void    algo(t_coor points, t_struct *data, int status);
 
 /*****deal keys*****/
@@ -95,8 +108,4 @@ void	shift(t_coor *points, t_struct *data);
 int	    max(int x,int y);
 int	    mod(int x);
 void    draw_menu(t_struct *data);
-
-
-void	menu(t_struct *t_data);
-
 #endif

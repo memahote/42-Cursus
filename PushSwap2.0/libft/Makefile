@@ -6,7 +6,7 @@
 #    By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/18 17:45:41 by memahote          #+#    #+#              #
-#    Updated: 2023/01/16 14:22:16 by memahote         ###   ########lyon.fr    #
+#    Updated: 2023/03/30 14:45:00 by memahote         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ OBJS			= $(SRCS:.c=.o)
 HEADER			= libft.h
 CC				= cc
 RM				= rm -f
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			= -Wall -Wextra -Werror -g3
 
 NAME			= libft.a
 
