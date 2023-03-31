@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 17:13:11 by memahote          #+#    #+#             */
-/*   Updated: 2023/01/16 14:30:41 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 13:07:15 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 int	is_empty(t_list **stack)
 {
 	if ((*stack) == NULL)
-		return(1);
+		return (1);
 	return (0);
 }

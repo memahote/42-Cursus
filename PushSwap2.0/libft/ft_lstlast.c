@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:36:17 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/30 08:30:11 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 13:18:46 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 t_list	*ft_lstlast(t_list *lst)
 {
-	while(lst)
+	while (lst)
 	{
-		if(!lst->next)
-			return(lst);
+		if (!lst->next)
+			return (lst);
 		lst = lst->next;
 	}
-	return(lst);
+	return (lst);
 }

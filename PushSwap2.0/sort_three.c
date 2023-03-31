@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 17:25:46 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/28 14:13:36 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 13:16:27 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,3 @@ void	sort_three(t_struct *data)
 	else if (second > first && second > first && first > third)
 		rra(&data->stack_a);
 }
-

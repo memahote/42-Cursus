@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:28:48 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/29 19:37:42 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 13:15:56 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	*sort_array(int *array, int len)
 {
-	int i;
-	int j;
-	int tmp;
+	int	i;
+	int	j;
+	int	tmp;
 
 	i = 0;
-	while(i < len - 1)
+	while (i < len - 1)
 	{
 		j = i + 1;
 		while (j <= len - 1)

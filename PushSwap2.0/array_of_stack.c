@@ -6,13 +6,13 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:20:40 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/30 09:48:55 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 14:14:21 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include    "pushswap.h"
 
-int		*array_of_stack(t_list *stack)
+int	*array_of_stack(t_list *stack)
 {
 	int		*st;
 	t_list	*head;
@@ -22,11 +22,11 @@ int		*array_of_stack(t_list *stack)
 	i = 0;
 	head = stack;
 	len = ft_lstsize(&stack);
-	st = ft_calloc(sizeof(int) , len);
+	st = malloc(sizeof(int) * len);
 	if (!st)
-		return(NULL);
+		return (NULL);
 	stack = head;
-	while(stack != NULL)
+	while (stack != NULL)
 	{
 		st[i] = stack->content;
 		stack = stack->next;

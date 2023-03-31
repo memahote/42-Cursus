@@ -14,14 +14,14 @@
 
 int	find_index_smallest(t_list **stack)
 {
-	int     i;
-	t_list  *head;
+	int		i;
+	t_list	*head;
 
 	i = 1;
 	head = (*stack);
 	if (!(*stack))
-		return(0);
-	while((*stack)->content != find_smallest(&(*stack)))
+		return (0);
+	while ((*stack)->content != find_smallest(&(*stack)))
 	{
 		i++;
 		(*stack) = (*stack)->next;

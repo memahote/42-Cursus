@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/29 14:48:59 by memahote          #+#    #+#             */
-/*   Updated: 2023/01/16 14:31:30 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 13:08:24 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	nb_of_chunk(int size)
 {
 	if (size <= 10)
-		return(5);
+		return (5);
 	else if (size <= 150)
 		return (10);
 	else

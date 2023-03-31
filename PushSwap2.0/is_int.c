@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/22 14:15:30 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/28 17:51:15 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 13:07:59 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	is_int(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if ((str[i] == '-' || str[i] == '+')  && ft_isdigit(str[i + 1]))
+		if ((str[i] == '-' || str[i] == '+') && ft_isdigit(str[i + 1]))
 			i++;
 		while (ft_isdigit(str[i]))
 			i++;

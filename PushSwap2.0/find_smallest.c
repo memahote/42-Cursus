@@ -28,11 +28,11 @@ int	find_smallest(t_list **stack)
 			if (nb > current->content)
 			{
 				nb = current->content;
-				break;
+				break ;
 			}
 			current = current ->next;
 		}
 		st_a = st_a ->next;
 	}
-	return(nb);
+	return (nb);
 }
