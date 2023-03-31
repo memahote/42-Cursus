@@ -6,7 +6,7 @@
 #    By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/18 17:45:41 by memahote          #+#    #+#              #
-#    Updated: 2023/03/30 14:45:00 by memahote         ###   ########lyon.fr    #
+#    Updated: 2023/01/16 14:22:16 by memahote         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,18 +20,18 @@ SRCS			=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c \
 					ft_memchr.c ft_memset.c ft_putstr_fd.c ft_strjoin.c \
 					ft_strmapi.c ft_strtrim.c ft_striteri.c ft_strcomp.c \
 					ft_printf.c ft_put_c.c ft_put_x.c ft_put_p.c ft_putd_i.c \
-					ft_put_s.c ft_put_u.c ft_base.c ft_atol.c addback.c \
-					ft_lstadd_back.c ft_lstadd_front.c addtop.c \
-					ft_lstlast.c ft_lstsize.c delfirst.c dellast.c\
-					ft_lstnew.c
+					ft_put_s.c ft_put_u.c ft_base.c ft_atol.c \
+					ft_lstadd_back.c ft_lstadd_front.c ft_lstlast.c ft_lstsize.c \
+					ft_lstnew.c gnl/get_next_line.c addback.c addtop.c \
+					gnl/get_next_line_utils.c delfirst.c dellast.c \
 
 OBJS			= $(SRCS:.c=.o)
 
 
 HEADER			= libft.h
 CC				= cc
-RM				= rm -f
-CFLAGS			= -Wall -Wextra -Werror -g3
+RM				= rm -rf
+CFLAGS			= -Wall -Wextra -Werror
 
 NAME			= libft.a
 

@@ -6,13 +6,13 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 16:45:22 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/30 21:18:14 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2022/11/18 13:04:39 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	clear(char **strs, int a)
+static int	clear(char **strs, int a)
 {
 	if (!strs[a])
 	{
@@ -27,7 +27,7 @@ int	clear(char **strs, int a)
 	return (0);
 }
 
-static int	ft_wordcount(char const *s, char c)
+int	ft_wordcount(char const *s, char c)
 {
 	int	wordcount;
 	int	i;

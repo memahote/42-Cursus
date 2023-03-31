@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 18:21:40 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/30 08:35:50 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2022/11/17 18:56:45 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	if (!*lst)
-	{
-		*lst = new;
-		return ;
-	}
 	new -> next = *lst;
 	*lst = new;
 }

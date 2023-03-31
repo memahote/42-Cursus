@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:24:34 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/31 15:17:22 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/03/31 21:01:03 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,5 @@ void	initialize_struct(t_struct *data_struct, char **argv, int argc)
 	data_struct->start = data_struct->sorted_sta[data_struct->index_start];
 	data_struct->index_end = data_struct->mid + data_struct->chunk_size;
 	data_struct->end = data_struct->sorted_sta[data_struct->index_end];
-	data_struct->index_biggest = data_struct->len_a - 3;
+	data_struct->index_biggest = data_struct->len_a - 4;
 }

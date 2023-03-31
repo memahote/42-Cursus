@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 19:02:56 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/30 12:04:50 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/01/16 14:22:08 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include <limits.h>
 # include <stdarg.h>
 # include <stdint.h>
+# include <fcntl.h>
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1
+# endif
 
 typedef struct s_list
 {
@@ -47,6 +52,7 @@ void		ft_putnbr_fd(int n, int fd);
 void		ft_putstr_fd(char *s, int fd);
 void		ft_striteri(char *s, void (*f)(unsigned int, char *));
 char		**ft_split(char const *s, char c);
+int			ft_wordcount(char const *s, char c);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char const *s1, char const *s2);
@@ -65,12 +71,18 @@ int			ft_toupper(int c);
 t_list		*ft_lstnew(int content);
 int			ft_lstsize(t_list **lst);
 t_list		*ft_lstlast(t_list *lst);
-void		ft_lstadd_front(t_list **alst, t_list *new);
-t_list		*ft_lstadd_back(t_list *alst, t_list *new);
+void		ft_lstadd_front(t_list **alst, t_list *ne);
+void		ft_lstadd_back(t_list *alst, t_list *ne);
 void		ft_lstdelone(t_list *lst, void (*del)(void*));
 void		ft_lstclear(t_list **lst, void (*del)(void*));
 void		ft_lstiter(t_list *lst, void (*f)(void*));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void *));
+t_list		*delfirst(t_list *stack);
+void		dellast(t_list *stack);
+t_list		*addback(t_list *stack, int value);
+t_list		*addtop(t_list *stack, t_list *stack2);
+
+//Printf
 int			ft_printf(const char *format, ...);
 int			ft_put_c(char c);
 int			ft_put_s(char *str);
@@ -79,8 +91,12 @@ int			ft_put_p(void *p);
 int			ft_put_u(unsigned int nb);
 int			ft_put_x(unsigned int nb, const char format);
 int			ft_base(unsigned long nb, char *base);
-t_list		*delfirst(t_list *stack);
-void		dellast(t_list *stack);
-t_list		*addback(t_list *stack, int value);
-t_list		*addtop(t_list *stack, t_list *stack2);
+
+//Gnl
+char		*get_next_line(int fd);
+char		*ft_extract(char *str);
+char		*ft_reset(char *str);
+char		*ft_strjoin_gnl(char *s1, char *s2);
+int			ft_strlen_gnl(char *s);
+int			ft_strchr_gnl(char *s, char c);
 #endif
