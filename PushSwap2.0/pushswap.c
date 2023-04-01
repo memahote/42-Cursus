@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:39:34 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/31 15:15:09 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/01 17:19:17 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	main(int argc, char **argv)
 	if (is_sorted(data->stack_a) || data->len_a == 1)
 		ft_free_and_exit(data);
 	if (data->len_a == 2)
-		sa(&(data->stack_a));
+		sa(&(data->stack_a), data->print);
 	else if (data->len_a == 3)
 		sort_three(data);
-	else if (data->len_a <= 5)
+	else if (data->len_a <= 10)
 		sort_five(data);
 	else
 	{

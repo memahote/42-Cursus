@@ -6,13 +6,13 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 19:55:54 by memahote          #+#    #+#             */
-/*   Updated: 2023/01/16 14:04:57 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/01 17:18:32 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pushswap.h"
 
-void	rrr(t_list **stack_a, t_list **stack_b)
+void	rrr(t_list **stack_a, t_list **stack_b, int printable)
 {
 	t_list	*st_a;
 	t_list	*st_b;
@@ -25,5 +25,6 @@ void	rrr(t_list **stack_a, t_list **stack_b)
 	st_b = addtop(st_b, ft_lstlast(st_b));
 	dellast(st_b);
 	*stack_b = st_b;
-	ft_printf("%s\n", "rrr");
+	if (printable == 1)
+		ft_printf("%s\n", "rrr");
 }

@@ -6,13 +6,13 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 19:55:58 by memahote          #+#    #+#             */
-/*   Updated: 2023/01/16 14:05:37 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/01 17:18:41 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pushswap.h"
 
-void	sb(t_list **stack_b)
+void	sb(t_list **stack_b, int printable)
 {
 	int		tmp2;
 	t_list	*st_b;
@@ -24,5 +24,6 @@ void	sb(t_list **stack_b)
 	st_b ->content = st_b->next->content;
 	st_b->next->content = tmp2;
 	*stack_b = st_b;
-	ft_printf("%s\n", "sb");
+	if (printable == 1)
+		ft_printf("%s\n", "sb");
 }

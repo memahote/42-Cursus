@@ -15,38 +15,43 @@
 static void	do_instructions(char *line, t_struct *data)
 {
 	if (ft_strcomp(line, "sa\n") == 0)
-		sa(&data->stack_a);
+		sa(&data->stack_a, data->print);
 	else if (ft_strcomp(line, "sb\n") == 0)
-		sb(&data->stack_b);
+		sb(&data->stack_b, data->print);
 	else if (ft_strcomp(line, "ss\n") == 0)
-		ss(&data->stack_a, &data->stack_b);
+		ss(&data->stack_a, &data->stack_b, data->print);
 	else if (ft_strcomp(line, "pa\n") == 0)
-		pa(&data->stack_a, &data->stack_b);
+		pa(&data->stack_a, &data->stack_b, data->print);
 	else if (ft_strcomp(line, "pb\n") == 0)
-		pb(&data->stack_a, &data->stack_b);
+		pb(&data->stack_a, &data->stack_b, data->print);
 	else if (ft_strcomp(line, "ra\n") == 0)
-		ra(&data->stack_a);
+		ra(&data->stack_a, data->print);
 	else if (ft_strcomp(line, "rb\n") == 0)
-		rb(&data->stack_b);
+		rb(&data->stack_b, data->print);
 	else if (ft_strcomp(line, "rr\n") == 0)
-		rr(&data->stack_a, &data->stack_b);
+		rr(&data->stack_a, &data->stack_b, data->print);
 	else if (ft_strcomp(line, "rra\n") == 0)
-		rra(&data->stack_a);
+		rra(&data->stack_a, data->print);
 	else if (ft_strcomp(line, "rrb\n") == 0)
-		rrb(&data->stack_b);
+		rrb(&data->stack_b, data->print);
 	else if (ft_strcomp(line, "rrr\n") == 0)
-		rrr(&data->stack_a, &data->stack_b);
+		rrr(&data->stack_a, &data->stack_b, data->print);
 	else
 		ft_print_error(data);
 }
 
 void	ft_print_res(t_struct *data)
 {
-	if (!is_sorted(data->stack_a) || (is_sorted(data->stack_a) && \
-		data->stack_b))
-		ft_putstr_fd("KO\n", 1);
+	if (data->stack_a)
+	{
+		if (!is_sorted(data->stack_a) || (is_sorted(data->stack_a) && \
+			data->stack_b))
+			ft_putstr_fd("KO\n", 1);
+		else
+			ft_putstr_fd("OK\n", 1);
+	}
 	else
-		ft_putstr_fd("OK\n", 1);
+		ft_putstr_fd("KO\n", 1);
 }
 
 int	main(int argc, char **argv)
@@ -61,8 +66,7 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 		ft_free_and_exit(data);
 	initialize_struct(data, argv, argc);
-	if (is_sorted(data->stack_a) || data->len_a == 1)
-		ft_free_and_exit(data);
+	data->print = 0;
 	line = get_next_line(0);
 	while (line)
 	{
@@ -72,6 +76,7 @@ int	main(int argc, char **argv)
 		free(line);
 		line = get_next_line(0);
 	}
+	free(line);
 	ft_print_res(data);
 	ft_free(data);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:56:03 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/31 15:35:52 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/01 17:13:12 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct s_struct
 	int		chunk_size;
 	int		number_of_chunk;
 	int		len_a;
-	int		len_b;
+	int		print;
 	int		lower;
 	int		upper;
 	int		down;
@@ -40,17 +40,17 @@ typedef struct s_struct
 	int		index_end;
 }		t_struct;
 
-void		sa(t_list **stack_a);
-void		sb(t_list **stack_b);
-void		ss(t_list **stack_a, t_list **stack_b);
-void		pa(t_list **stack_a, t_list **stack_b);
-void		pb(t_list **stack_a, t_list **stack_b);
-void		ra(t_list **stack_a);
-void		rb(t_list **stack_b);
-void		rr(t_list **stack_a, t_list **stack_b);
-void		rra(t_list **stack_a);
-void		rrb(t_list **stack_b);
-void		rrr(t_list **stack_a, t_list **stack_b);	
+void		sa(t_list **stack_a, int printable);
+void		sb(t_list **stack_b, int printable);
+void		ss(t_list **stack_a, t_list **stack_b, int printable);
+void		pa(t_list **stack_a, t_list **stack_b, int printable);
+void		pb(t_list **stack_a, t_list **stack_b, int printable);
+void		ra(t_list **stack_a, int printable);
+void		rb(t_list **stack_b, int printable);
+void		rr(t_list **stack_a, t_list **stack_b, int printable);
+void		rra(t_list **stack_a, int printable);
+void		rrb(t_list **stack_b, int printable);
+void		rrr(t_list **stack_a, t_list **stack_b, int printable);	
 void		fill_st_a(int argc, char **argv, t_struct *data);
 int			*array_of_stack(t_list *stack);
 int			*sort_array(int *array, int len);
