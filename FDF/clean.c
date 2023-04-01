@@ -28,6 +28,8 @@ void	ft_free_tab(t_struct *data, int len)
 	free(data->matrix_z);
 	if (data->mlx_ptr && data->win_ptr)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+	mlx_destroy_display(data->mlx_ptr);
+		// free mlx et destroy display 
 	exit(EXIT_FAILURE);
 }
 
@@ -43,5 +45,6 @@ void	free_all(t_struct *data)
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 	if (data->mlx_ptr && data->image)
 		mlx_destroy_image(data->mlx_ptr, data->image);
+	mlx_destroy_display(data->mlx_ptr);
 	exit(0);
 }

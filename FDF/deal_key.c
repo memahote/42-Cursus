@@ -18,7 +18,11 @@ int	mouse(int mouse, int x, int y, t_struct *t_data)
 	if (mouse == 5)
 		t_data->zoom += 1;
 	if (mouse == 4)
+	{
+		if (t_data->zoom < 5)
+			t_data->zoom = 5;
 		t_data->zoom -= 1;
+	}
 	if (mouse == 1)
 	{
 		t_data->shift_x = x;

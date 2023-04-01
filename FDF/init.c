@@ -14,6 +14,7 @@
 
 void	init_data(t_struct *data)
 {
+	data->bits_per_pixel /= 8;
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
 		return (ft_free_tab(data, data->height - 1));
@@ -33,5 +34,4 @@ void	init_data(t_struct *data)
 	data->shift_y = 325;
 	data->depth = 1;
 	data->iso = 1;
-	data->bits_per_pixel /= 8;
 }
