@@ -37,7 +37,11 @@ static void	do_instructions(char *line, t_struct *data)
 	else if (ft_strcomp(line, "rrr\n") == 0)
 		rrr(&data->stack_a, &data->stack_b, data->print);
 	else
+	{
+		free(line);
+		get_next_line(-1);
 		ft_print_error(data);
+	}
 }
 
 void	ft_print_res(t_struct *data)
