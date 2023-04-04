@@ -18,6 +18,11 @@ void	one_arg_filling(char **argv, t_struct *data)
 	char	**tab;
 
 	tab = ft_split(argv[1], ' ');
+	if (!tab[0])
+	{
+		free(tab);
+		ft_free_and_exit(data);
+	}
 	j = 0;
 	while (tab[j])
 	{

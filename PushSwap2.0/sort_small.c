@@ -12,7 +12,7 @@
 
 #include "pushswap.h"
 
-void	sort_five(t_struct *data)
+void	sort_small(t_struct *data)
 {
 	int		i;
 

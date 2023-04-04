@@ -20,16 +20,9 @@
 # include <fcntl.h>
 
 
-# define MAX(x, y) ((x > y) ? x : y)
-# define Mod(x) ((x < 0) ? -x : x)
+
 # define WHITE 0xffffff 
 # define RED 0xe80c0c
-# define ORANGE 0xffa500
-# define YELLOW 0xFFFF00
-# define TEXT_COLOR 0x1A1A1D
-# define MENU_BACKGROUND 0x950740
-# define MINUS 65451
-# define PLUS 65453
 # define WIN_W 1000
 # define WIN_H 1000
 
@@ -55,7 +48,6 @@ typedef struct s_struct
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-    char    *background;
 
 }       t_struct;
 

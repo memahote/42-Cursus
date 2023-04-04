@@ -40,6 +40,7 @@ typedef struct s_struct
 	int		index_end;
 }		t_struct;
 
+/********** Instrucions  **********/
 void		sa(t_list **stack_a, int printable);
 void		sb(t_list **stack_b, int printable);
 void		ss(t_list **stack_a, t_list **stack_b, int printable);
@@ -51,14 +52,19 @@ void		rr(t_list **stack_a, t_list **stack_b, int printable);
 void		rra(t_list **stack_a, int printable);
 void		rrb(t_list **stack_b, int printable);
 void		rrr(t_list **stack_a, t_list **stack_b, int printable);	
+
+/**********	Parsing/Filling stack **********/
 void		fill_st_a(int argc, char **argv, t_struct *data);
 int			*array_of_stack(t_list *stack);
 int			*sort_array(int *array, int len);
-int			nb_of_chunk(int size);
-void		initialize_struct(t_struct *data_struct, char **argv, int argc);
 int			is_int(char *str);
+void		initialize_struct(t_struct *data_struct, char **argv, int argc);
+int			nb_of_chunk(int size);
+void		check_duplicate(t_struct *data);
+
+/**********	Sorting **********/
 void		sort_three(t_struct *data);
-void		sort_five(t_struct *data);
+void		sort_small(t_struct *data);
 int			is_sorted(t_list *stack);
 int			is_empty(t_list **stack);
 int			find_index_smallest(t_list **stack);
@@ -67,7 +73,8 @@ int			find_biggest(t_struct **data);
 void		sort_a_to_b(t_struct *data);
 void		sort_b_to_a(t_struct **data);
 void		update_values(t_struct *data);
-void		check_duplicate(t_struct *data);
+
+/**********	Free and exit **********/
 void		ft_print_error(t_struct *data);
 void		ft_free(t_struct *data);
 void		ft_free_and_exit(t_struct *data);

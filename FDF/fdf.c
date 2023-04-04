@@ -28,7 +28,9 @@ int	main(int argc, char **argv)
 		mlx_hook(data.win_ptr, 2, (1L << 0), deal_key, &data);
 		mlx_mouse_hook(data.win_ptr, mouse, &data);
 		mlx_loop(data.mlx_ptr);
-		free_all(&data);
+		mlx_destroy_display(data.mlx_ptr);
+		free(data.mlx_ptr);
+		free(data.image);
 	}
 	return (0);
 }

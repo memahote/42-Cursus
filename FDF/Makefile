@@ -1,7 +1,7 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
-#    MAKEFILE                                           :+:      :+:    :+:    #
+#    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
 #    By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
@@ -33,7 +33,7 @@ LIBFT_A		=	$(LIBFT_DIR)libft.a
 OBJ_DIR		=	build/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
-CC			=	cc
+CC			=	gcc
 CC_FLAGS	=	-Wextra -Werror -Wall -g3
 
 MLX_DIR	=	mlx_linux/
@@ -42,8 +42,6 @@ MLX_FLAG = -L $(MLXDIR) -lm  -lXext -lX11
 
 
 Pink=\033[1;38;5;205m
-_IPURPLE=$'\x1b[45m'
-COLOUR_RED=\033[0;31m
 NONE = \033[39m
 
 

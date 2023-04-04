@@ -28,10 +28,8 @@ int	main(int argc, char **argv)
 		ft_free_and_exit(data);
 	if (data->len_a == 2)
 		sa(&(data->stack_a), data->print);
-	else if (data->len_a == 3)
-		sort_three(data);
 	else if (data->len_a <= 10)
-		sort_five(data);
+		sort_small(data);
 	else
 	{
 		sort_a_to_b(data);

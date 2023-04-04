@@ -14,19 +14,12 @@
 
 void	init_data(t_struct *data)
 {
-	data->bits_per_pixel /= 8;
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
-		return (ft_free_tab(data, data->height - 1));
+		return (ft_free_tab(data, data->height));
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WIN_W, WIN_H, "FDF");
 	if (!data->win_ptr)
-		return (ft_free_tab(data, data->height - 1));
-	data->image = mlx_new_image(data->mlx_ptr, WIN_W, WIN_H);
-	if (!data->image)
-		return (mlx_destroy_window(data->mlx_ptr, data->win_ptr), \
-				ft_free_tab(data, data->height - 1));
-	data->addr = mlx_get_data_addr(data->image, &data->bits_per_pixel, \
-			&data->line_length, &data->endian);
+		return (ft_free_tab(data, data->height));
 	data->angle_x = 0.8;
 	data->angle_y = 0.8;
 	data->zoom = 20 ;
@@ -34,4 +27,5 @@ void	init_data(t_struct *data)
 	data->shift_y = 325;
 	data->depth = 1;
 	data->iso = 1;
+	data->bits_per_pixel /= 8;
 }

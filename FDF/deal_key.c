@@ -63,13 +63,13 @@ int	deal_key(int key, t_struct *t_data)
 {
 	mlx_clear_window(t_data->mlx_ptr, t_data->win_ptr);
 	if (key == 65364)
-		t_data->shift_y += 20;
+		t_data->shift_y += 10;
 	if (key == 65362)
-		t_data->shift_y -= 20;
+		t_data->shift_y -= 10;
 	if (key == 65361)
-		t_data->shift_x -= 20;
+		t_data->shift_x -= 10;
 	if (key == 65363)
-		t_data->shift_x += 20;
+		t_data->shift_x += 10;
 	if (key == 65307)
 		ft_free_tab(t_data, t_data->height);
 	key_helper(key, t_data);
