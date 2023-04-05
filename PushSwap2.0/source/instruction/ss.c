@@ -6,11 +6,11 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 19:56:01 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/01 17:18:45 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 13:57:01 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pushswap.h"
+#include "pushswap.h"
 
 void	ss(t_list **stack_a, t_list **stack_b, int printable)
 {

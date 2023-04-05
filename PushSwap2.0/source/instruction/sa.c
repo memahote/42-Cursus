@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rr.c                                               :+:      :+:    :+:   */
+/*   sa.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 19:55:47 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/01 17:18:19 by memahote         ###   ########lyon.fr   */
+/*   Created: 2022/12/10 19:55:56 by memahote          #+#    #+#             */
+/*   Updated: 2023/04/05 13:56:54 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pushswap.h"
+#include "pushswap.h"
 
-void	rr(t_list **stack_a, t_list **stack_b, int printable)
+void	sa(t_list **stack_a, int printable)
 {
+	int		tmp;
 	t_list	*st_a;
-	t_list	*st_b;
 
 	st_a = *stack_a;
-	st_a = addback(st_a, st_a->content);
-	st_a = delfirst(st_a);
+	if (!st_a || st_a ->next == NULL)
+		return ;
+	tmp = st_a->content;
+	st_a ->content = st_a->next->content;
+	st_a->next->content = tmp;
 	*stack_a = st_a;
-	st_b = *stack_b;
-	st_b = addback(st_b, st_b->content);
-	st_b = delfirst(st_b);
-	*stack_b = st_b;
 	if (printable == 1)
-		ft_printf("%s\n", "rr");
+		ft_printf("%s\n", "sa");
 }

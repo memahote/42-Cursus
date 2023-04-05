@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   number_of_chunk.c                                  :+:      :+:    :+:   */
+/*   sb.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/29 14:48:59 by memahote          #+#    #+#             */
-/*   Updated: 2023/03/31 13:08:24 by memahote         ###   ########lyon.fr   */
+/*   Created: 2022/12/10 19:55:58 by memahote          #+#    #+#             */
+/*   Updated: 2023/04/05 13:56:57 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-int	nb_of_chunk(int size)
+void	sb(t_list **stack_b, int printable)
 {
-	if (size <= 10)
-		return (5);
-	else if (size <= 150)
-		return (10);
-	else
-		return (14);
+	int		tmp2;
+	t_list	*st_b;
+
+	st_b = *stack_b;
+	if (!st_b || st_b ->next == NULL)
+		return ;
+	tmp2 = st_b->content;
+	st_b ->content = st_b->next->content;
+	st_b->next->content = tmp2;
+	*stack_b = st_b;
+	if (printable == 1)
+		ft_printf("%s\n", "sb");
 }

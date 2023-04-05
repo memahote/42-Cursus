@@ -6,14 +6,14 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:56:03 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/01 17:13:12 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 14:01:40 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 
-# include "libft/libft.h"
+# include "../libft/libft.h"
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>

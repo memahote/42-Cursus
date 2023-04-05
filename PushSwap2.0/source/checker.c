@@ -12,6 +12,13 @@
 
 #include "pushswap.h"
 
+static	void	error_checker(char *line, t_struct *data)
+{
+	free(line);
+	get_next_line(-1);
+	ft_print_error(data);
+}
+
 static void	do_instructions(char *line, t_struct *data)
 {
 	if (ft_strcomp(line, "sa\n") == 0)
@@ -37,11 +44,7 @@ static void	do_instructions(char *line, t_struct *data)
 	else if (ft_strcomp(line, "rrr\n") == 0)
 		rrr(&data->stack_a, &data->stack_b, data->print);
 	else
-	{
-		free(line);
-		get_next_line(-1);
-		ft_print_error(data);
-	}
+		error_checker(line, data);
 }
 
 void	ft_print_res(t_struct *data)

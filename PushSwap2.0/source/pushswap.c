@@ -6,13 +6,11 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 13:39:34 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/01 17:19:17 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/05 13:59:19 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
-
-#include <stdio.h>
 
 int	main(int argc, char **argv)
 {
