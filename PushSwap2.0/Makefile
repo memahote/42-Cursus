@@ -61,20 +61,20 @@ ascii			=	██████╗ ██╗   ██╗███████╗█
 					██║     ╚██████╔╝███████║██║  ██║    ███████║╚███╔███╔╝██║  ██║██║      \n\
 					╚═╝      ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝     
 
-all:	lib $(NAME)
+all:	$(NAME)
 		@echo "\033[31mCompiling \033[1mis done !\033[0;31m $(NONE)"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC)
 				@mkdir -p $(@D) 
 				${CC} ${FLAG} -I $(INC_DIR) -I ./libft -c $< -o $@ 
 
-$(NAME):		$(LIBX_DIR)$(LIBX) $(OBJ) $(INC)
+$(NAME):		lib $(LIBX_DIR)$(LIBX) $(OBJ) $(INC)
 				@echo " $(ascii)"
 				@echo "\033[31mCompiling \033[1mobjects files\033[0;31m...\033[0m $(NONE)"
-				${CC} -o $(NAME) $(OBJ) $(LIBX_DIR)$(LIBX) $(FLAG_LIB) -s
+				${CC} -o $(NAME) $(OBJ) $(LIBX_DIR)$(LIBX) $(FLAG_LIB) 
 
 lib:
-				@make -C $(LIBX_DIR) -s
+				@make -C $(LIBX_DIR) 
 
 bonus:			$(LIBX_DIR)$(LIBX) $(OBJ_BONUS) $(INC)
 				@echo "\033[31mCompiling \033[1mChecker\033[0;31m...\033[0m $(NONE)"
@@ -94,4 +94,4 @@ re:				fclean all
 
 .PHONY:			all clean fclean re bonus lib
 
-.SILENT:		$(OBJ_DIR) lib $(NAME) $(LIST_OBJ) $(LIST_OBJ_B) bonus all clean fclean
+# .SILENT:		$(OBJ_DIR) lib $(NAME) $(LIST_OBJ) $(LIST_OBJ_B) bonus all clean fclean
