@@ -1,97 +1,125 @@
-# Folders and Names
+################################## VARIABLES ###################################
+
 NAME			= push_swap
-CHECKER_NAME	= checker
+CHECKER     	= checker
+
+
+# ----- FOLDERS ----- #
 
 INC_DIR			= include/
-INC_Name		= pushswap.h
-INC				= $(addprefix $(INC_DIR), $(INC_Name))
+INSTR_DIR		= instruction/
+PARSE_DIR		= parse/
+SORT_DIR		= sort/
+CLEAN_DIR		= clean/
+SRC_DIR			= source/
+LIB_DIR			= libft/
+OBJ_DIR			= obj/
+
+# ----- FILES ----- #
 
 INSTR			= pa.c pb.c \
-				rra.c rrb.c rrr.c \
-				ra.c rb.c rr.c \
-				sa.c sb.c ss.c
-INSTR_DIR		= instruction/
-INSTRUCTIONS	= $(addprefix $(INSTR_DIR), $(INSTR))
+			  rra.c rrb.c rrr.c \
+			  ra.c rb.c rr.c \
+			  sa.c sb.c ss.c
 
-PARSE			=  number_of_chunk.c sort_array.c is_int.c initialize_struct.c \
-				fill_st_a.c array_of_stack.c check_duplicate.c
-PARSE_DIR		= parse/
-PARSING			= $(addprefix $(PARSE_DIR), $(PARSE))
+PARSE			= number_of_chunk.c sort_array.c is_int.c initialize_struct.c \
+			  fill_st_a.c array_of_stack.c check_duplicate.c
 
 SORT			= sort_three.c is_sorted.c sort_small.c is_empty.c \
-				find_index_smallest.c find_smallest.c find_biggest.c \
-				sort_a_to_b.c sort_b_to_a.c update_value.c 
-SORT_DIR		= sort/
-SORTING			= $(addprefix $(SORT_DIR), $(SORT))
+			  find_index_smallest.c find_smallest.c find_biggest.c \
+			  sort_a_to_b.c sort_b_to_a.c update_value.c 
 
 CLEAN			= ft_free.c ft_print_error.c 
-CLEAN_DIR		= clean/
+
+INSTRUCTIONS	= $(addprefix $(INSTR_DIR), $(INSTR))
+PARSING			= $(addprefix $(PARSE_DIR), $(PARSE))
+SORTING			= $(addprefix $(SORT_DIR), $(SORT))
 CLEANING		= $(addprefix $(CLEAN_DIR), $(CLEAN))
 
 LIST_SRC		=  pushswap.c \
-				$(INSTRUCTIONS) $(PARSING) $(SORTING) $(CLEANING)
+			   $(INSTRUCTIONS) $(PARSING) $(SORTING) $(CLEANING)
 
-LIST_SRC_B		= checker.c \
-				$(INSTRUCTIONS) $(PARSING) $(SORTING) $(CLEANING)
+LIST_SRC_B		= checker.c ./sort/is_sorted.c \
+			  $(INSTRUCTIONS) $(PARSING) $(CLEANING)
 
-SRC_DIR			= source/
-SRC				= $(addprefix $(SRC_DIR, $(LIST_SRC)))
+# ----- SHORTCUTS ----- #
 
-LIBX_DIR		= libft/
-LIBX			= libft.a
+SRC             = $(addprefix $(SRC_DIR), $(LIST_SRC))
+SRC_B           = $(addprefix $(SRC_DIR), $(LIST_SRC_B))
+LIBFT           = $(addprefix $(LIB_DIR), libft.a)
+OBJ             = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
+OBJ_B           = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC_B))
+DEP				= $(patsubst %.c, $(OBJ_DIR)%.d, $(SRC))
 
-OBJ_DIR			= obj/
-LIST_OBJ		= $(LIST_SRC:.c=.o)
-OBJ				=	$(addprefix $(OBJ_DIR), $(LIST_OBJ))
-
-LIST_OBJ_B		= $(LIST_SRC_B:.c=.o)
-OBJ_BONUS		= $(addprefix $(OBJ_DIR), $(LIST_OBJ_B))
-
-# ----- CCompiler -----
+# ----- COMPILATIONS ----- #
 
 CC				= cc
 RM				= rm -rf
 FLAG			= -Wall -Wextra -Werror -g3
-FLAG_LIB		= -I ./libft -L ./libft/libft.a
+DEP_FLAGS		= -MMD -MP
+MKDIR           = mkdir -p
+MAKE            = make -C
 
-ascii			=	██████╗ ██╗   ██╗███████╗██╗  ██╗    ███████╗██╗    ██╗ █████╗ ██████╗  \n\
-					██╔══██╗██║   ██║██╔════╝██║  ██║    ██╔════╝██║    ██║██╔══██╗██╔══██╗ \n\
-					██████╔╝██║   ██║███████╗███████║    ███████╗██║ █╗ ██║███████║██████╔╝ \n\
-					██╔═══╝ ██║   ██║╚════██║██╔══██║    ╚════██║██║███╗██║██╔══██║██╔═══╝  \n\
-					██║     ╚██████╔╝███████║██║  ██║    ███████║╚███╔███╔╝██║  ██║██║      \n\
-					╚═╝      ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝     
+################################## RULES ###################################
 
-all:	$(NAME)
-		@echo "\033[31mCompiling \033[1mis done !\033[0;31m $(NONE)"
+all:            $(NAME)
+	@echo "\033[31mCompiling \033[1mis done !\033[0;31m $(NONE)"
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC)
-				@mkdir -p $(@D) 
-				${CC} ${FLAG} -I $(INC_DIR) -I ./libft -c $< -o $@ 
+bonus:          $(CHECKER)
 
-$(NAME):		lib $(LIBX_DIR)$(LIBX) $(OBJ) $(INC)
-				@echo " $(ascii)"
-				@echo "\033[31mCompiling \033[1mobjects files\033[0;31m...\033[0m $(NONE)"
-				${CC} -o $(NAME) $(OBJ) $(LIBX_DIR)$(LIBX) $(FLAG_LIB) 
+$(NAME): $(LIBFT) $(OBJ)
+	@echo " $(ascii)"
+	@echo "\033[31mCompiling \033[1mobjects files\033[0;31m...\033[0m $(NONE)"
+	$(CC) $(FLAG) -o $(NAME) $(OBJ) -L $(LIB_DIR) -lft
 
-lib:
-				@make -C $(LIBX_DIR) 
+$(CHECKER):     $(LIBFT) $(OBJ_B)
+	@echo "\033[31mCompiling \033[1mChecker\033[0;31m...\033[0m $(NONE)"
+	$(CC) $(FLAG) -o $(CHECKER) $(OBJ_B) -L $(LIB_DIR) -lft
 
-bonus:			$(LIBX_DIR)$(LIBX) $(OBJ_BONUS) $(INC)
-				@echo "\033[31mCompiling \033[1mChecker\033[0;31m...\033[0m $(NONE)"
-				${CC} -o $(CHECKER_NAME) $(OBJ_BONUS) $(LIBX_DIR)$(LIBX) $(FLAG_LIB) -s
+$(LIBFT):   FORCE
+	$(MAKE) $(LIB_DIR)
+
+-include $(DEP)
+
+$(OBJ_DIR)%.o: %.c 
+	$(MKDIR) $(@D)
+	$(CC) $(FLAG) $(DEP_FLAGS) -I $(INC_DIR) -c $< -o $@
 
 clean:
-				@echo "\033[31mRemoving \033[1mobjects files\033[0;31m...\033[0m $(NONE)"
-				@make clean -C $(LIBX_DIR) -s
-				${RM} $(OBJ_DIR)
+	@echo "\033[31mRemoving \033[1mobjects files\033[0;31m...\033[0m $(NONE)"
+	$(MAKE) $(LIB_DIR) clean
+	$(RM) $(OBJ_DIR)
 
-fclean:			clean
-				@echo "\033[31mAnd \033[1mexecutable file !\033[0;31m\033[0m $(NONE)"
-				@make fclean -C $(LIBX_DIR) -s
-				$(RM) $(NAME) $(CHECKER_NAME)
+fclean:     clean
+	@echo "\033[31mAnd \033[1mexecutable file !\033[0;31m\033[0m $(NONE)"
+	$(MAKE) $(LIB_DIR) fclean
+	$(RM) $(NAME)
+	$(RM) $(CHECKER)
 
-re:				fclean all
+FORCE:
 
-.PHONY:			all clean fclean re bonus lib
+re:             fclean all
 
-# .SILENT:		$(OBJ_DIR) lib $(NAME) $(LIST_OBJ) $(LIST_OBJ_B) bonus all clean fclean
+.PHONY:         all bonus clean fclean FORCE re 
+
+################################## CUSTOM ###################################
+
+ascii			=	██████╗ ██╗   ██╗███████╗██╗  ██╗    ███████╗██╗    ██╗ █████╗ ██████╗  \n\
+				██╔══██╗██║   ██║██╔════╝██║  ██║    ██╔════╝██║    ██║██╔══██╗██╔══██╗ \n\
+				██████╔╝██║   ██║███████╗███████║    ███████╗██║ █╗ ██║███████║██████╔╝ \n\
+				██╔═══╝ ██║   ██║╚════██║██╔══██║    ╚════██║██║███╗██║██╔══██║██╔═══╝  \n\
+				██║     ╚██████╔╝███████║██║  ██║    ███████║╚███╔███╔╝██║  ██║██║      \n\
+				╚═╝      ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝     
+
+_END		:=	\x1b[0m
+_BOLD		:=	\x1b[1m
+_UNDER		:=	\x1b[4m
+_REV		:=	\x1b[7m
+_GREY		:=	\x1b[30m
+_RED		:=	\x1b[31m
+_GREEN		:=	\x1b[32m
+_YELLOW		:=	\x1b[33m
+_BLUE		:=	\x1b[34m
+_PURPLE		:=	\x1b[35m
+_CYAN		:=	\x1b[36m
+_WHITE		:=	\x1b[37m
