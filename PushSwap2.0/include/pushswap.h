@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:56:03 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/05 14:01:40 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/09 14:41:48 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,5 @@ void		ft_print_error(t_struct *data);
 void		ft_free(t_struct *data);
 void		ft_free_and_exit(t_struct *data);
 void		ft_free_tab(char **tab, int i);
+void		ft_free_tab_and_exit(t_struct *data, char **tab, int j);
 #endif

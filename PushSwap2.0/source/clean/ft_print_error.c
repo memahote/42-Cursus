@@ -19,3 +19,10 @@ void	ft_print_error(t_struct *data)
 	ft_free(data);
 	exit(EXIT_FAILURE);
 }
+
+void	ft_free_tab_and_exit(t_struct *data, char **tab, int j)
+{
+		ft_free_tab(tab, j);
+		free(tab);
+		ft_print_error(data);
+}
