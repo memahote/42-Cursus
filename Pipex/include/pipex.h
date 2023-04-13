@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:38:07 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/06 11:33:12 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/13 15:35:47 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ char    *get_path(char *cmd, char **envp);
 void    do_cmd(char *cmd, char **envp);
 void    child_process(char **argv, int *p_fd, int in_fd, char **envp);
 void    parent_process(char **argv, int *p_fd, int in_fd, char **envp);
-
+void    error(int fd_in, int fd_out, char **argv);
 
 #endif
