@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/15 15:59:15 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/04/15 16:16:24 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,37 @@ int main(int argc, char **argv, char **envp) // main for transition for bonus
     int fd_out;
     int p_fd[2];
     int pid;
+    int i;
 
     
-    if (argc != 5)
+    if (argc < 5)
         exit(1);
     fd_in = open(argv[1], O_RDONLY);
-    fd_out = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
+    fd_out = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
     error(fd_in, fd_out, argv);
-    pipe(p_fd);
-    pid = fork();
-    if (pid < 0)
-        exit(1);
     dup2(fd_in, 0);
-    if (pid == 0)
+    i = 2;
+        pipe(p_fd);
+    while (i < argc - 2)
     {
-        dup2(p_fd[1], 1);
-        close(p_fd[0]);
-        do_cmd(argv[2], envp);
+        pid = fork();
+        if (pid < 0)
+            exit(1);
+        if (pid == 0)
+        {
+            dup2(p_fd[1], 1);
+            close(p_fd[0]);
+            do_cmd(argv[i], envp);
+        }
+        else
+        {
+            dup2(p_fd[0], 0);
+            close(p_fd[1]);
+        } 
+        i++;  
     }
-    else
-    {
-        dup2(p_fd[0], 0);
-        close(p_fd[1]);
-    }   
     dup2(fd_out, 1);
-    do_cmd(argv[3], envp);
+    do_cmd(argv[argc - 2], envp);
 }
 
 
