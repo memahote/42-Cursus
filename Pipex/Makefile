@@ -1,45 +1,75 @@
-NAME		=	pipex
+################################## VARIABLES ###################################
+
+NAME			= pipex
+NAME_BONUS     	= pipex_bonus
+
+# ----- FOLDERS ----- #
 
 INC_DIR		= 	include/
-INC			= 	$(INC_DIR)pipex.h
+LIB_DIR		= 	libft/
+SRC_DIR		=	source/
+OBJ_DIR		= 	obj/
 
-LIB_DIR		= libft/
-LIB_A		= $(LIB_DIR)libft.a
-LIB_H		= $(LIB_DIR)libft.h
+
+# ----- FILES ----- #
 
 LIST_SRC	= 	do_cmd.c free_tab.c get_path_from_envp.c \
 				get_path.c pipex.c process.c 
-SRC_DIR		=	source/
-SRC			= $(addprefix $(SRC_DIR), $(LIST_SRC))
 
-OBJ_DIR		= obj/
-OBJ			= $(LIST_SRC:%.c=$(OBJ_DIR)%.o)
+LIST_SRC_B	= 	pipex_bonus.c do_cmd.c free_tab.c get_path_from_envp.c \
+				get_path.c process.c 
+
+# ----- SHORTCUTS ----- #
+
+INC			= $(addprefix $(INC_DIR), pipex.h)
+LIBFT       = $(addprefix $(LIB_DIR), libft.a)
+SRC			= $(addprefix $(SRC_DIR), $(LIST_SRC))
+SRC_B       = $(addprefix $(SRC_DIR), $(LIST_SRC_B))
+OBJ         = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
+OBJ_B       = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC_B))
+DEP			= $(patsubst %.c, $(OBJ_DIR)%.d, $(SRC))
 
 # ----- Compiler -----
 
 CC				= cc
 RM				= rm -rf
 FLAG			= -Wall -Wextra -Werror -g3
-FLAG_LIB		= -I ./libft -L ./libft/libft.a
+DEP_FLAGS		= -MMD -MP
+MKDIR           = mkdir -p
+MAKE            = make -C
+
+################################## RULES ###################################
 
 all:	$(NAME)
 
-lib:
-		@make -C $(LIB_DIR)
+bonus: $(NAME_BONUS)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC) $(LIB_H)
-				@mkdir -p $(@D) 
-				${CC} ${FLAG} -I $(INC_DIR) -I ./libft -c $< -o $@ 
+$(NAME):	$(LIBFT) $(OBJ)
+			$(CC) $(FLAG) -o $(NAME) $(OBJ) -L $(LIB_DIR) -lft
 
-$(NAME):	lib $(OBJ) $(INC)
-			${CC} -o $(NAME) $(OBJ) $(FLAG_LIB) $(LIB_A)
+$(NAME_BONUS): 	$(LIBFT) $(OBJ_B)
+				$(CC) $(FLAG) -o $(NAME_BONUS) $(OBJ_B) -L $(LIB_DIR) -lft
+
+$(LIBFT):	FORCE
+		$(MAKE) $(LIB_DIR)
+
+-include $(DEP)
+
+$(OBJ_DIR)%.o: %.c 
+	$(MKDIR) $(@D)
+	$(CC) $(FLAG) $(DEP_FLAGS) -I $(INC_DIR) -c $< -o $@
 
 clean:		
-			@make clean -C $(LIB_DIR)
+			$(MAKE) $(LIB_DIR) clean
 			${RM} $(OBJ_DIR)
 
 fclean:		clean
-			@make fclean -C $(LIB_DIR)
+			$(MAKE) $(LIB_DIR) fclean
 			${RM} ${NAME}
+			${RM} ${NAME_BONUS}
 
 re:			fclean all
+
+FORCE:
+
+.PHONY:         all bonus clean fclean FORCE re 

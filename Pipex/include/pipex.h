@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:38:07 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/13 15:35:47 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/05/04 13:23:42 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
+# include <sys/wait.h>
 
 
 char    *get_path_from_envp(char **envp);
