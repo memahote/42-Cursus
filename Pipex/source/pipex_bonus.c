@@ -32,10 +32,10 @@ void    do_pipe(char *argv, char **envp)
 	int		p_fd[2];
 
 	if (pipe(p_fd) == -1)
-		error();
+		exit(1);
 	pid = fork();
 	if (pid == -1)
-		error();
+		exit(1);
 	if (pid == 0)
 	{
 		close(p_fd[0]);
@@ -54,6 +54,7 @@ void	here_doc(char *limiter, int argc)
 {
 	int	    pid;
 	int		p_fd[2];
+	char	*line;
 
 	if (argc < 6)
 		exit(1);
@@ -63,11 +64,13 @@ void	here_doc(char *limiter, int argc)
 	if (pid == 0)
 	{
 		close(p_fd[0]);
-		while (get_next_line(0))
+		line = get_next_line(0);
+		while (line)
 		{
 			if (ft_strncmp(line, limiter, ft_strlen(limiter)) == 0)
 				exit(EXIT_SUCCESS);
 			write(p_fd[1], line, ft_strlen(line));
+			line = get_next_line(0);
 		}
 	}
 	else
@@ -85,7 +88,7 @@ int	main(int argc, char **argv, char **envp)
 	int	fd_out;
 
 	if (argc < 5)
-		error();
+		exit(1);
 	if (ft_strncmp(argv[1], "here_doc", 8) == 0)
 	{
 		i = 3;
@@ -102,6 +105,6 @@ int	main(int argc, char **argv, char **envp)
 	while (i < argc - 2)
 		do_pipe(argv[i++], envp);
 	dup2(fd_out, 1);
-	command(argv[argc - 2], envp);
+	do_cmd(argv[argc - 2], envp);
 	return (0);
 }

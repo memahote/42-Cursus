@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/05/04 13:21:54 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 17:08:32 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ int main(int argc, char **argv, char **envp) // main
     if (pid == 0)
         child_process(argv, p_fd, fd_in, envp);
     else
+    {
         parent_process(argv, p_fd, fd_out, envp);
-    waitpid(pid, NULL, 0);
+    }
 }
+        // waitpid(pid - 1, NULL, 0);
+        // waitpid(pid, NULL, 0);
 
 void    error(int   fd_in, int fd_out, char **argv)
 {
