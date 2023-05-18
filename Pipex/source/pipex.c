@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/05/09 17:08:32 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/05/18 19:19:42 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int main(int argc, char **argv, char **envp) // main
     int fd_out;
     int p_fd[2];
     int pid;
+    int pid2;
 
     if (argc != 5)
         exit(1);
@@ -34,13 +35,20 @@ int main(int argc, char **argv, char **envp) // main
         exit(1);
     if (pid == 0)
         child_process(argv, p_fd, fd_in, envp);
-    else
+    pid2 = fork();
+    if (pid < 0)
+        exit(1);
+    if (pid2 == 0)
     {
-        parent_process(argv, p_fd, fd_out, envp);
+        dup2(fd_out, 1);
+        dup2(p_fd[0], 0);
+        close(p_fd[1]);
+        do_cmd(argv[3], envp);
     }
-}
-        // waitpid(pid - 1, NULL, 0);
-        // waitpid(pid, NULL, 0);
+    waitpid(pid, NULL, 0);
+    waitpid(pid2, NULL, 0);
+}       
+
 
 void    error(int   fd_in, int fd_out, char **argv)
 {
@@ -114,6 +122,7 @@ gerer les leaks
 //     }
 //     dup2(fd_out, 1);
 //     do_cmd(argv[argc - 2], envp);
+//     waitpid(pid -1, NULL, 0);
 // }
 
 // int main(int argc, char **argv, char **envp) // main for transition for bonus 

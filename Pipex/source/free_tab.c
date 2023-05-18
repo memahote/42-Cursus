@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:32:15 by memahote          #+#    #+#             */
-/*   Updated: 2023/05/09 17:13:02 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/05/09 18:14:04 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,4 @@ void	ft_free_tab(char **tab)
 		free(tab[i]);
 		i++;
 	}
-	free(tab);
 }
