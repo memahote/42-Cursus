@@ -46,8 +46,8 @@ void    do_pipe(char *argv, char **envp)
 	{
 		close(p_fd[1]);
 		dup2(p_fd[0], 0);
-		waitpid(pid, NULL, 0);
 	}
+	waitpid(pid, NULL, 0);
 }
 
 void	here_doc(char *limiter, int argc)

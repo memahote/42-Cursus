@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/05/18 19:19:42 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/05/22 14:53:47 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,35 +18,27 @@
 
 int main(int argc, char **argv, char **envp) // main 
 {
-    int fd_in;
-    int fd_out;
-    int p_fd[2];
-    int pid;
-    int pid2;
-
+   t_struct data;
+   
+    
     if (argc != 5)
         exit(1);
-    fd_in = open(argv[1], O_RDONLY);
-    fd_out = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
-    error(fd_in, fd_out, argv);
-    pipe(p_fd);
-    pid = fork();
-    if (pid < 0)
+    data.fd_in = open(argv[1], O_RDONLY);
+    data.fd_out = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
+    error(data.fd_in, data.fd_out, argv);
+    pipe(data.p_fd);
+    data.first_child_pid = fork();
+    if (data.first_child_pid < 0)
         exit(1);
-    if (pid == 0)
-        child_process(argv, p_fd, fd_in, envp);
-    pid2 = fork();
-    if (pid < 0)
+    if (data.first_child_pid == 0)
+        child_process(argv, data.p_fd, data.fd_in, envp);
+   data.second_child_pid = fork();
+    if (data.second_child_pid < 0)
         exit(1);
-    if (pid2 == 0)
-    {
-        dup2(fd_out, 1);
-        dup2(p_fd[0], 0);
-        close(p_fd[1]);
-        do_cmd(argv[3], envp);
-    }
-    waitpid(pid, NULL, 0);
-    waitpid(pid2, NULL, 0);
+    if (data.second_child_pid == 0)
+        second_child_process(argv, data.p_fd, data.fd_out, envp);
+    waitpid(data.first_child_pid, NULL, 0);
+    waitpid(data.second_child_pid, NULL, 0);
 }       
 
 
