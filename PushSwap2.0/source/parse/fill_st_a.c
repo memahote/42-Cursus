@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:27:53 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/09 14:43:56 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/05/23 14:30:17 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,7 @@ void	mult_arg_filling(char **argv, t_struct *data)
 		while (tab[j])
 		{
 			if (is_int(tab[j]) == 0)
-			{
-				ft_free_tab(tab, j);
-				free(tab);
-				ft_print_error(data);
-			}
+				ft_free_tab_and_exit(data, tab, j);
 			data->stack_a = addback(data->stack_a, ft_atol(tab[j]));
 			free(tab[j]);
 			j++;
