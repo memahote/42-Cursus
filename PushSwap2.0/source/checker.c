@@ -36,21 +36,13 @@ static void	do_instructions(char *line, t_struct *data)
 	else if (ft_strcomp(line, "rb\n") == 0)
 		rb(&data->stack_b, data->print);
 	else if (ft_strcomp(line, "rr\n") == 0)
-	{
-		if (!data->stack_a | !data->stack_b)
-			error_checker(line, data);
 		rr(&data->stack_a, &data->stack_b, data->print);
-	}
 	else if (ft_strcomp(line, "rra\n") == 0)
 		rra(&data->stack_a, data->print);
 	else if (ft_strcomp(line, "rrb\n") == 0)
 		rrb(&data->stack_b, data->print);
 	else if (ft_strcomp(line, "rrr\n") == 0)
-	{
-		if (!data->stack_a | !data->stack_b)
-			error_checker(line, data);
 		rrr(&data->stack_a, &data->stack_b, data->print);
-	}
 	else
 		error_checker(line, data);
 }
