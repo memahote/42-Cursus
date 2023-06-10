@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:41:04 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/15 16:04:55 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/06/10 16:42:19 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ void    do_cmd(char *cmd, char **envp)
     char    **command;
 
     path = get_path(cmd, envp);
-    if (!path)
-        exit(1);
     command = ft_split(cmd, ' ');
     if (execve(path, command, envp) < 0)
     {

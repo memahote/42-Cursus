@@ -47,7 +47,6 @@ void    do_pipe(char *argv, char **envp)
 		close(p_fd[1]);
 		dup2(p_fd[0], 0);
 	}
-	waitpid(pid, NULL, 0);
 }
 
 void	here_doc(char *limiter, int argc)
@@ -77,8 +76,18 @@ void	here_doc(char *limiter, int argc)
 	{
 		close(p_fd[1]);
 		dup2(p_fd[0], 0);
-		wait(NULL);
 	}
+}
+
+void	execute_last_cmd(char *cmd, char *envp[])
+{
+	pid_t	child;
+
+	child = fork();
+	if (child > 0)
+		waitpid(child, NULL, 0);
+	else
+		do_cmd(cmd, envp);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -104,7 +113,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	while (i < argc - 2)
 		do_pipe(argv[i++], envp);
-	dup2(fd_out, 1);
-	do_cmd(argv[argc - 2], envp);
+	execute_last_cmd(argv[argc - 2], envp);
 	return (0);
 }

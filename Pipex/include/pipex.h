@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:38:07 by memahote          #+#    #+#             */
-/*   Updated: 2023/05/22 14:55:21 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/06/10 16:37:12 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include <sys/wait.h>
+#include <stdio.h>
+#include <errno.h>
 
 
 typedef struct s_struct

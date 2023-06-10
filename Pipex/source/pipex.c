@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/05/22 14:53:47 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/06/10 16:30:10 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 #include <stdio.h>
 #include <errno.h>
-
+int open_file(char *file, int choice);
+void	if_no_infile(t_struct *data);
 
 int main(int argc, char **argv, char **envp) // main 
 {
@@ -23,9 +24,11 @@ int main(int argc, char **argv, char **envp) // main
     
     if (argc != 5)
         exit(1);
-    data.fd_in = open(argv[1], O_RDONLY);
-    data.fd_out = open(argv[4], O_RDWR | O_CREAT | O_TRUNC, 0644);
-    error(data.fd_in, data.fd_out, argv);
+    data.fd_in = open_file(argv[1], 1);
+    if_no_infile(&data);
+    data.fd_out = open_file(argv[argc -1], 2);
+    if (data.fd_in == -1 && data.fd_out == -1)
+        exit(1);
     pipe(data.p_fd);
     data.first_child_pid = fork();
     if (data.first_child_pid < 0)
@@ -42,28 +45,39 @@ int main(int argc, char **argv, char **envp) // main
 }       
 
 
-void    error(int   fd_in, int fd_out, char **argv)
+int open_file(char *file, int choice)
 {
-    if (fd_in== -1 && fd_out == -1)
+    int fd;
+    
+    fd = 0;
+    if (choice == 1)
     {
-        ft_putstr_fd(argv[4], 2);
-        perror(" ");
-        ft_putstr_fd(argv[1], 2);
-        perror(" ");
-        exit(1);
+        fd = open(file, O_RDONLY);
+	    if (fd == -1)
+		    perror(file);
+	    return (fd); 
     }
-    else if (fd_in >= 0 && fd_out == -1)
+    if (choice == 2)
     {
-        ft_putstr_fd(argv[4], 2);
-        perror(" ");
-        exit(1);
+        fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	    if (fd == -1)
+		    perror(file);
+	    return (fd);
     }
-    else if (fd_in == -1 && fd_out >= 0)
-    {
-        ft_putstr_fd(argv[1], 2);
-        perror(" ");
-    }
+    return(fd);
 }
+
+
+void	if_no_infile(t_struct *data)
+{
+	if (data->fd_in == -1)
+	{
+		pipe(data->p_fd);
+		close(data->p_fd[1]);
+		data->fd_in = data->p_fd[0];
+	}
+}
+
 
 // reste a faire :
 /*
@@ -75,83 +89,3 @@ gerer les leaks
 
 */
 
-/*bonus*/
-
-// int main(int argc, char **argv, char **envp)
-// {
-//     int fd_in;
-//     int fd_out;
-//     int p_fd[2];
-//     int pid;
-//     int i;
-
-    
-//     if (argc < 5)
-//         exit(1);
-//     fd_in = open(argv[1], O_RDONLY);
-//     fd_out = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-//     error(fd_in, fd_out, argv);
-//     i = 2;
-//     dup2(fd_in, 0);
-//     while (i < argc - 2) // index dernier commande
-//     {
-//         if(pipe(p_fd) == -1)
-//             exit (1);
-//         pid = fork();
-//         if (pid == -1)
-//              exit (1);
-//         if (pid == 0) //child
-//         {
-//             close(p_fd[0]);
-//             dup2(p_fd[1], 1);
-//             do_cmd(argv[i], envp);
-//         }
-//         else
-//         {
-//             close(p_fd[1]);
-//             dup2(p_fd[0], 0);
-//         }
-//     }
-//     dup2(fd_out, 1);
-//     do_cmd(argv[argc - 2], envp);
-//     waitpid(pid -1, NULL, 0);
-// }
-
-// int main(int argc, char **argv, char **envp) // main for transition for bonus 
-// {
-//     int fd_in;
-//     int fd_out;
-//     int p_fd[2];
-//     int pid;
-//     int i;
-
-    
-//     if (argc < 5)
-//         exit(1);
-//     fd_in = open(argv[1], O_RDONLY);
-//     fd_out = open(argv[argc - 1], O_RDWR | O_CREAT | O_TRUNC, 0644);
-//     error(fd_in, fd_out, argv);
-//     dup2(fd_in, 0);
-//     dup2(fd_out, 1);
-//     i = 2;
-//         pipe(p_fd);
-//     while (i < argc - 2)
-//     {
-//         pid = fork();
-//         if (pid < 0)
-//             exit(1);
-//         if (pid == 0)
-//         {
-//             dup2(p_fd[1], 1);
-//             close(p_fd[0]);
-//             do_cmd(argv[i], envp);
-//         }
-//         else
-//         {
-//             dup2(p_fd[0], 0);
-//             close(p_fd[1]);
-//         } 
-//         i++;  
-//     }
-//     do_cmd(argv[argc - 2], envp);
-// }
