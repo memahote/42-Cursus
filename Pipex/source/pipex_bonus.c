@@ -111,7 +111,7 @@ int	main(int argc, char **argv, char **envp)
 		fd_in = open_file(argv[1], 2);
 		dup2(fd_in, 0);
 	}
-	while (i < argc - 1)
+	while (i < argc - 2)
 		do_pipe(argv[i++], envp);
 	dup2(fd_out, 1);
 	execute_last_cmd(argv[argc - 2], envp);
