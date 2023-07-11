@@ -6,13 +6,13 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:41:04 by memahote          #+#    #+#             */
-/*   Updated: 2023/06/10 16:42:19 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/07/11 04:46:19 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void    do_cmd(char *cmd, char **envp)
+char    *do_cmd(char *cmd, char **envp)
 {
     char    *path;
     char    **command;
@@ -27,4 +27,5 @@ void    do_cmd(char *cmd, char **envp)
         free (path);
         exit(0);
     }
+    return(NULL);
 }

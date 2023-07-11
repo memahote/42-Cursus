@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/06/10 16:30:10 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/07/11 05:20:55 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int main(int argc, char **argv, char **envp) // main
     data.fd_out = open_file(argv[argc -1], 2);
     if (data.fd_in == -1 && data.fd_out == -1)
         exit(1);
-    pipe(data.p_fd);
+    if(pipe(data.p_fd)== -1)
+        exit(0);
     data.first_child_pid = fork();
     if (data.first_child_pid < 0)
         exit(1);
@@ -40,9 +41,17 @@ int main(int argc, char **argv, char **envp) // main
         exit(1);
     if (data.second_child_pid == 0)
         second_child_process(argv, data.p_fd, data.fd_out, envp);
+    close(data.p_fd[0]);
+    close(data.p_fd[1]);
     waitpid(data.first_child_pid, NULL, 0);
-    waitpid(data.second_child_pid, NULL, 0);
-}       
+   return(0);
+}  
+     
+
+// exit dans le child , free 
+// ajouter le path absolu ex: /bin/ls
+// env -i infile "/bin/ls" "/bin/cat" outfile -> doit marcher car le path est absolu 
+// donc si envp est nul , check si la commande a un path absolu;
 
 
 int open_file(char *file, int choice)
@@ -54,14 +63,20 @@ int open_file(char *file, int choice)
     {
         fd = open(file, O_RDONLY);
 	    if (fd == -1)
+        {
 		    perror(file);
+            exit(1);
+        }
 	    return (fd); 
     }
     if (choice == 2)
     {
         fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	    if (fd == -1)
+        {
 		    perror(file);
+            exit(1);
+        }
 	    return (fd);
     }
     return(fd);
@@ -78,14 +93,4 @@ void	if_no_infile(t_struct *data)
 	}
 }
 
-
-// reste a faire :
-/*
-Faire le bonus : necessite de recommencer
-gestion d'erreur : return les meme erreur que bash (FAIT)
-    -> gerer le fait que l'on a pas acces a certain fichier (FAIT)
-faire un makeile qui marche (FAIT)
-gerer les leaks
-
-*/
 
