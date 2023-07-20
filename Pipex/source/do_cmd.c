@@ -6,26 +6,64 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:41:04 by memahote          #+#    #+#             */
-/*   Updated: 2023/07/11 04:46:19 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/07/20 19:28:03 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char    *do_cmd(char *cmd, char **envp)
+// char    *do_cmd(char *cmd, char **envp, t_struct *data)
+// {
+//     char    *path;
+//     char    **command;
+    
+//     path = get_path(cmd, envp);
+//     command = ft_split(cmd, ' ');
+//     if (execve(path, command, envp) < 0)
+//     {
+//         ft_putstr_fd(command[0], 2);
+//         ft_putendl_fd(": command not found", 2);
+//         ft_free_tab(command);
+//         free (path);
+//         ft_close_all(data);
+//     }
+//     ft_free_tab(command);
+//     return(NULL);
+// }
+
+void do_cmd(char *cmd, char **envp, t_struct *data)
 {
-    char    *path;
-    char    **command;
+    char *path;
+    char **command;
 
     path = get_path(cmd, envp);
     command = ft_split(cmd, ' ');
+    if(!path)
+    {
+        ft_putstr_fd(command[0], 2);
+        ft_putendl_fd(": command not found", 2);
+        ft_free_tab(command);
+        if (path)
+            free(path);
+        ft_close_all(data);
+        return ;
+    }
     if (execve(path, command, envp) < 0)
     {
         ft_putstr_fd(command[0], 2);
         ft_putendl_fd(": command not found", 2);
-        free(command);
-        free (path);
-        exit(0);
+        ft_free_tab(command);
+        if (path)                                            
+            free(path);
+        ft_close_all(data);
     }
-    return(NULL);
+    if (path)
+        free(path);
+    ft_close_all(data);
 }
+
+
+
+
+
+

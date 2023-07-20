@@ -1,8 +1,8 @@
-Makefile$
-include$
-infile$
-libft$
-obj$
-outfile$
-pipex_bonus$
-source$
+Makefile
+include
+infile
+libft
+obj
+outfile
+pipex
+source
