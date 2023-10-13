@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/07/20 13:41:03 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/07/21 00:09:10 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	if_no_infile(t_struct *data);
 int main(int argc, char **argv, char **envp) // main 
 {
    t_struct data;
-   
+    int timeout = 1;
+    
     if (argc != 5)
         exit(1);
     data.fd_in = open_file(argv[1], 1);
@@ -43,7 +44,11 @@ int main(int argc, char **argv, char **envp) // main
     if (data.second_child_pid == 0)
         second_child_process(argv, &data, envp);
     ft_close_all(&data);
-    waitpid(data.first_child_pid, NULL, 0);
+    waitpid(data.first_child_pid, NULL, WNOHANG);
+    while ((waitpid(data.first_child_pid, NULL, WNOHANG)) == 0 && timeout > 0) {
+        sleep(1);
+        timeout--;
+    }
    return(0);
 }
 
@@ -95,9 +100,5 @@ void	if_no_outfile(t_struct *data)
 		data->fd_out = data->p_fd[1];
 	}
 }
-// exit dans le child , free 
-// ajouter le path absolu ex: /bin/ls
-// env -i infile "/bin/ls" "/bin/cat" outfile -> doit marcher car le path est absolu 
-// donc si envp est nul , check si la commande a un path absolu;
-// close tout si ya une erreur
+// essayer de mettre les openfile dans les child 
 

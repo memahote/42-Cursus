@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:19:03 by memahote          #+#    #+#             */
-/*   Updated: 2023/07/20 19:24:43 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/07/20 23:35:28 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void    second_child_process(char **argv,t_struct *data, char **envp)
     check_dup(data->fd_out, 1);
     check_dup(data->p_fd[0], 0);
     close(data->p_fd[1]);
+    
     do_cmd(argv[3], envp, data);
     ft_close_all(data);
     exit(1);
