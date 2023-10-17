@@ -14,8 +14,13 @@
 
 int main(int argc, char **argv)
 {
+    t_philo *philos;
 
-
-    if (argc < 5 || ft_atoi(argv[1]) <= 0 || argc > 6)
-		return (printf("Wrong number of arguments."));
+    philos = NULL;
+    if (argc < 5 || argc > 6)
+		  return (printf("Wrong number of arguments."));
+    if(check_args_are_positive(argv) == 0)
+        return(0);
 }
+
+

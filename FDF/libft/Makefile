@@ -31,7 +31,7 @@ OBJS			= $(SRCS:.c=.o)
 HEADER			= libft.h
 CC				= cc
 RM				= rm -rf
-CFLAGS			= -Wall -Wextra -Werror
+CFLAGS			= -Wall -Wextra -Werror -fPIE
 
 NAME			= libft.a
 

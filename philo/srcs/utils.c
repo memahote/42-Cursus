@@ -40,3 +40,20 @@ int	ft_atoi(const char *str)
 	}
 	return (nb * neg);
 }
+
+int	ft_strlen(char *str)
+{
+	int i;
+	i = 0;
+
+	while(str)
+		i++;
+	return(i);
+}
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
+}
