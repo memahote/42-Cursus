@@ -22,19 +22,25 @@
 
 typedef struct s_philo
 {
-    pthread_h p_id;
+    pthread_t p_id;
+    pthread_t dead;
+    pthread_t eat;
+    int id_philo;
     int nb_philo;
     int time_to_die;
     int time_to_eat;
     int time_to_sleep;
     int nb_time_to_eat;
-    size_t time_start;
+    int time_start;
+    pthread_mutex_t fork_l;
+    pthread_mutex_t fork_r;
 
 }t_philo;
 
 
 int	ft_atoi(const char *str);
-void init(t_philo *data,char **argv);
+void init_data(t_philo *data,char **argv);
+void    init_forks(char **argv, pthread_mutex_t *forks);
 int check_args(char **argv);
 int	ft_strlen(char *str);
 long get_time(void);
