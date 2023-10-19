@@ -23,7 +23,7 @@ int main(int argc, char **argv)
     if(check_args_are_positive(argv) == 0)
         return(0);
     forks = malloc(sizeof(pthread_mutex_t) * ft_atoi(argv[1]));
-    init_data(philos, argv);
+    init_data(&philos, argv);
     init_forks(argv, forks);
 }
 

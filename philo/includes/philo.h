@@ -32,14 +32,14 @@ typedef struct s_philo
     int time_to_sleep;
     int nb_time_to_eat;
     int time_start;
-    pthread_mutex_t fork_l;
-    pthread_mutex_t fork_r;
+    pthread_mutex_t *fork_l;
+    pthread_mutex_t *fork_r;
 
 }t_philo;
 
 
 int	ft_atoi(const char *str);
-void init_data(t_philo *data,char **argv);
+void init_data(t_philo *philos, pthread_mutex_t *forks, char **argv);
 void    init_forks(char **argv, pthread_mutex_t *forks);
 int check_args(char **argv);
 int	ft_strlen(char *str);
