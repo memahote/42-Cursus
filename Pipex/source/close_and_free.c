@@ -6,32 +6,34 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:32:15 by memahote          #+#    #+#             */
-/*   Updated: 2023/07/20 19:12:00 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/10/26 16:10:46 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void ft_free_tab(char **tab)
+void	ft_free_tab(char **tab)
 {
-    if (tab == NULL)
-        return;
+	int	i;
 
-    int i = 0;
-    while (tab[i])
-    {
-        free(tab[i]);
-        tab[i] = NULL; // Mettre le pointeur à NULL après la libération
-        i++;
-    }
-    free(tab);
+	i = 0;
+	if (tab == NULL)
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
+	free(tab);
 }
+
 void	ft_close_all(t_struct *data)
 {
 	close(data->fd_in);
 	close(data->fd_out);
 	close(data->p_fd[0]);
-    close(data->p_fd[1]);
+	close(data->p_fd[1]);
 }
 
 void	exit_fork(t_struct *data)
@@ -50,8 +52,9 @@ void	exit_pipe(t_struct *data)
 
 void	check_dup(int fd, int input)
 {
-	if (dup2(fd, input) == -1) {
-        perror("DUP : Error\n");
-        exit(EXIT_FAILURE);
-    }
+	if (dup2(fd, input) == -1)
+	{
+		perror("DUP : Error\n");
+		exit(EXIT_FAILURE);
+	}
 }

@@ -16,8 +16,8 @@ OBJ_DIR		= 	obj/
 LIST_SRC	= 	do_cmd.c close_and_free.c get_path_from_envp.c \
 				get_path.c pipex.c process.c 
 
-LIST_SRC_B	= 	pipex_bonus.c do_cmd.c close_and_free.c get_path_from_envp.c \
-				get_path.c process.c 
+LIST_SRC_B	= 	pipex_bonus.c do_cmd_bonus.c close_and_free.c \
+				get_path_from_envp.c get_path.c 
 
 # ----- SHORTCUTS ----- #
 

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   do_cmd.c                                           :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 10:41:04 by memahote          #+#    #+#             */
-/*   Updated: 2023/04/15 16:04:55 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/10/26 16:28:11 by memahote         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	open_file(char *argv, int i)
 	return (file);
 }
 
-void    do_pipe(char *argv, char **envp, t_struct *data)
+void	do_pipe(char *argv, char **envp, t_struct *data)
 {
-    int	    pid;
+	int	pid;
 
 	if (pipe(data->p_fd) == -1)
 		exit(1);
@@ -50,7 +50,7 @@ void    do_pipe(char *argv, char **envp, t_struct *data)
 
 void	here_doc(char *limiter, int argc, t_struct *data)
 {
-	int	    pid;
+	int		pid;
 	char	*line;
 
 	if (argc < 6)
@@ -85,42 +85,13 @@ void	execute_last_cmd(char *cmd, char **envp, t_struct *data)
 	if (child > 0)
 		waitpid(child, NULL, 0);
 	else
-		do_cmd(cmd, envp, data);
-}
-
-void do_cmd_bonus(char *cmd, char **envp, t_struct *data)
-{
-    char *path;
-    char **command;
-
-    path = get_path(cmd, envp);
-    command = ft_split(cmd, ' ');
-    if(!path)
-    {
-        ft_putstr_fd(command[0], 2);
-        ft_putendl_fd(": command not found", 2);
-        ft_free_tab(command);
-        if (path)
-            free(path);
-        return ;
-    }
-    if (execve(path, command, envp) < 0)
-    {
-        ft_putstr_fd(command[0], 2);
-        ft_putendl_fd(": command not found", 2);
-        ft_free_tab(command);
-        if (path)                                            
-            free(path);
-    }
-    if (path)
-        free(path);
-    ft_close_all(data);
+		do_cmd_bonus(cmd, envp, data);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	int	i;
-	t_struct data;
+	int			i;
+	t_struct	data;
 
 	if (argc < 5)
 		exit(1);
