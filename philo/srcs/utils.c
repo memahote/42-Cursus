@@ -5,55 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/13 20:37:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/10/13 20:37:23 by memahote         ###   ########lyon.fr   */
+/*   Created: 2023/10/27 22:18:28 by memahote          #+#    #+#             */
+/*   Updated: 2023/10/27 22:18:28 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *str)
+int	philo_atoi(char *str)
 {
 	int			i;
-	long		nb;
-	int			neg;
+	long int	n;
 
 	i = 0;
-	nb = 0;
-	neg = 1;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			neg *= -1;
-		i++;
-	}
+	n = 0;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (nb >= LONG_MAX / 10 && neg == 1)
-			return (-1);
-		if (nb < LONG_MIN / 10 && neg == -1)
-			return (0);
-		nb = (nb * 10) + (str[i] - '0');
+		n = n * 10 + str[i] - '0';
 		i++;
 	}
-	return (nb * neg);
+	if (n < 0 || ((str[i] < '0' || str[i] > '9') && str[i] != '\0')
+		|| n > INT_MAX)
+		return (0);
+	return (n);
+}
+
+void	print_message(char *message, t_philo *philos, int id)
+{
+	int		time;
+
+	pthread_mutex_lock(philos->writing);
+	time = get_time() - philos->time_start;
+	printf("%d %d %s\n", time, id, message);
+	pthread_mutex_unlock(philos->writing);
 }
 
 int	ft_strlen(char *str)
 {
 	int i;
-	i = 0;
 
-	while(str)
+	i = 0;
+	while(str[i])
 		i++;
 	return(i);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
 }

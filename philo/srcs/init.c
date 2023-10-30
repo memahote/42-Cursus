@@ -5,50 +5,54 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/14 00:35:28 by memahote          #+#    #+#             */
-/*   Updated: 2023/10/19 21:14:32 by memahote         ###   ########lyon.fr   */
+/*   Created: 2023/10/28 02:10:54 by memahote          #+#    #+#             */
+/*   Updated: 2023/10/28 02:10:54 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void init_data(t_philo *philos, pthread_mutex_t *forks, char **argv)
+void    init_data(t_philo *philos, pthread_mutex_t *forks, t_mutex *mutex, char **av)
 {
     int i;
 
     i = 0;
-    while(i < argv[1])
+    while (i < philo_atoi(av[1]))
     {
-        philos[i].id_philo = i + 1;
-        philos[i].time_to_die = ft_atoi(argv[2]);
-        philos[i].time_to_eat = ft_atoi(argv[3]);
-        philos[i].time_to_sleep = ft_atoi(argv[4]);
-        philos[i].nb_time_to_eat = -1;
-        if(argv[5])
-            philos[i].nb_time_to_eat = ft_atoi(argv[5]);
-        philos[i].time_start = get_time() ;// temps en ms au debut du prog
-        if(philos[i].id_philo == argv[1])
-        {
-            philos[i].fork_l = &forks[i];
-            philos[i].fork_r = &forks[0];
-        }
-        else
-        {
-            philos[i].fork_l = &forks[i];
-            philos[i].fork_r = &forks[i + 1];
-        }
+        philos[i].id = i + 1;
+        philos[i].t_to_die = philo_atoi(av[2]);
+        philos[i].t_to_eat = philo_atoi(av[3]);
+        philos[i].t_to_sleep = philo_atoi(av[4]);
+        philos[i].nb_meal = -1;
+        if(av[5])
+            philos[i].nb_meal = philo_atoi(av[5]);
+        philos[i].meal_count = 0;
+        philos[i].dead = &mutex->dead_status;
+        philos[i].time_start = get_time();
+        philos[i].fork_l = &forks[i];
+        philos[i].fork_r = &forks[i + 1];
+        if(philos[i].fork_r == NULL)
+            philos[i].fork_l = &forks[0];
+        philos[i].dead_m = &mutex->dead_m;
+        philos[i].meal_m = &mutex->meal_m;
+        philos[i].writing = &mutex->writing;
         i++;
     }
 }
 
-void    init_forks(char **argv, pthread_mutex_t *forks)
+void    init_mutex(char **av, pthread_mutex_t *forks, t_mutex *mutex)
 {
     int i;
 
     i = 0;
-    while(i < ft_atoi(argv[1]))
+    while(i < philo_atoi(av[1]))
     {
         pthread_mutex_init(&forks[i], NULL);
         i++;
     }
+    mutex->dead_status = 0;
+    pthread_mutex_init(&mutex->dead_m, NULL);
+    pthread_mutex_init(&mutex->meal_m, NULL);
+    pthread_mutex_init(&mutex->writing, NULL);
+    
 }
