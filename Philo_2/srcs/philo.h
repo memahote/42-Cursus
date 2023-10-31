@@ -37,6 +37,7 @@ typedef struct s_philo
     int t_to_eat;
     int t_to_sleep;
     int nb_meal;
+    int is_eating;
     int meal_count;
     int *dead;
     size_t time_start;
@@ -68,7 +69,7 @@ void    init_data(t_data *data, t_philo *philo);
 
 // Utils
 int	philo_atoi(char *str);
-int get_time(void);
+size_t get_time(void);
 int philo_starving(t_philo *philo);
 
 //action
@@ -79,8 +80,8 @@ void    philo_think(t_philo *philo);
 void	*host(void *pointer);
 void	print_message(char *message, t_philo *philos, int id);
 
-int	dead_loop(t_philo *philo);
 void    *routine(void *arg);
 int parse(int ac, char **av);
+int	death_status(t_philo *philo);
 
 #endif

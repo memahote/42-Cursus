@@ -30,6 +30,7 @@ void    init_philo(t_philo *philos, pthread_mutex_t *forks, t_data *data, char *
         philos[i].meal_count = 0;
         philos[i].dead = &data->dead_status;
         philos[i].time_start = get_time();
+        philos[i].last_meal = get_time();
         philos[i].fork_l = &forks[i];
         philos[i].fork_r = &forks[i + 1];
         if(philos[i].fork_r == NULL)

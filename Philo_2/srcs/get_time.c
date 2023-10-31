@@ -6,13 +6,13 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 18:00:44 by memahote          #+#    #+#             */
-/*   Updated: 2023/10/30 02:03:25 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/10/31 16:23:44 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int get_time(void)
+size_t get_time(void)
 {
     struct timeval time;
 

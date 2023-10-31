@@ -36,7 +36,8 @@ void	print_message(char *message, t_philo *philos, int id)
 
 	pthread_mutex_lock(philos->writing);
 	time = get_time() - philos->time_start;
-	printf("%d %d %s\n", time, id, message);
+	if(!death_status(philos))
+		printf("%d %d %s\n", time, id, message);
 	pthread_mutex_unlock(philos->writing);
 }
 

@@ -25,12 +25,12 @@ void    thread_create(t_data *data, pthread_mutex_t *forks)
         i++;
     }
     pthread_join(host_t, NULL);
-    // i = 0;
-    // while(i < data->philo[0].nb_philo)
-    // {
-    //     pthread_join(data->philo[i].thread, NULL);
-    //     i++;
-    // }
+    i = 0;
+    while(i < data->philo[0].nb_philo)
+    {
+        pthread_join(data->philo[i].thread, NULL);
+        i++;
+    }
 }
 
 int main(int ac, char **av)
