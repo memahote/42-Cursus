@@ -29,14 +29,6 @@
 # define ARG5 "ERROR: There is a mistake in number of times each \
 philosopher must eat"
 
-typedef struct s_mutex
-{
-    int             dead_status;
-    pthread_mutex_t writing;
-    pthread_mutex_t dead_m;
-    pthread_mutex_t meal_m;
-}       t_mutex;
-
 typedef struct s_philo
 {
     int id;
@@ -57,12 +49,22 @@ typedef struct s_philo
     pthread_mutex_t *meal_m;
 }       t_philo;
 
+typedef struct s_data
+{
+    int             dead_status;
+    pthread_mutex_t writing;
+    pthread_mutex_t dead_m;
+    pthread_mutex_t meal_m;
+    t_philo         *philo;
+}       t_data;
+
 //parse
 int check_args(int ac, char **av);
 
 //Init
-void    init_data(t_philo *philos, pthread_mutex_t *forks, t_mutex *mutex, char **av);
-void    init_mutex(char **av, pthread_mutex_t *forks, t_mutex *mutex);
+void    init_philo(t_philo *philos, pthread_mutex_t *forks, t_data *data, char **av);
+void    init_forks(char **av, pthread_mutex_t *forks);
+void    init_data(t_data *data, t_philo *philo);
 
 // Utils
 int	philo_atoi(char *str);

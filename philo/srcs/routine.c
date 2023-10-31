@@ -48,7 +48,7 @@ void    philo_think(t_philo *philo)
 int	death_status(t_philo *philo)
 {
 	pthread_mutex_lock(philo->dead_m);
-	if(philo->dead == 1)
+	if(*philo->dead == 1)
 		return(pthread_mutex_unlock(philo->dead_m), 1);
 	return(pthread_mutex_unlock(philo->dead_m), 0);
 }
@@ -59,7 +59,7 @@ void    *routine(void *data)
 
     philo = data;
     if((philo->id % 2) == 0 )
-        usleep(10);
+        usleep(100);
     while(!death_status(philo))
     {
         philo_eat(philo);

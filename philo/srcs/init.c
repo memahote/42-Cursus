@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-void    init_data(t_philo *philos, pthread_mutex_t *forks, t_mutex *mutex, char **av)
+void    init_philo(t_philo *philos, pthread_mutex_t *forks, t_data *data, char **av)
 {
     int i;
 
@@ -20,6 +20,7 @@ void    init_data(t_philo *philos, pthread_mutex_t *forks, t_mutex *mutex, char 
     while (i < philo_atoi(av[1]))
     {
         philos[i].id = i + 1;
+        philos[i].nb_philo = philo_atoi(av[1]);
         philos[i].t_to_die = philo_atoi(av[2]);
         philos[i].t_to_eat = philo_atoi(av[3]);
         philos[i].t_to_sleep = philo_atoi(av[4]);
@@ -27,20 +28,20 @@ void    init_data(t_philo *philos, pthread_mutex_t *forks, t_mutex *mutex, char 
         if(av[5])
             philos[i].nb_meal = philo_atoi(av[5]);
         philos[i].meal_count = 0;
-        philos[i].dead = &mutex->dead_status;
+        philos[i].dead = &data->dead_status;
         philos[i].time_start = get_time();
         philos[i].fork_l = &forks[i];
         philos[i].fork_r = &forks[i + 1];
         if(philos[i].fork_r == NULL)
             philos[i].fork_l = &forks[0];
-        philos[i].dead_m = &mutex->dead_m;
-        philos[i].meal_m = &mutex->meal_m;
-        philos[i].writing = &mutex->writing;
+        philos[i].dead_m = &data->dead_m;
+        philos[i].meal_m = &data->meal_m;
+        philos[i].writing = &data->writing;
         i++;
     }
 }
 
-void    init_mutex(char **av, pthread_mutex_t *forks, t_mutex *mutex)
+void    init_forks(char **av, pthread_mutex_t *forks)
 {
     int i;
 
@@ -49,10 +50,14 @@ void    init_mutex(char **av, pthread_mutex_t *forks, t_mutex *mutex)
     {
         pthread_mutex_init(&forks[i], NULL);
         i++;
-    }
-    mutex->dead_status = 0;
-    pthread_mutex_init(&mutex->dead_m, NULL);
-    pthread_mutex_init(&mutex->meal_m, NULL);
-    pthread_mutex_init(&mutex->writing, NULL);
-    
+    }  
+}
+
+void    init_data(t_data *data, t_philo *philo)
+{
+    data->dead_status = 0;
+    data->philo = philo;
+    pthread_mutex_init(&data->dead_m, NULL);
+    pthread_mutex_init(&data->meal_m, NULL);
+    pthread_mutex_init(&data->writing, NULL);
 }
