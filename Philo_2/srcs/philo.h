@@ -27,7 +27,9 @@
 # define ARG3 "ERROR: There is a mistake in time to eat"
 # define ARG4 "ERROR: There is a mistake in time to sleep"
 # define ARG5 "ERROR: There is a mistake in number of times each \
-philosopher must eat"
+                philosopher must eat"
+# define THREAD "ERROR : Thread creation fail"
+# define THREAD2 "ERROR : Thread join fail" 
 
 typedef struct s_philo
 {
@@ -79,7 +81,7 @@ void    philo_think(t_philo *philo);
 
 void	*host(void *pointer);
 void	print_message(char *message, t_philo *philos, int id);
-
+void    clean(t_philo *philo, t_data *data, pthread_mutex_t *forks, char *str);
 void    *routine(void *arg);
 int parse(int ac, char **av);
 int	death_status(t_philo *philo);
