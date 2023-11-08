@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/10/26 18:03:40 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/08 16:34:22 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	main(int argc, char **argv, char **envp)
 	if (data.second_child_pid == 0)
 		second_child_process(argv, &data, envp);
 	ft_close_all(&data);
-	waitpid(data.first_child_pid, NULL, 0);
-	return (0);
+	return (waitpid(data.first_child_pid, NULL, 0), \
+	waitpid(data.second_child_pid, NULL, 0), data.ret);
 }
 
 int	open_file(char *file, int choice)
@@ -73,11 +73,13 @@ int	open_file(char *file, int choice)
 
 void	if_no_infile(t_struct *data)
 {
+	data->ret = 0;
 	if (data->fd_in == -1)
 	{
 		pipe(data->p_fd);
 		close(data->p_fd[1]);
 		data->fd_in = data->p_fd[0];
+		data->ret = 1;
 	}
 }
 
@@ -88,5 +90,6 @@ void	if_no_outfile(t_struct *data)
 		pipe(data->p_fd);
 		close(data->p_fd[0]);
 		data->fd_out = data->p_fd[1];
+		data->ret = 1;
 	}
 }

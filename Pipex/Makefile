@@ -1,7 +1,7 @@
 ################################## VARIABLES ###################################
 
 NAME			= pipex
-NAME_BONUS     	= pipex_bonus
+# NAME_BONUS     	= pipex_bonus
 
 # ----- FOLDERS ----- #
 
@@ -42,13 +42,13 @@ MAKE            = make -C
 
 all:	$(NAME)
 
-bonus: $(NAME_BONUS)
+# bonus: $(NAME_BONUS)
 
 $(NAME):	$(LIBFT) $(OBJ)
 			$(CC) $(FLAG) -o $(NAME) $(OBJ) -L $(LIB_DIR) -lft
 
-$(NAME_BONUS): 	$(LIBFT) $(OBJ_B)
-				$(CC) $(FLAG) -o $(NAME_BONUS) $(OBJ_B) -L $(LIB_DIR) -lft
+bonus: 	$(LIBFT) $(OBJ_B)
+				$(CC) $(FLAG) -o $(NAME) $(OBJ_B) -L $(LIB_DIR) -lft
 
 $(LIBFT):	FORCE
 		$(MAKE) $(LIB_DIR)
