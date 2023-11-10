@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/08 16:34:22 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/10 17:15:24 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_struct	data;
 
+	data.exitstatus = 0;
 	if (argc != 5)
 		exit(1);
 	data.fd_in = open_file(argv[1], 1);
-	if_no_infile(&data);
+	if(data.fd_in < 0)
+		data.exitstatus = 1;
 	data.fd_out = open_file(argv[argc -1], 2);
 	if_no_outfile(&data);
 	if (data.fd_in == -1 && data.fd_out == -1)
@@ -41,8 +43,10 @@ int	main(int argc, char **argv, char **envp)
 	if (data.second_child_pid == 0)
 		second_child_process(argv, &data, envp);
 	ft_close_all(&data);
+	if(WEXITSTATUS(data.second_child_pid) == 127)
+		data.exitstatus = 127;
 	return (waitpid(data.first_child_pid, NULL, 0), \
-	waitpid(data.second_child_pid, NULL, 0), data.ret);
+	waitpid(data.second_child_pid, NULL, 0), data.exitstatus);
 }
 
 int	open_file(char *file, int choice)
@@ -73,13 +77,11 @@ int	open_file(char *file, int choice)
 
 void	if_no_infile(t_struct *data)
 {
-	data->ret = 0;
 	if (data->fd_in == -1)
 	{
 		pipe(data->p_fd);
 		close(data->p_fd[1]);
 		data->fd_in = data->p_fd[0];
-		data->ret = 1;
 	}
 }
 
@@ -90,6 +92,6 @@ void	if_no_outfile(t_struct *data)
 		pipe(data->p_fd);
 		close(data->p_fd[0]);
 		data->fd_out = data->p_fd[1];
-		data->ret = 1;
+		data->exitstatus = 1;
 	}
 }

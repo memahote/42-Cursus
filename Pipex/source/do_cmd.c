@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:41:04 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/08 16:21:49 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/10 17:15:41 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	no_path(char	*path, char **command, t_struct *data)
 	if (path)
 		free(path);
 	ft_close_all(data);
-	exit(1);
+	exit(127);
 }
 
 void	do_cmd(char *cmd, char **envp, t_struct *data)

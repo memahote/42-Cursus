@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:38:07 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/08 12:55:39 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/10 14:31:41 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_struct
 	int	p_fd[2];
 	int	first_child_pid;
 	int	second_child_pid;
-	int	ret;
+	int	exitstatus;
 
 }		t_struct;
 
