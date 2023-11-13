@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:32:15 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/08 13:49:33 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/13 20:44:33 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,15 @@ void	ft_free_tab(char **tab)
 
 void	ft_close_all(t_struct *data)
 {
-	close(data->fd_in);
-	close(data->fd_out);
+	if (data->fd_in >= 0)
+		close(data->fd_in);
+	if (data->fd_out >= 0)
+		close(data->fd_out);
 	close(data->p_fd[0]);
 	close(data->p_fd[1]);
+	close(0);
+	close(1);
+	close(2);
 }
 
 void	exit_fork(t_struct *data)

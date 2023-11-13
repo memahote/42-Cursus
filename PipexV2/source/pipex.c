@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/11 14:36:30 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/13 20:56:41 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,12 @@ void	fd_create(char **argv, int argc, t_struct *data);
 int	main(int argc, char **argv, char **envp)
 {
 	t_struct	data;
+	int			status;
 
 	data.exitstatus = 0;
 	if (argc != 5)
 		exit(1);
-	fd_create(argv, argc, &data);	
+	fd_create(argv, argc, &data);
 	if (pipe(data.p_fd) == -1)
 		exit_pipe(&data);
 	data.first_child_pid = fork();
@@ -38,12 +39,11 @@ int	main(int argc, char **argv, char **envp)
 	if (data.second_child_pid == 0)
 		second_child_process(argv, &data, envp);
 	ft_close_all(&data);
-	int status;
 	waitpid(data.first_child_pid, NULL, 0);
 	waitpid(data.second_child_pid, &status, 0);
-	if (MY_WIFEXITED(status)) 
-       	data.exitstatus = MY_WEXITSTATUS(status);
-	return(data.exitstatus);
+	if (MY_WIFEXITED(status))
+		data.exitstatus = MY_WEXITSTATUS(status);
+	return (data.exitstatus);
 }
 
 int	open_file(char *file, int choice)
@@ -72,15 +72,19 @@ int	open_file(char *file, int choice)
 	return (fd);
 }
 
-void	fd_create(char **argv, int argc,  t_struct *data)
+void	fd_create(char **argv, int argc, t_struct *data)
 {
 	data->fd_in = open_file(argv[1], 1);
-	if(data->fd_in < 0)
+	if (data->fd_in < 0)
 		data->exitstatus = 1;
 	data->fd_out = open_file(argv[argc -1], 2);
-	if_no_outfile(data);
-	if (data->fd_in == -1 && data->fd_out == -1)
+	if ((data->fd_in == -1 && data->fd_out == -1))
+	{
+		close(0);
+		close(1);
+		close(2);
 		exit(1);
+	}
 }
 
 // void	if_no_infile(t_struct *data)
@@ -93,13 +97,13 @@ void	fd_create(char **argv, int argc,  t_struct *data)
 // 	}
 // }
 
-void	if_no_outfile(t_struct *data)
-{
-	if (data->fd_out == -1)
-	{
-		pipe(data->p_fd);
-		close(data->p_fd[0]);
-		data->fd_out = data->p_fd[1];
-		data->exitstatus = 1;
-	}
-}
+// void	if_no_outfile(t_struct *data)
+// {
+// 	if (data->fd_out == -1)
+// 	{
+// 		pipe(data->p_fd);
+// 		close(data->p_fd[0]);
+// 		data->fd_out = data->p_fd[1];
+// 		data->exitstatus = 1;
+// 	}
+// }
