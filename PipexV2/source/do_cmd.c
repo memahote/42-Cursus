@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:41:04 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/11 14:11:18 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/14 13:56:37 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	no_path(char	*path, char **command, t_struct *data)
 {
 	ft_putstr_fd(command[0], 2);
-	ft_putendl_fd(": command not found 1", 2);
+	ft_putendl_fd(": command not found", 2);
 	ft_free_tab(command);
 	if (path)
 		free(path);

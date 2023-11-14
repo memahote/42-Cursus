@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:38:07 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/13 20:53:46 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/14 11:14:02 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,6 @@
 # include <sys/wait.h>
 # include <stdio.h>
 # include <errno.h>
-
-#define MY_WIFEXITED(status) (((status) & 0xFF) == 0)
-
-#define MY_WEXITSTATUS(status) (((status) >> 8) & 0xFF)
 
 typedef struct s_struct
 {

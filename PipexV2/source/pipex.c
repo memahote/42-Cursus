@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/13 20:56:41 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/14 14:04:01 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	fd_create(char **argv, int argc, t_struct *data);
 int	main(int argc, char **argv, char **envp)
 {
 	t_struct	data;
-	int			status;
 
 	data.exitstatus = 0;
 	if (argc != 5)
@@ -40,9 +39,7 @@ int	main(int argc, char **argv, char **envp)
 		second_child_process(argv, &data, envp);
 	ft_close_all(&data);
 	waitpid(data.first_child_pid, NULL, 0);
-	waitpid(data.second_child_pid, &status, 0);
-	if (MY_WIFEXITED(status))
-		data.exitstatus = MY_WEXITSTATUS(status);
+	waitpid(data.second_child_pid, NULL, 0);
 	return (data.exitstatus);
 }
 

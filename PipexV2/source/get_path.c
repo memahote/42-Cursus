@@ -6,11 +6,18 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:08:08 by memahote          #+#    #+#             */
-/*   Updated: 2023/10/26 16:21:57 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/14 16:01:24 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	ft_putstr_fd(char *s, int fd)
+{
+	if (!s)
+		return ;
+	write(fd, s, ft_strlen(s));
+}
 
 char	*get_path(char *cmd, char **envp)
 {
@@ -22,6 +29,11 @@ char	*get_path(char *cmd, char **envp)
 
 	fullpath = ft_split(get_path_from_envp(envp), ':');
 	command = ft_split(cmd, ' ');
+	if (!fullpath)
+	{
+		ft_putstr_fd(command[0], 2);
+		ft_putstr_fd(":No such file or directory\n", 2);
+	}
 	if (command[0][0] == '/' || (command[0][0] == '.' && command[0][1] == '/'))
 	{
 		if (access(command[0], F_OK | X_OK) == -1)

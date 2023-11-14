@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:19:03 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/13 20:44:11 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/14 14:04:40 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	child_process(char **argv, t_struct *data, char **envp)
 {
+	
 	if (data->fd_in < 0)
 	{
 		ft_close_all(data);
