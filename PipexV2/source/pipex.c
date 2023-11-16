@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/14 14:04:01 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/16 12:59:36 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,20 @@ void	if_no_infile(t_struct *data);
 void	if_no_outfile(t_struct *data);
 void	fd_create(char **argv, int argc, t_struct *data);
 
+void	err_mess(void)
+{
+	ft_putstr_fd("Wrong number of arguments\n", 2);
+	ft_putstr_fd("Try ./pipex input 'cmd1' 'cmd2' output\n", 2);
+	exit(1);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_struct	data;
 
 	data.exitstatus = 0;
 	if (argc != 5)
-		exit(1);
+		err_mess();
 	fd_create(argv, argc, &data);
 	if (pipe(data.p_fd) == -1)
 		exit_pipe(&data);
@@ -83,24 +90,3 @@ void	fd_create(char **argv, int argc, t_struct *data)
 		exit(1);
 	}
 }
-
-// void	if_no_infile(t_struct *data)
-// {
-// 	if (data->fd_in == -1)
-// 	{
-// 		pipe(data->p_fd);
-// 		close(data->p_fd[1]);
-// 		data->fd_in = data->p_fd[0];
-// 	}
-// }
-
-// void	if_no_outfile(t_struct *data)
-// {
-// 	if (data->fd_out == -1)
-// 	{
-// 		pipe(data->p_fd);
-// 		close(data->p_fd[0]);
-// 		data->fd_out = data->p_fd[1];
-// 		data->exitstatus = 1;
-// 	}
-// }
