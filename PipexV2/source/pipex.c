@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 08:52:23 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/16 12:59:36 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/19 12:58:55 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	err_mess(void)
 int	main(int argc, char **argv, char **envp)
 {
 	t_struct	data;
+	int 		status;
 
 	data.exitstatus = 0;
 	if (argc != 5)
@@ -46,7 +47,9 @@ int	main(int argc, char **argv, char **envp)
 		second_child_process(argv, &data, envp);
 	ft_close_all(&data);
 	waitpid(data.first_child_pid, NULL, 0);
-	waitpid(data.second_child_pid, NULL, 0);
+	waitpid(data.second_child_pid, &status, 0);
+	if (WIFEXITED(status)) 
+       	data.exitstatus = WEXITSTATUS(status);
 	return (data.exitstatus);
 }
 

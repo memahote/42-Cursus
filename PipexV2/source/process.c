@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 09:19:03 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/15 13:02:07 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/18 18:12:05 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	child_process(char **argv, t_struct *data, char **envp)
 {
-	if (data->fd_in < 0)
+	if (data->fd_in < 0 || argv[2][0] == '\0')
 	{
 		ft_close_all(data);
 		close(3);
@@ -30,7 +30,7 @@ void	child_process(char **argv, t_struct *data, char **envp)
 
 void	second_child_process(char **argv, t_struct *data, char **envp)
 {
-	if (data->fd_out < 0)
+	if (data->fd_out < 0 || argv[3][0] == '\0')
 	{
 		ft_close_all(data);
 		exit(1);

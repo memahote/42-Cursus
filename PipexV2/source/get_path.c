@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 10:08:08 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/15 13:01:47 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/19 13:18:55 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ char	*get_path(char *cmd, char **envp)
 	char	**fullpath;
 	char	**command;
 	char	*exec_cmd;
+	char	*possible_p;
 	int		i;
 
 	fullpath = ft_split(get_path_from_envp(envp), ':');
@@ -45,7 +46,9 @@ char	*get_path(char *cmd, char **envp)
 	i = -1;
 	while (fullpath[++i])
 	{
-		exec_cmd = ft_strjoin(ft_strjoin(fullpath[i], "/"), command[0]);
+		possible_p = ft_strjoin(fullpath[i], "/");
+		exec_cmd = ft_strjoin(possible_p, command[0]);
+		free(possible_p);
 		if (access(exec_cmd, F_OK | X_OK) == 0)
 			return (ft_free_tab(command), ft_free_tab(fullpath), exec_cmd);
 		free(exec_cmd);
