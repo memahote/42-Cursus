@@ -21,8 +21,6 @@ void    clean(t_philo *philo, t_data *data, pthread_mutex_t *forks, char *str)
         pritnf("%s\n", THREAD);
     if(str == THREAD2)
         pritnf("%s\n", THREAD2);
-    if(philo)
-        free(philo);
     pthread_mutex_destroy(&data->dead_m);
     pthread_mutex_destroy(&data->meal_m);
     pthread_mutex_destroy(&data->writing);
@@ -32,4 +30,6 @@ void    clean(t_philo *philo, t_data *data, pthread_mutex_t *forks, char *str)
         i++;
     }
     free(forks);
+    if(philo)
+        free(philo);
 }

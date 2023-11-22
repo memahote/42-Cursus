@@ -5,44 +5,34 @@
 #                                                     +:+ +:+         +:+      #
 #    By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/10/27 20:20:26 by memahote          #+#    #+#              #
-#    Updated: 2023/10/27 20:20:26 by memahote         ###   ########lyon.fr    #
+#    Created: 2023/11/20 17:54:54 by memahote          #+#    #+#              #
+#    Updated: 2023/11/20 17:54:54 by memahote         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = philo
+NAME = megaphone
 
-INC_DIR 	= includes/
-SRC_DIR 	= srcs/
-OBJ_DIR		= 	obj/
+OBJ_DIR = obj/
 
-SRC =  get_time.c host.c init.c parse.c philo.c routine.c utils.c
+SRC = megaphone.cpp
 
-SRC_PATH 	= $(addprefix $(SRC_DIR), $(SRC))
-OBJ      	= $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC_PATH))
-INC			= $(addprefix $(INC_DIR), philo.h)
-DEP			= $(patsubst %.c, $(OBJ_DIR)%.d, $(SRC_PATH))
+OBJ      = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
 
-CC				= cc
+CC				= c++
 RM				= rm -rf
-FLAGS			= -Wall -Wextra -O3 -pthread
+FLAGS			= -Wall -Wextra -Werror -std=c++98
 DEP_FLAGS		= -MMD -MP
 MKDIR           = mkdir -p
 MAKE            = make -C
 
-
-# SANITIZER = -fsanitize=thread
-
-.PHONY: all clean fclean re debug
-
-all: $(NAME)
+.PHONY: all clean fclean re
 
 $(NAME): $(OBJ) 
-	@cc $(FLAGS) -o $(NAME) $(OBJ) 
+	${CC} $(FLAGS) -o $(NAME) $(OBJ)
 
 $(OBJ_DIR)%.o: %.c 
 	$(MKDIR) $(@D)
-	$(CC) $(FLAGs) $(DEP_FLAGS) -I $(INC_DIR) -c $< -o $@
+	$(CC) $(FLAGS) $(DEP_FLAGS) -c $< -o $@
 
 clean:
 	@rm -rf $(OBJ_DIR)

@@ -67,13 +67,13 @@ int	check_if_all_ate(t_philo *philo)
 	return (0);
 }
 
-void	*host(void	*data)
+void	*host(void	*pointer)
 {
 	t_philo *philo;
 
-	philo = data;
+	philo = pointer;
 	while(1)
 		if(check_death(philo) == 1 || check_if_all_ate(philo) == 1)
 			break;
-	return(NULL);
+	return(pointer);
 }

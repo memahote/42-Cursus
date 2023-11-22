@@ -15,10 +15,10 @@
 void    philo_eat(t_philo *philo)
 {
     pthread_mutex_lock(philo->fork_l);
-    print_message("take a fork", philo, philo->id);
+    print_message("has taken a fork", philo, philo->id);
     if (philo->nb_philo == 1)
 	{
-		usleep(philo->t_to_die * 1000);
+		ft_usleep(philo->t_to_die);
 		pthread_mutex_unlock(philo->fork_l);
 		return ;
 	}
@@ -29,15 +29,15 @@ void    philo_eat(t_philo *philo)
     philo->last_meal = get_time();
     philo->meal_count++;
     pthread_mutex_unlock(philo->meal_m);
-    usleep((philo->t_to_eat / 1000));
+    ft_usleep((philo->t_to_eat));
     pthread_mutex_unlock(philo->fork_l);
     pthread_mutex_unlock(philo->fork_r);
 }
 
 void    philo_sleep(t_philo *philo)
 {
-    print_message("is sleeping ZZZzzz", philo, philo->id);
-    usleep((philo->t_to_sleep / 1000)); 
+    print_message("is sleeping", philo, philo->id);
+    ft_usleep((philo->t_to_sleep)); 
 }
 
 void    philo_think(t_philo *philo)
@@ -53,20 +53,20 @@ int	death_status(t_philo *philo)
 	return(pthread_mutex_unlock(philo->dead_m), 0);
 }
 
-void    *routine(void *data)
+void    *routine(void *pointer)
 {
     t_philo *philo;
 
-    philo = data;
+    philo = pointer;
     if((philo->id % 2) == 0 )
-        usleep(100);
+        ft_usleep(40);
     while(!death_status(philo))
     {
         philo_eat(philo);
         philo_sleep(philo);
-        philo_sleep(philo);
+        philo_think(philo);
     }
-    return(NULL);
+    return(pointer);
 }
 
 

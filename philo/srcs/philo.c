@@ -12,6 +12,28 @@
 
 #include "philo.h"
 
+void    clean(t_philo *philo, t_data *data, pthread_mutex_t *forks, char *str)
+{
+    int i;
+
+    i = 0;
+    if(ft_strcmp(str, THREAD) == 0)
+        printf("%s\n", THREAD);
+    if(ft_strcmp(str, THREAD2) == 0)
+        printf("%s\n", THREAD2);
+    if(philo)
+        free(philo);
+    pthread_mutex_destroy(&data->dead_m);
+    pthread_mutex_destroy(&data->meal_m);
+    pthread_mutex_destroy(&data->writing);
+    while(i < philo[0].nb_philo)
+    {
+        pthread_mutex_destroy(&forks[i]);
+        i++;
+    }
+    free(forks);
+}
+
 void    thread_create(t_data *data, pthread_mutex_t *forks, t_philo *philo)
 {
     pthread_t  host_t;
@@ -56,7 +78,11 @@ int main(int ac, char **av)
     init_forks(av, forks); //ok
     init_philo(philo, forks, &data, av); //ok
     thread_create(&data, forks, philo);  //ok
-    clean(philo, &data, forks, NULL);
+    if(forks)
+        free(forks);
+    if(philo)
+        free(philo);
+    // clean(philo, &data, forks, NULL);
 }
 
-//a faire : fonction clean -> qui free et detruit les thread en cas d'eereur ou non
+// Programme s'execute et continu meme quand les parametre sont etabli pour qu'un philo meurt.

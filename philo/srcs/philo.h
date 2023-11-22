@@ -20,7 +20,8 @@
 # include <limits.h>
 # include <sys/time.h>
 
-// # define INT_MAX 2147483647
+# define THREAD "ERROR : Thread creation fail"
+# define THREAD2 "ERROR : Thread join fail" 
 # define NB_ARGS "ERROR: The number of argments must be 4 or 5"
 # define ARG1 "ERROR: There is a mistake in number of philosophers"
 # define ARG2 "ERROR: There is a mistake in time to die"
@@ -28,16 +29,14 @@
 # define ARG4 "ERROR: There is a mistake in time to sleep"
 # define ARG5 "ERROR: There is a mistake in number of times each \
                 philosopher must eat"
-# define THREAD "ERROR : Thread creation fail"
-# define THREAD2 "ERROR : Thread join fail" 
 
 typedef struct s_philo
 {
     int id;
     int nb_philo;
-    int t_to_die;
-    int t_to_eat;
-    int t_to_sleep;
+    size_t t_to_die;
+    size_t t_to_eat;
+    size_t t_to_sleep;
     int nb_meal;
     int is_eating;
     int meal_count;
@@ -86,4 +85,6 @@ void    *routine(void *arg);
 int parse(int ac, char **av);
 int	death_status(t_philo *philo);
 
+int	ft_usleep(size_t milliseconds);
+int	ft_strcmp(const char *s1, const char *s2);
 #endif

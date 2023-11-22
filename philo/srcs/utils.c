@@ -37,10 +37,7 @@ void	print_message(char *message, t_philo *philos, int id)
 	pthread_mutex_lock(philos->writing);
 	time = get_time() - philos->time_start;
 	if(!death_status(philos))
-	{
 		printf("%d %d %s\n", time, id, message);
-		usleep(15000);
-	}
 	pthread_mutex_unlock(philos->writing);
 }
 
@@ -52,4 +49,33 @@ int	ft_strlen(char *str)
 	while(str[i])
 		i++;
 	return(i);
+}
+
+int	ft_usleep(size_t milliseconds)
+{
+	size_t	start;
+
+	start = get_time();
+	while ((get_time() - start) < milliseconds)
+		usleep(100);
+	return (0);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+	int		r;
+
+	i = 0;
+	r = 0;
+	while ((s1[i] || s2[i]) && r == 0)
+	{
+		if (s1[i] != s2[i])
+		{
+			r = (unsigned char)s1[i] - (unsigned char)s2[i];
+			return (r);
+		}
+		i++;
+	}
+	return (r);
 }
