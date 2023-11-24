@@ -31,7 +31,6 @@ MKDIR           = mkdir -p
 MAKE            = make -C
 
 
-# SANITIZER = -fsanitize=thread
 
 .PHONY: all clean fclean re 
 
