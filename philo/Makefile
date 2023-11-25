@@ -39,6 +39,8 @@ all: $(NAME)
 $(NAME): $(OBJ) 
 	@cc $(FLAGS) -o $(NAME) $(OBJ) 
 
+-include $(DEP)
+
 $(OBJ_DIR)%.o: %.c 
 	$(MKDIR) $(@D)
 	$(CC) $(FLAGS) $(DEP_FLAGS) -I $(INC_DIR) -c $< -o $@
