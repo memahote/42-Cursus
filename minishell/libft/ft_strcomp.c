@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 19:49:28 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/22 19:49:28 by memahote         ###   ########lyon.fr   */
+/*   Created: 2022/12/22 14:40:42 by memahote          #+#    #+#             */
+/*   Updated: 2022/12/22 14:43:11 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTACTS_HPP
-# define CONTACTS_HPP
-#include <iostream>
-#include <iomanip>
+#include "libft.h"
 
-class Contact
+int	ft_strcomp(const char *s1, const char *s2)
 {
-	private:
-		std::string first_name;
-		std::string last_name;
-		std::string nick_name;
-		std::string phone_number;
-		std::string darkest_secret;
-	public:
-	
-}
+	size_t	i;
+	int		r;
 
-#endif
+	i = 0;
+	r = 0;
+	while ((s1[i] || s2[i]) && r == 0)
+	{
+		if (s1[i] != s2[i])
+		{
+			r = (unsigned char)s1[i] - (unsigned char)s2[i];
+			return (r);
+		}
+		i++;
+	}
+	return (r);
+}

@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 19:49:28 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/22 19:49:28 by memahote         ###   ########lyon.fr   */
+/*   Created: 2022/11/07 17:50:02 by memahote          #+#    #+#             */
+/*   Updated: 2022/11/09 13:55:23 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTACTS_HPP
-# define CONTACTS_HPP
-#include <iostream>
-#include <iomanip>
+#include "libft.h"
 
-class Contact
+void	ft_bzero(void *s, size_t n)
 {
-	private:
-		std::string first_name;
-		std::string last_name;
-		std::string nick_name;
-		std::string phone_number;
-		std::string darkest_secret;
-	public:
-	
-}
+	char	*st;
 
-#endif
+	st = s;
+	while (n > 0)
+	{
+		st[n - 1] = 0;
+		n--;
+	}
+}

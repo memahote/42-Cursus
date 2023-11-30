@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 19:49:28 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/22 19:49:28 by memahote         ###   ########lyon.fr   */
+/*   Created: 2022/11/09 19:34:06 by memahote          #+#    #+#             */
+/*   Updated: 2022/11/17 18:26:34 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTACTS_HPP
-# define CONTACTS_HPP
-#include <iostream>
-#include <iomanip>
+#include "libft.h"
 
-class Contact
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 {
-	private:
-		std::string first_name;
-		std::string last_name;
-		std::string nick_name;
-		std::string phone_number;
-		std::string darkest_secret;
-	public:
-	
-}
+	size_t	i;
 
-#endif
+	i = 0;
+	if (dstsize > 0)
+	{
+		while (src[i] != '\0' && i < dstsize - 1)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = '\0';
+	}
+	return (ft_strlen(src));
+}

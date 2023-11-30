@@ -1,30 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 19:49:28 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/22 19:49:28 by memahote         ###   ########lyon.fr   */
+/*   Created: 2022/11/09 11:24:28 by memahote          #+#    #+#             */
+/*   Updated: 2022/11/18 17:44:19 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTACTS_HPP
-# define CONTACTS_HPP
-#include <iostream>
-#include <iomanip>
-
-class Contact
+int	ft_toupper(int c)
 {
-	private:
-		std::string first_name;
-		std::string last_name;
-		std::string nick_name;
-		std::string phone_number;
-		std::string darkest_secret;
-	public:
-	
+	if (c >= 'a' && c <= 'z')
+		c -= 32;
+	return (c);
 }
-
-#endif

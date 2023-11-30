@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 19:49:28 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/22 19:49:28 by memahote         ###   ########lyon.fr   */
+/*   Created: 2022/11/10 18:06:04 by memahote          #+#    #+#             */
+/*   Updated: 2022/11/17 18:34:58 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTACTS_HPP
-# define CONTACTS_HPP
-#include <iostream>
-#include <iomanip>
+#include "libft.h"
 
-class Contact
+char	*ft_strdup(const char *s1)
 {
-	private:
-		std::string first_name;
-		std::string last_name;
-		std::string nick_name;
-		std::string phone_number;
-		std::string darkest_secret;
-	public:
-	
-}
+	char	*st;
+	int		len;
+	int		i;
 
-#endif
+	len = ft_strlen(s1) + 1;
+	i = 0;
+	st = malloc(sizeof(char) * len);
+	if (!st)
+		return (NULL);
+	while (s1[i])
+	{
+		st[i] = s1[i];
+		i++;
+	}
+	st[i] = '\0';
+	return (st);
+}

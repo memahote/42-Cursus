@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Contact.hpp                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/22 19:49:28 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/22 19:49:28 by memahote         ###   ########lyon.fr   */
+/*   Created: 2022/11/11 13:39:26 by memahote          #+#    #+#             */
+/*   Updated: 2022/11/17 18:25:54 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONTACTS_HPP
-# define CONTACTS_HPP
-#include <iostream>
-#include <iomanip>
+#include "libft.h"
 
-class Contact
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	private:
-		std::string first_name;
-		std::string last_name;
-		std::string nick_name;
-		std::string phone_number;
-		std::string darkest_secret;
-	public:
-	
-}
+	char	*dest;
+	char	*sr;
+	size_t	i;
 
-#endif
+	dest = (char *)dst;
+	sr = (char *)src;
+	i = -1;
+	if (dest < sr)
+		while (++i < len)
+			dest[i] = sr[i];
+	else if (dest > sr)
+	{
+		while (len > 0)
+		{
+			dest[len - 1] = sr[len - 1];
+			len--;
+		}
+	}
+	return (dest);
+}
