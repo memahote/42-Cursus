@@ -31,7 +31,6 @@ MKDIR           = mkdir -p
 MAKE            = make -C
 
 
-# SANITIZER = -fsanitize=thread
 
 .PHONY: all clean fclean re 
 
@@ -39,6 +38,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ) 
 	@cc $(FLAGS) -o $(NAME) $(OBJ) 
+
+-include $(DEP)
 
 $(OBJ_DIR)%.o: %.c 
 	$(MKDIR) $(@D)

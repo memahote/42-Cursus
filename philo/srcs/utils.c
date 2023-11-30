@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 22:18:28 by memahote          #+#    #+#             */
-/*   Updated: 2023/10/27 22:18:28 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/24 20:02:12 by memahote         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	philo_atoi(char *str)
 		n = n * 10 + str[i] - '0';
 		i++;
 	}
-	if (n < 0 || ((str[i] < '0' || str[i] > '9') && str[i] != '\0')
-		|| n > INT_MAX)
+	if (n < 0 || ((str[i] < '0' || str[i] > '9') && str[i] != '\0') \
+			|| n > INT_MAX)
 		return (0);
 	return (n);
 }
@@ -36,19 +36,19 @@ void	print_message(char *message, t_philo *philos, int id)
 
 	pthread_mutex_lock(philos->writing);
 	time = get_time() - philos->time_start;
-	if(!death_status(philos))
+	if (!death_status(philos))
 		printf("%d %d %s\n", time, id, message);
 	pthread_mutex_unlock(philos->writing);
 }
 
 int	ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 		i++;
-	return(i);
+	return (i);
 }
 
 int	ft_usleep(size_t milliseconds)

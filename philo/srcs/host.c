@@ -6,15 +6,15 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/29 18:36:33 by memahote          #+#    #+#             */
-/*   Updated: 2023/10/29 18:36:33 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/11/24 19:48:18 by memahote         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int philo_starving(t_philo *philo)
+int	philo_starving(t_philo *philo)
 {
-    pthread_mutex_lock(philo->meal_m);
+	pthread_mutex_lock(philo->meal_m);
 	if (get_time() - philo->last_meal >= philo->t_to_die)
 		return (pthread_mutex_unlock(philo->meal_m), 1);
 	return (pthread_mutex_unlock(philo->meal_m), 0);
@@ -69,11 +69,11 @@ int	check_if_all_ate(t_philo *philo)
 
 void	*host(void	*pointer)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = pointer;
-	while(1)
-		if(check_death(philo) == 1 || check_if_all_ate(philo) == 1)
-			break;
-	return(pointer);
+	while (1)
+		if (check_death(philo) == 1 || check_if_all_ate(philo) == 1)
+			break ;
+	return (pointer);
 }
