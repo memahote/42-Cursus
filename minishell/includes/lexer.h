@@ -26,7 +26,7 @@ enum e_state
 enum e_token
 {
 	WORD = -1,
-	WHITE_SPACE = ' ',
+	SPACE,
 	NEW_LINE = '\n',
 	SQUOTE = '\'',
 	DQUOTE = '\"',
