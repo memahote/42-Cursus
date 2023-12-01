@@ -21,9 +21,7 @@ SRCS			=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c \
 					ft_strmapi.c ft_strtrim.c ft_striteri.c ft_strcomp.c \
 					ft_printf.c ft_put_c.c ft_put_x.c ft_put_p.c ft_putd_i.c \
 					ft_put_s.c ft_put_u.c ft_base.c ft_atol.c \
-					ft_lstadd_back.c ft_lstadd_front.c ft_lstlast.c ft_lstsize.c \
-					ft_lstnew.c gnl/get_next_line.c addback.c addtop.c \
-					gnl/get_next_line_utils.c delfirst.c dellast.c \
+					gnl/get_next_line.c gnl/get_next_line_utils.c
 
 OBJS			= $(SRCS:.c=.o)
 

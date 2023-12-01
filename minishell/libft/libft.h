@@ -24,12 +24,6 @@
 #  define BUFFER_SIZE 1
 # endif
 
-typedef struct s_list
-{
-	int				content;
-	struct s_list	*next;
-}				t_list;
-
 long int	ft_atol(const char *str);
 int			ft_atoi(const char *str);
 void		ft_bzero(void *s, size_t n);
@@ -68,19 +62,7 @@ char		*ft_strtrim(char const *s1, char const *set);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
-t_list		*ft_lstnew(int content);
-int			ft_lstsize(t_list **lst);
-t_list		*ft_lstlast(t_list *lst);
-void		ft_lstadd_front(t_list **alst, t_list *ne);
-void		ft_lstadd_back(t_list *alst, t_list *ne);
-void		ft_lstdelone(t_list *lst, void (*del)(void*));
-void		ft_lstclear(t_list **lst, void (*del)(void*));
-void		ft_lstiter(t_list *lst, void (*f)(void*));
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void*), void (*del)(void *));
-t_list		*delfirst(t_list *stack);
-void		dellast(t_list *stack);
-t_list		*addback(t_list *stack, int value);
-t_list		*addtop(t_list *stack, t_list *stack2);
+
 
 //Printf
 int			ft_printf(const char *format, ...);
@@ -99,4 +81,5 @@ char		*ft_reset(char *str);
 char		*ft_strjoin_gnl(char *s1, char *s2);
 int			ft_strlen_gnl(char *s);
 int			ft_strchr_gnl(char *s, char c);
+
 #endif

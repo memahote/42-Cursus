@@ -4,7 +4,7 @@ NAME			= minishell
 
 # ----- FOLDERS ----- #
 
-INC_DIR		= 	include/
+INC_DIR		= 	includes/
 LIB_DIR		= 	libft/
 SRC_DIR		=	srcs/
 OBJ_DIR		= 	obj/
@@ -12,7 +12,7 @@ OBJ_DIR		= 	obj/
 
 # ----- FILES ----- #
 
-LIST_SRC	= 	main.c
+LIST_SRC	= 	main.c lexer.c lexer_utils.c list_minishell.c
 
 
 # ----- SHORTCUTS ----- #

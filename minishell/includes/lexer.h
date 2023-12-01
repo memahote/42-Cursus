@@ -14,19 +14,19 @@
 # define LEXER_H
 
 #include <stdio.h>
-#include "libft.h"
+#include "../libft/libft.h"
 
 enum e_state
 {
 	IN_DQUOTE,
-	IN_QUOTE,
+	IN_SQUOTE,
 	OUTSIDE,
 };
 
 enum e_token
 {
 	WORD = -1,
-	SPACE,
+	SPACE_T,
 	NEW_LINE = '\n',
 	SQUOTE = '\'',
 	DQUOTE = '\"',
@@ -45,9 +45,9 @@ typedef struct s_list
 	int				len;
 	enum e_token	type;
 	enum e_state	state;
-	t_list			*next;
+	struct s_list	*next;
 
-}	t_list ;
+}	t_list;
 
 //lexer
 int	tokenizer(char *line, int i, enum e_state	state, t_list *token);
@@ -58,11 +58,15 @@ t_list	*lexer(char *line);
 int	extract_word(char *str, enum e_state state, t_list *token);
 int	is_special(char c);
 int	ft_isspace(char c);
+void	check_quote(char *str, t_list *token, enum e_state state, char flag);
+int	redir(char *line, t_list *token, enum e_state state);
 
 //list_minishell
 t_list	*init_list(t_list *list);
 t_list	*new_cont(char *content, int len, enum e_token type, enum e_state state);
 void	free_list(t_list *list);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstlast(t_list *lst);
 
 
 

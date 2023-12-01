@@ -12,25 +12,57 @@
 
 #include "lexer.h"
 
+//Single Quotes
+//Enclosing characters in single quotes (‘’) preserves the literal value of
+// each character within the quotes. 
+//A single quote may not occur between single quotes, 
+//even when preceded by a backslash. '
+
+
+//3.1.2.3 Guillemets doubles
+//L'encadrement de caractères entre guillemets doubles ("") préserve la valeur 
+// littérale de tous les caractères à l'intérieur des guillemets, à l'exception 
+// de '$', '', '\'.
+
+//($?) Expands to the exit status of the most recently executed foreground pipeline.
+
+
+int	get_var(t_list *tokens, char *line, enum e_state state)
+{
+	int	i;
+
+	i = 1;
+	if (line[i] == '?' || (line[i] >= '0' && line[i] <= '9'))
+		i++;
+	else
+		while (ft_isalnum(line[i]) && line[i] != '\n' && line[i] != '\0')
+			i++;
+	ft_lstadd_back(&tokens, new_cont(line, i, ENV, state));
+	return (i);
+}
+
 int	tokenizer(char *line, int i, enum e_state	state, t_list *token)
 {
 	if(!is_special(line[i]))
 		i += extract_word(&line[i], state, token);
 	else if (ft_isspace(line[i]))
-		ft_lstadd_back(token, new_cont(&line[i++], 1, SPACE, state));
+		ft_lstadd_back(&token, new_cont(&line[i++], 1, SPACE_T, state));
 	else if (line[i] == '$')
 	{
 		if(is_special(line[i + 1]))
-			ft_lstadd_back(token, new_cont(&line[i++], 1, WORD, state));
+			ft_lstadd_back(&token, new_cont(&line[i++], 1, WORD, state));
 		else
-			//sinon $ n'est pas un metacaractere et a un comportement defini dans bash
-		;
-		
+			get_var(token, &line[i++], state);
 	}
 	else if (line[i] == '|')
-		ft_lstadd_back(token, new_cont(&line[i++], 1, PIPE_LINE, state));
-	else if 
-	
+		ft_lstadd_back(&token, new_cont(&line[i++], 1, PIPE_LINE, state));
+	else if (line[i] == '\'')
+		check_quote(&line[i++], token, state, 'S');
+	else if (line[i] == '\"')
+		check_quote(&line[i++], token, state, 'D');
+	else if (line[i] == '<' || line[i] == '>')
+		redir(&line[i], token, state);
+	return(i);
 }
 
 
@@ -47,7 +79,9 @@ t_list	*lexer(char *line)
 	init_list(token);
 	while(line[i])
 	{
+		printf("i = %d", i);
 		i += tokenizer(line, i, state, token);
 	}
+	return(token);
 }
 
