@@ -37,18 +37,22 @@ t_list	*init_list(t_list *list)
 t_list	*new_cont(char *content, int len, enum e_token type, enum e_state state)
 {
 	t_list	*list;
+	char *cont;
 
 	list = malloc(sizeof(t_list));
 	if (!list)
 		return (NULL);
-	list -> content = content;
+	cont = ft_strndup(content, len);
+	if(!cont)
+		return (NULL);
+	list -> content = cont;
 	printf("Content :%s ", list->content);
 	list -> len = len;
 	printf("len : %i ", list->len);
 	list -> type = type;
 	printf("Type : %i ", list->type);
 	list -> state = state;
-	printf("state : %i ####", list->state);
+	printf("state : %i \n\n", list->state);
 	list -> next = NULL;
 	return (list);
 }

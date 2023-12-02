@@ -12,7 +12,7 @@
 
 #include "lexer.h"
 
-int	redir(char *line, t_list *token, enum e_state state)
+int	redir(char *line, t_list *token, enum e_state *state)
 {
 	int i;
 
@@ -21,21 +21,21 @@ int	redir(char *line, t_list *token, enum e_state state)
 	{
 		if (line[i + 1] == '<')
 		{
-			ft_lstadd_back(&token, new_cont(&line[i], 2, HERE_DOC, state));
+			ft_lstadd_back(&token, new_cont(&line[i], 2, HERE_DOC, *state));
 			i += 2;
 		}
 		else
-			ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_IN, state));
+			ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_IN, *state));
 	}
 	else if (line[i] == '>')
 	{
 		if (line[i + 1] == '>')
 		{
-			ft_lstadd_back(&token, new_cont(&line[i], 2, DREDIR_OUT, state));
+			ft_lstadd_back(&token, new_cont(&line[i], 2, DREDIR_OUT, *state));
 			i += 2;
 		}
 		else
-			ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_OUT, state));
+			ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_OUT, *state));
 	}
 	return (i);
 }
@@ -53,7 +53,7 @@ int	extract_word(char *str, enum e_state state, t_list *token)
 	return (i);
 }
 
-void	check_quote(char *str, t_list *token, enum e_state state, char flag)
+void	check_quote(char *str, t_list *token, enum e_state *state, char flag)
 {
 	enum e_state quote;
 	enum e_token type;
@@ -61,25 +61,25 @@ void	check_quote(char *str, t_list *token, enum e_state state, char flag)
 	if(flag == 'S')
 	{
 		quote = IN_SQUOTE;
-	 type = SQUOTE;
+	 	type = SQUOTE;
 	}
 	else if (flag == 'D')
 	{
 		quote = IN_DQUOTE; 
-	 type = DQUOTE;
+	 	type = DQUOTE;
 	}
-	if	(state == OUTSIDE)
+	if	(*state == OUTSIDE)
 	{
-		ft_lstadd_back(&token, new_cont(str, 1, type, state)); //la quote est compter a l'exterieur
-		state = quote;
+		ft_lstadd_back(&token, new_cont(str, 1, type, *state)); //la quote est compter a l'exterieur
+		*state = quote;
 	}
-	else if (state == quote) // quand on rerentre dans cette fonction en tant que quote fermante simple ou double
+	else if (*state == quote) // quand on rerelsntre dans cette fonction en tant que quote fermante simple ou double
 	{
-		state = OUTSIDE;
-		ft_lstadd_back(&token, new_cont(str, 1, type, state));
+		*state = OUTSIDE;
+		ft_lstadd_back(&token, new_cont(str, 1, type, *state));
 	}
 	else // si je suis une quote differente 
-		ft_lstadd_back(&token, new_cont(str, 1, type, state));
+		ft_lstadd_back(&token, new_cont(str, 1, type, *state));
 }
 
 int	ft_isspace(char c)
@@ -96,6 +96,10 @@ int	is_special(char c)
 		return (1);
 	if (c == '>')
 		return (1);
+	if (c == '\"')
+		return (1);
+	if (c == '\'')
+		return (1);
 	if (c == '<')
 		return (1);
 	if (c == '$')
@@ -109,4 +113,24 @@ int	is_special(char c)
 	if (ft_isspace(c))
 		return (1);
 	return (0);
+}
+
+char	*ft_strndup(char *s1, int n)
+{
+	char	*copy;
+	size_t	s1_len;
+	int		i;
+
+	i = 0;
+	s1_len = ft_strlen(s1);
+	copy = malloc(sizeof(char) * (s1_len + 1));
+	if (!copy)
+		return (NULL);
+	while (s1[i] && i < n)
+	{
+		copy[i] = s1[i];
+		i++;
+	}
+	copy[i] = '\0';
+	return (copy);
 }

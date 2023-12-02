@@ -37,32 +37,52 @@ int	get_var(t_list *tokens, char *line, enum e_state state)
 	else
 		while (ft_isalnum(line[i]) && line[i] != '\n' && line[i] != '\0')
 			i++;
-	ft_lstadd_back(&tokens, new_cont(line, i, ENV, state));
+	if (state == IN_SQUOTE)
+		ft_lstadd_back(&tokens, new_cont(line, i, WORD, state));
+	else
+		ft_lstadd_back(&tokens, new_cont(line, i, ENV, state));
 	return (i);
 }
 
-int	tokenizer(char *line, int i, enum e_state	state, t_list *token)
+int	tokenizer(char *line, int i, enum e_state	*state, t_list *token)
 {
+	int j = 0;
 	if(!is_special(line[i]))
-		i += extract_word(&line[i], state, token);
+		j += extract_word(&line[i], *state, token);
 	else if (ft_isspace(line[i]))
-		ft_lstadd_back(&token, new_cont(&line[i++], 1, SPACE_T, state));
+	{
+		printf("space");
+		ft_lstadd_back(&token, new_cont(&line[i], 1, SPACE_T, *state));
+		j++;
+	}
 	else if (line[i] == '$')
 	{
 		if(is_special(line[i + 1]))
-			ft_lstadd_back(&token, new_cont(&line[i++], 1, WORD, state));
+		{
+			ft_lstadd_back(&token, new_cont(&line[i], 1, WORD, *state));
+			j++;
+		}
 		else
-			get_var(token, &line[i++], state);
+			j += get_var(token, &line[i], *state);
 	}
 	else if (line[i] == '|')
-		ft_lstadd_back(&token, new_cont(&line[i++], 1, PIPE_LINE, state));
+	{
+		ft_lstadd_back(&token, new_cont(&line[i], 1, PIPE_LINE, *state));
+		j++;
+	}
 	else if (line[i] == '\'')
-		check_quote(&line[i++], token, state, 'S');
+	{
+		check_quote(&line[i], token, state, 'S');
+		j++;
+	}
 	else if (line[i] == '\"')
-		check_quote(&line[i++], token, state, 'D');
+	{
+		check_quote(&line[i], token, state, 'D');
+		j++;
+	}
 	else if (line[i] == '<' || line[i] == '>')
-		redir(&line[i], token, state);
-	return(i);
+		j += redir(&line[i], token, state);
+	return(j);
 }
 
 
@@ -79,8 +99,8 @@ t_list	*lexer(char *line)
 	init_list(token);
 	while(line[i])
 	{
-		printf("i = %d", i);
-		i += tokenizer(line, i, state, token);
+		printf("i = %d ", i);
+		i += tokenizer(line, i, &state, token);
 	}
 	return(token);
 }

@@ -53,7 +53,7 @@ void print_tokens(t_list *tokens)
 	int i = 0;
     while (tokens) 
 	{
-		printf("i = %d\n", i);
+		printf("i = %d \n", i);
         printf("Type: %d, Content: %s\n", tokens->type, tokens->content);
         tokens = tokens->next;
 		i++;
