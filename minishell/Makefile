@@ -12,7 +12,7 @@ OBJ_DIR		= 	obj/
 
 # ----- FILES ----- #
 
-LIST_SRC	= 	main.c lexer.c lexer_utils.c list_minishell.c
+LIST_SRC	= 	main.c lexer.c lexer_utils.c list_minishell.c check_syntax.c
 
 
 # ----- SHORTCUTS ----- #

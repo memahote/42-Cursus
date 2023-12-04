@@ -12,34 +12,6 @@
 
 #include "lexer.h"
 
-int	redir(char *line, t_list *token, enum e_state *state)
-{
-	int i;
-
-	i = 0;
-	if (line[i] == '<')
-	{
-		if (line[i + 1] == '<')
-		{
-			ft_lstadd_back(&token, new_cont(&line[i], 2, HERE_DOC, *state));
-			i += 2;
-		}
-		else
-			ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_IN, *state));
-	}
-	else if (line[i] == '>')
-	{
-		if (line[i + 1] == '>')
-		{
-			ft_lstadd_back(&token, new_cont(&line[i], 2, DREDIR_OUT, *state));
-			i += 2;
-		}
-		else
-			ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_OUT, *state));
-	}
-	return (i);
-}
-
 int	extract_word(char *str, enum e_state state, t_list *token)
 {
 	int 	i;

@@ -12,21 +12,70 @@
 
 #include "lexer.h"
 
-int	check_syntax(t_list *token, enum e_token type)
+t_list	*check_close_quote(t_list *lst, enum e_token type)
+{
+	while(lst)
+	{
+		if(lst->type == type)
+			return(lst);
+		lst = lst->next;
+	}
+	if (!lst)
+		write(2, "error", 5);
+	return (lst);
+}
+
+
+
+int	check_syntax(t_list *token)
 {
 	t_list *tmp;
 
 	tmp = token;
 	while(tmp)
 	{
-		//si tmp->type == dquote
-		//si tmp->type == squote
-			//check unclose quote
+		printf("type : %s\n", tmp->content);
+		if (tmp->type == DQUOTE || tmp->type == SQUOTE)
+		{
+			printf("jss la");
+			if(check_close_quote(tmp, DQUOTE) == NULL)
+				exit(EXIT_FAILURE);
 
-		//si tmp->type == pipe
-			//check if type bef4 and after is word
+		}
+		tmp = tmp->next;
+		// else if (tmp->type == PIPE_LINE)
+		// 	check_pipe_syntax(tmp, PIPE_LINE);
+		// //si tmp->type == dquote
+		// //si tmp->type == squote
+		// 	//check unclose quote
 
-		//si tmp->type == redir
-			//check if type bef4 or after is a word
+		// //si tmp->type == pipe
+		// 	//check if type bef4 and after is word
+
+		// //si tmp->type == redir
+		// 	//check if type bef4 or after is a word
 	}
+	return(0);
 }
+
+
+// Pour check si les quote sont fermer , je part d'une quote et 
+// je parcour la liste jusqu'a retrouver une autre quote de meme type
+// si je trouve je renvoie la liste a index ou je la trouve sinon
+// je return NULL et donc error;
+
+// Pour check si les pipes sont valide , je regarde si ce qui suit
+// est un mot sinon error.
+
+// Pour les redir je regarde si ce qui precede ou succede est un 
+// mot sinon error;
+
+// Parcourir la liste et voir si on croise un & en dehors de quote
+// return error
+
+
+// Quand analyse de syntaxe fini, bien la tester et 
+// la normer avant de passer au parser
+
+
+// Voir pq le type dans le check_syntaxe est null

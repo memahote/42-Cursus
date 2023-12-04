@@ -67,7 +67,10 @@ int	tokenizer(char *line, int i, enum e_state	*state, t_list *token)
 	}
 	else if (line[i] == '|')
 	{
-		ft_lstadd_back(&token, new_cont(&line[i], 1, PIPE_LINE, *state));
+		if (*state != OUTSIDE)
+			ft_lstadd_back(&token, new_cont(&line[i], 1, WORD, *state));
+		else
+			ft_lstadd_back(&token, new_cont(&line[i], 1, PIPE_LINE, *state));
 		j++;
 	}
 	else if (line[i] == '\'')
@@ -85,7 +88,49 @@ int	tokenizer(char *line, int i, enum e_state	*state, t_list *token)
 	return(j);
 }
 
+int	redir(char *line, t_list *token, enum e_state *state)
+{
+	int i;
 
+	i = 0;
+	if (line[i] == '<')
+	{
+		if (line[i + 1] == '<')
+		{
+			if (*state != OUTSIDE)
+				ft_lstadd_back(&token, new_cont(&line[i], 2, WORD, *state));
+			else
+				ft_lstadd_back(&token, new_cont(&line[i], 2, HERE_DOC, *state));
+			i += 2;
+		}
+		else
+		{
+			if (*state != OUTSIDE)
+				ft_lstadd_back(&token, new_cont(&line[i++], 1, WORD, *state));
+			else
+				ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_IN, *state));
+		}
+	}
+	else if (line[i] == '>')
+	{
+		if (line[i + 1] == '>')
+		{
+			if (*state != OUTSIDE)
+				ft_lstadd_back(&token, new_cont(&line[i], 2, WORD, *state));
+			else
+				ft_lstadd_back(&token, new_cont(&line[i], 2, HERE_DOC, *state));
+			i += 2;
+		}
+		else
+		{
+			if (*state != OUTSIDE)
+				ft_lstadd_back(&token, new_cont(&line[i++], 1, WORD, *state));
+			else
+				ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_IN, *state));
+		}
+	}
+	return (i);
+}
 
 t_list	*lexer(char *line)
 {

@@ -27,6 +27,7 @@ int main(int ac, char **av, char **envp)
 	char *line;
 	char	*input_line;
 	t_list	*token_list;
+	t_list	*head;
 
 	while (1)
 	{
@@ -39,7 +40,10 @@ int main(int ac, char **av, char **envp)
 			if(ft_strlen(line) > 0)
 				add_history(line);
 			input_line = line;
+			head = token_list;
 			token_list = lexer(input_line);
+			token_list = head;
+			check_syntax(token_list);
     		print_tokens(token_list);
 	}
 }

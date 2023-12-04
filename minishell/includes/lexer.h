@@ -70,6 +70,7 @@ t_list	*ft_lstlast(t_list *lst);
 
 char	*ft_strndup(char *s1, int n);
 
-
+int	check_syntax(t_list *token);
+t_list	*check_close_quote(t_list *lst, enum e_token type);
 
 #endif
