@@ -59,7 +59,7 @@ void	*routine(void *pointer)
 
 	philo = pointer;
 	if ((philo->id % 2) == 0)
-		ft_usleep(40);
+		ft_usleep(10);
 	while (!death_status(philo))
 	{
 		philo_eat(philo);

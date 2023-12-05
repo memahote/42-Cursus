@@ -34,8 +34,8 @@ void	init_philo(t_philo *philos, pthread_mutex_t *forks, t_data *data, \
 		philos[i].last_meal = get_time();
 		philos[i].fork_l = &forks[i];
 		philos[i].fork_r = &forks[i + 1];
-		if (philos[i].fork_r == NULL)
-			philos[i].fork_l = &forks[0];
+		if (i == (philo_atoi(av[1]) - 1))
+			philos[i].fork_r = &forks[0];
 		philos[i].dead_m = &data->dead_m;
 		philos[i].meal_m = &data->meal_m;
 		philos[i].writing = &data->writing;

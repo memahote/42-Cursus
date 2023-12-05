@@ -32,6 +32,7 @@ void	clean(t_philo *philo, t_data *data, pthread_mutex_t *forks, char *str)
 		i++;
 	}
 	free(forks);
+	exit(1);
 }
 
 void	thread_create(t_data *data, pthread_mutex_t *forks, t_philo *philo)
@@ -83,3 +84,8 @@ int	main(int ac, char **av)
 	if (philo)
 		free(philo);
 }
+
+// malloc trop grand pour les forks et philo ?
+// 4 adresse de pointer pour les fork alors qu'il n'y a que 3 philo
+//quand je reduis le malloc , le programme reste bloquer dna sla boucle
+// de host check if dead
