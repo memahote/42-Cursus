@@ -46,40 +46,27 @@ t_list	*new_cont(char *content, int len, enum e_token type, enum e_state state)
 	if(!cont)
 		return (NULL);
 	list -> content = cont;
-	printf("Content :%s ", list->content);
+	// printf("Content :%s ", list->content);
 	list -> len = len;
-	printf("len : %i ", list->len);
+	// printf("len : %i ", list->len);
 	list -> type = type;
-	printf("Type : %i ", list->type);
+	// printf("Type : %i ", list->type);
 	list -> state = state;
-	printf("state : %i \n\n", list->state);
+	// printf("state : %i \n\n", list->state);
 	list -> next = NULL;
 	return (list);
 }
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*lastlist;
+	t_list	*current;
 
-	lastlist = *lst;
 	if (!*lst)
-	{
 		*lst = new;
-		return ;
-	}
-	lastlist = ft_lstlast(*lst);
-	lastlist -> next = new;
+	current = *lst;
+	while(current->next != NULL)
+		current = current->next;
+	current->next = new;
+
 }
 
-t_list	*ft_lstlast(t_list *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst)
-	{
-		if (!(lst -> next))
-			return (lst);
-		lst = lst -> next;
-	}
-	return (lst);
-}

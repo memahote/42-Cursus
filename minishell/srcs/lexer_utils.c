@@ -12,7 +12,7 @@
 
 #include "lexer.h"
 
-int	extract_word(char *str, enum e_state state, t_list *token)
+int	extract_word(char *str, enum e_state state, t_list **token)
 {
 	int 	i;
 	char	*wd;
@@ -21,11 +21,11 @@ int	extract_word(char *str, enum e_state state, t_list *token)
 	while(!is_special(str[i]))
 		i++;
 	wd = ft_substr(str, 0, i);
-	ft_lstadd_back(&token, new_cont(wd, i, WORD, state));
+	ft_lstadd_back(token, new_cont(wd, i, WORD, state));
 	return (i);
 }
 
-void	check_quote(char *str, t_list *token, enum e_state *state, char flag)
+void	check_quote(char *str, t_list **token, enum e_state *state, char flag)
 {
 	enum e_state quote;
 	enum e_token type;
@@ -42,16 +42,16 @@ void	check_quote(char *str, t_list *token, enum e_state *state, char flag)
 	}
 	if	(*state == OUTSIDE)
 	{
-		ft_lstadd_back(&token, new_cont(str, 1, type, *state)); //la quote est compter a l'exterieur
+		ft_lstadd_back(token, new_cont(str, 1, type, *state)); //la quote est compter a l'exterieur
 		*state = quote;
 	}
 	else if (*state == quote) // quand on rerelsntre dans cette fonction en tant que quote fermante simple ou double
 	{
 		*state = OUTSIDE;
-		ft_lstadd_back(&token, new_cont(str, 1, type, *state));
+		ft_lstadd_back(token, new_cont(str, 1, type, *state));
 	}
 	else // si je suis une quote differente 
-		ft_lstadd_back(&token, new_cont(str, 1, type, *state));
+		ft_lstadd_back(token, new_cont(str, 1, type, *state));
 }
 
 int	ft_isspace(char c)

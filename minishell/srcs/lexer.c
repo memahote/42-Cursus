@@ -27,7 +27,7 @@
 //($?) Expands to the exit status of the most recently executed foreground pipeline.
 
 
-int	get_var(t_list *tokens, char *line, enum e_state state)
+int	get_var(t_list **tokens, char *line, enum e_state state)
 {
 	int	i;
 
@@ -38,9 +38,9 @@ int	get_var(t_list *tokens, char *line, enum e_state state)
 		while (ft_isalnum(line[i]) && line[i] != '\n' && line[i] != '\0')
 			i++;
 	if (state == IN_SQUOTE)
-		ft_lstadd_back(&tokens, new_cont(line, i, WORD, state));
+		ft_lstadd_back(tokens, new_cont(line, i, WORD, state));
 	else
-		ft_lstadd_back(&tokens, new_cont(line, i, ENV, state));
+		ft_lstadd_back(tokens, new_cont(line, i, ENV, state));
 	return (i);
 }
 
@@ -48,10 +48,9 @@ int	tokenizer(char *line, int i, enum e_state	*state, t_list *token)
 {
 	int j = 0;
 	if(!is_special(line[i]))
-		j += extract_word(&line[i], *state, token);
+		j += extract_word(&line[i], *state, &token);
 	else if (ft_isspace(line[i]))
 	{
-		printf("space");
 		ft_lstadd_back(&token, new_cont(&line[i], 1, SPACE_T, *state));
 		j++;
 	}
@@ -63,7 +62,7 @@ int	tokenizer(char *line, int i, enum e_state	*state, t_list *token)
 			j++;
 		}
 		else
-			j += get_var(token, &line[i], *state);
+			j += get_var(&token, &line[i], *state);
 	}
 	else if (line[i] == '|')
 	{
@@ -75,12 +74,12 @@ int	tokenizer(char *line, int i, enum e_state	*state, t_list *token)
 	}
 	else if (line[i] == '\'')
 	{
-		check_quote(&line[i], token, state, 'S');
+		check_quote(&line[i], &token, state, 'S');
 		j++;
 	}
 	else if (line[i] == '\"')
 	{
-		check_quote(&line[i], token, state, 'D');
+		check_quote(&line[i], &token, state, 'D');
 		j++;
 	}
 	else if (line[i] == '<' || line[i] == '>')
@@ -140,11 +139,10 @@ t_list	*lexer(char *line)
 
 	i = 0;
 	token = NULL;
+	token = init_list(token);
 	state = OUTSIDE;
-	init_list(token);
 	while(line[i])
 	{
-		printf("i = %d ", i);
 		i += tokenizer(line, i, &state, token);
 	}
 	return(token);

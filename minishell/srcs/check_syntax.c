@@ -12,35 +12,53 @@
 
 #include "lexer.h"
 
-t_list	*check_close_quote(t_list *lst, enum e_token type)
+t_list	*check_close_quote(t_list **lst, enum e_token type)
 {
-	while(lst)
+	t_list *current;
+
+	current = *lst;
+	current = current->next;
+	while(current)
 	{
-		if(lst->type == type)
-			return(lst);
-		lst = lst->next;
+		if(current->type == type)
+		{
+			return(current);
+		}
+		current = current->next;
 	}
-	if (!lst)
-		write(2, "error", 5);
-	return (lst);
+	return (current);
 }
 
 
+void	del_space(t_list **token)
+{
+	t_list *current;
 
-int	check_syntax(t_list *token)
+	current = *token;
+	while(current)
+	{
+		if(ft_isspace(current->content) && current->state == OUTSIDE)
+		{
+			
+		}
+		current = current->next;
+	}
+}
+
+int	check_syntax(t_list **token)
 {
 	t_list *tmp;
 
-	tmp = token;
+	tmp = *token;
 	while(tmp)
 	{
-		printf("type : %s\n", tmp->content);
+		// printf("type : %s\n", tmp->content);
 		if (tmp->type == DQUOTE || tmp->type == SQUOTE)
 		{
-			printf("jss la");
-			if(check_close_quote(tmp, DQUOTE) == NULL)
-				exit(EXIT_FAILURE);
-
+			if(check_close_quote(&tmp, DQUOTE) == NULL)
+				return (0);
+			else 
+				tmp = check_close_quote(&tmp, DQUOTE);
 		}
 		tmp = tmp->next;
 		// else if (tmp->type == PIPE_LINE)
@@ -55,7 +73,7 @@ int	check_syntax(t_list *token)
 		// //si tmp->type == redir
 		// 	//check if type bef4 or after is a word
 	}
-	return(0);
+	return(1);
 }
 
 

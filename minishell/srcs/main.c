@@ -27,11 +27,11 @@ int main(int ac, char **av, char **envp)
 	char *line;
 	char	*input_line;
 	t_list	*token_list;
-	t_list	*head;
+	// t_list	*head;
 
 	while (1)
 	{
-			line = readline("minishell~> ");
+			line = readline("minishell~>");
 			if (!line)
 			{
 				printf("exit\n");
@@ -40,27 +40,22 @@ int main(int ac, char **av, char **envp)
 			if(ft_strlen(line) > 0)
 				add_history(line);
 			input_line = line;
-			head = token_list;
+			// head = token_list;
 			token_list = lexer(input_line);
-			token_list = head;
-			check_syntax(token_list);
+			// token_list = head;
+			if(!check_syntax(&token_list))
+				ft_putstr_fd("Error unclose quote\n", 2);
     		print_tokens(token_list);
 	}
 }
 
-#include <stdio.h>
-
-// Assurez-vous d'avoir les définitions appropriées pour les types utilisés dans votre code (t_list, new_cont, enum e_state, etc.)
-
 void print_tokens(t_list *tokens) 
 {
-	int i = 0;
-    while (tokens) 
+	while (tokens) 
 	{
-		printf("i = %d \n", i);
-        printf("Type: %d, Content: %s\n", tokens->type, tokens->content);
+        printf("Type: %d, Content: %s, State: %d\n", tokens->type, tokens->content, tokens->state);
         tokens = tokens->next;
-		i++;
     }
 }
 
+// voir pq le 1er noeud de la liste est null

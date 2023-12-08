@@ -55,10 +55,10 @@ int	is_special(char c);
 t_list	*lexer(char *line);
 
 //lexer_utils
-int	extract_word(char *str, enum e_state state, t_list *token);
+int	extract_word(char *str, enum e_state state, t_list **token);
 int	is_special(char c);
 int	ft_isspace(char c);
-void	check_quote(char *str, t_list *token, enum e_state *state, char flag);
+void	check_quote(char *str, t_list **token, enum e_state *state, char flag);
 int	redir(char *line, t_list *token, enum e_state *state);
 
 //list_minishell
@@ -70,7 +70,6 @@ t_list	*ft_lstlast(t_list *lst);
 
 char	*ft_strndup(char *s1, int n);
 
-int	check_syntax(t_list *token);
-t_list	*check_close_quote(t_list *lst, enum e_token type);
+int	check_syntax(t_list **token);
 
 #endif
