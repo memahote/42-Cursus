@@ -20,8 +20,7 @@
 # include <limits.h>
 # include <sys/time.h>
 
-# define THREAD "ERROR : Thread creation fail"
-# define THREAD2 "ERROR : Thread join fail" 
+# define THREAD "ERROR : Thread fail"
 # define NB_ARGS "ERROR: The number of argments must be 4 or 5"
 # define ARG1 "ERROR: There is a mistake in number of philosophers"
 # define ARG2 "ERROR: There is a mistake in time to die"

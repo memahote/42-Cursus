@@ -43,8 +43,8 @@ int	thread_create(t_data *data)
 		if (pthread_create(&data->philo[i].thread, NULL, &routine, \
 					&data->philo[i]) != 0)
 		{
-			write(2, THREAD, 29);
-			break;
+			printf("%s\n", THREAD);
+			break ;
 		}
 		i++;
 	}
