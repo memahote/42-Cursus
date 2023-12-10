@@ -117,7 +117,7 @@ int	redir(char *line, t_list *token, enum e_state *state)
 			if (*state != OUTSIDE)
 				ft_lstadd_back(&token, new_cont(&line[i], 2, WORD, *state));
 			else
-				ft_lstadd_back(&token, new_cont(&line[i], 2, HERE_DOC, *state));
+				ft_lstadd_back(&token, new_cont(&line[i], 2, DREDIR_OUT, *state));
 			i += 2;
 		}
 		else
@@ -125,7 +125,7 @@ int	redir(char *line, t_list *token, enum e_state *state)
 			if (*state != OUTSIDE)
 				ft_lstadd_back(&token, new_cont(&line[i++], 1, WORD, *state));
 			else
-				ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_IN, *state));
+				ft_lstadd_back(&token, new_cont(&line[i++], 1, REDIR_OUT, *state));
 		}
 	}
 	return (i);
@@ -142,9 +142,8 @@ t_list	*lexer(char *line)
 	token = init_list(token);
 	state = OUTSIDE;
 	while(line[i])
-	{
 		i += tokenizer(line, i, &state, token);
-	}
+	del_space(&token);
 	return(token);
 }
 

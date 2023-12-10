@@ -19,5 +19,6 @@
 # include <readline/history.h>
 # include "lexer.h"
 
+int	check_quote_input(char *line);
 
 #endif

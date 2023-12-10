@@ -12,88 +12,48 @@
 
 #include "lexer.h"
 
-t_list	*check_close_quote(t_list **lst, enum e_token type)
-{
-	t_list *current;
-
-	current = *lst;
-	current = current->next;
-	while(current)
-	{
-		if(current->type == type)
-		{
-			return(current);
-		}
-		current = current->next;
-	}
-	return (current);
-}
-
-
-void	del_space(t_list **token)
-{
-	t_list *current;
-
-	current = *token;
-	while(current)
-	{
-		if(ft_isspace(current->content) && current->state == OUTSIDE)
-		{
-			
-		}
-		current = current->next;
-	}
-}
-
-int	check_syntax(t_list **token)
+int		check_pipe_syntaxe(t_list **token)
 {
 	t_list *tmp;
 
-	tmp = *token;
+    tmp = *token;
 	while(tmp)
 	{
-		// printf("type : %s\n", tmp->content);
-		if (tmp->type == DQUOTE || tmp->type == SQUOTE)
+		if (tmp->type == PIPE_LINE)
 		{
-			if(check_close_quote(&tmp, DQUOTE) == NULL)
-				return (0);
-			else 
-				tmp = check_close_quote(&tmp, DQUOTE);
-		}
+            if (tmp->prev == NULL || tmp->next == NULL || tmp->prev->type != -1\
+			|| tmp->next->type != -1 )
+                return (0);
+        }
 		tmp = tmp->next;
-		// else if (tmp->type == PIPE_LINE)
-		// 	check_pipe_syntax(tmp, PIPE_LINE);
-		// //si tmp->type == dquote
-		// //si tmp->type == squote
-		// 	//check unclose quote
-
-		// //si tmp->type == pipe
-		// 	//check if type bef4 and after is word
-
-		// //si tmp->type == redir
-		// 	//check if type bef4 or after is a word
 	}
-	return(1);
+	return (1);
+}
+
+int	check_redir_syntax(t_list **token)
+{
+	t_list *tmp;
+
+    tmp = *token;
+	while (tmp)
+	{
+		 if (tmp->type == 60 || tmp->type == 62 || tmp->type == 63 || tmp->type == 64)
+		{
+            if (tmp->next == NULL || tmp->next->type != -1)
+				return(0);
+        }
+		tmp = tmp->next;
+	}
+	return (1);
 }
 
 
-// Pour check si les quote sont fermer , je part d'une quote et 
-// je parcour la liste jusqu'a retrouver une autre quote de meme type
-// si je trouve je renvoie la liste a index ou je la trouve sinon
-// je return NULL et donc error;
-
-// Pour check si les pipes sont valide , je regarde si ce qui suit
-// est un mot sinon error.
-
-// Pour les redir je regarde si ce qui precede ou succede est un 
-// mot sinon error;
-
-// Parcourir la liste et voir si on croise un & en dehors de quote
-// return error
-
-
-// Quand analyse de syntaxe fini, bien la tester et 
-// la normer avant de passer au parser
-
-
-// Voir pq le type dans le check_syntaxe est null
+int check_syntax(t_list **token)
+{
+    if(!check_pipe_syntaxe(token))
+		return (1);
+	else if(!check_redir_syntax(token))
+		return (2);
+	else
+		return (0);
+}
