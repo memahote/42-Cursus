@@ -65,4 +65,24 @@ re:			fclean all
 
 FORCE:
 
+leaks: 		all
+			touch valgrind.txt
+			rm valgrind.txt
+			echo "{" > valgrind_ignore_leaks.txt
+			echo "leak readline" >> valgrind_ignore_leaks.txt
+			echo "Memcheck:Leak" >> valgrind_ignore_leaks.txt
+			echo "..." >> valgrind_ignore_leaks.txt
+			echo "fun:readline" >> valgrind_ignore_leaks.txt
+			echo "}" >> valgrind_ignore_leaks.txt
+			echo "{" >> valgrind_ignore_leaks.txt
+			echo "leak add_history" >> valgrind_ignore_leaks.txt
+			echo "Memcheck:Leak" >> valgrind_ignore_leaks.txt
+			echo "..." >> valgrind_ignore_leaks.txt
+			echo "fun:add_history" >> valgrind_ignore_leaks.txt
+			echo "}" >> valgrind_ignore_leaks.txt
+			valgrind --suppressions=valgrind_ignore_leaks.txt --leak-check=full \
+					--show-leak-kinds=all --track-fds=yes \
+					--show-mismatched-frees=yes --read-var-info=yes \
+					--log-file=valgrind.txt -s ./${NAME}
+
 .PHONY:         all bonus clean fclean FORCE re 

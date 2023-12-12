@@ -44,46 +44,46 @@ int	get_var(t_list **tokens, char *line, enum e_state state)
 	return (i);
 }
 
-int	tokenizer(char *line, int i, enum e_state	*state, t_list *token)
+int	tokenizer(char *line, int i, enum e_state	*state, t_list **token)
 {
 	int j = 0;
 	if(!is_special(line[i]))
-		j += extract_word(&line[i], *state, &token);
+		j += extract_word(&line[i], *state, token);
 	else if (ft_isspace(line[i]))
 	{
-		ft_lstadd_back(&token, new_cont(&line[i], 1, SPACE_T, *state));
+		ft_lstadd_back(token, new_cont(&line[i], 1, SPACE_T, *state));
 		j++;
 	}
 	else if (line[i] == '$')
 	{
 		if(is_special(line[i + 1]))
 		{
-			ft_lstadd_back(&token, new_cont(&line[i], 1, WORD, *state));
+			ft_lstadd_back(token, new_cont(&line[i], 1, WORD, *state));
 			j++;
 		}
 		else
-			j += get_var(&token, &line[i], *state);
+			j += get_var(token, &line[i], *state);
 	}
 	else if (line[i] == '|')
 	{
 		if (*state != OUTSIDE)
-			ft_lstadd_back(&token, new_cont(&line[i], 1, WORD, *state));
+			ft_lstadd_back(token, new_cont(&line[i], 1, WORD, *state));
 		else
-			ft_lstadd_back(&token, new_cont(&line[i], 1, PIPE_LINE, *state));
+			ft_lstadd_back(token, new_cont(&line[i], 1, PIPE_LINE, *state));
 		j++;
 	}
 	else if (line[i] == '\'')
 	{
-		check_quote(&line[i], &token, state, 'S');
+		check_quote(&line[i], token, state, 'S');
 		j++;
 	}
 	else if (line[i] == '\"')
 	{
-		check_quote(&line[i], &token, state, 'D');
+		check_quote(&line[i], token, state, 'D');
 		j++;
 	}
 	else if (line[i] == '<' || line[i] == '>')
-		j += redir(&line[i], token, state);
+		j += redir(&line[i], *token, state);
 	return(j);
 }
 
@@ -139,10 +139,9 @@ t_list	*lexer(char *line)
 
 	i = 0;
 	token = NULL;
-	token = init_list(token);
 	state = OUTSIDE;
 	while(line[i])
-		i += tokenizer(line, i, &state, token);
+		i += tokenizer(line, i, &state, &token);
 	del_space(&token);
 	return(token);
 }

@@ -27,8 +27,9 @@ int main(int ac, char **av, char **envp)
 	char *line;
 	char	*input_line;
 	t_list	*token_list;
+	int i = 0;
 
-	while (1)
+	while (i < 2)
 	{
 			line = readline("minishell~>"); 
 			if (!line)
@@ -50,7 +51,9 @@ int main(int ac, char **av, char **envp)
 					ft_putstr_fd("syntax error near unexpected token \n", 2);
 				print_tokens(token_list);
 			}
-
+			free (line);
+			free_list(&token_list);
+			i++;
 	}
 	return (0);
 }
