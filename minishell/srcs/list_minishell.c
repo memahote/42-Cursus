@@ -18,7 +18,7 @@ void	free_list(t_list **list)
 	t_list	*next;
 
 	if (!*list)
-        return;
+		return ;
 	tmp = *list;
 	while (tmp)
 	{
@@ -32,14 +32,13 @@ void	free_list(t_list **list)
 t_list	*new_cont(char *content, int len, enum e_token type, enum e_state state)
 {
 	t_list	*new_elem;
-	char *cont;
+	char	*cont;
 
 	new_elem = malloc(sizeof(t_list));
 	if (!new_elem)
 		return (NULL);
 	cont = ft_strndup(content, len);
-	printf("cont : %s\n", cont);
-	if(!cont)
+	if (!cont)
 		return (free(new_elem), NULL);
 	new_elem -> content = cont;
 	new_elem -> len = len;
@@ -60,31 +59,32 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		*lst = new;
 		return ;
 	}
-	while(current->next != NULL)
+	while (current->next != NULL)
 		current = current->next;
 	current->next = new;
 	new->prev = current;
 }
 
-void del_space(t_list **head)
+void	del_space(t_list **head)
 {
-    t_list *current = *head;
-    t_list *next_node;
+	t_list	*current;
+	t_list	*next_node;
 
-    while (current != NULL)
+	current = *head;
+	while (current != NULL)
 	{
-        next_node = current->next;
-
-        if (current->type == 0 && current->state == 2)
+		next_node = current->next;
+		if (current->type == 0 && current->state == 2)
 		{
-            if (current->prev != NULL)
-                current->prev->next = current->next;
+			if (current->prev != NULL)
+				current->prev->next = current->next;
 			else
-                *head = current->next;
-            if (current->next != NULL)
-                current->next->prev = current->prev;
-            free(current);
-        }
+				*head = current->next;
+			if (current->next != NULL)
+				current->next->prev = current->prev;
+			free(current->content);
+			free(current);
+		}
 		current = next_node;
-    }
+	}
 }

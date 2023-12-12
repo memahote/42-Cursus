@@ -14,33 +14,31 @@
 
 int	extract_word(char *str, enum e_state state, t_list **token)
 {
-	int 	i;
+	int	i;
 
 	i = 0;
-	while(!is_special(str[i]))
+	while (!is_special(str[i]))
 		i++;
-	printf("la ");
-	printf("i : %d\n", i);
-	ft_lstadd_back(token, new_cont(str, i+1, WORD, state));
+	ft_lstadd_back(token, new_cont(str, i + 1, WORD, state));
 	return (i);
 }
 
 void	check_quote(char *str, t_list **token, enum e_state *state, char flag)
 {
-	enum e_state quote;
-	enum e_token type;
+	enum e_state	quote;
+	enum e_token	type;
 
-	if(flag == 'S')
+	if (flag == 'S')
 	{
 		quote = IN_SQUOTE;
-	 	type = SQUOTE;
+		type = SQUOTE;
 	}
 	else if (flag == 'D')
 	{
-		quote = IN_DQUOTE; 
-	 	type = DQUOTE;
+		quote = IN_DQUOTE;
+		type = DQUOTE;
 	}
-	if	(*state == OUTSIDE)
+	if (*state == OUTSIDE)
 	{
 		ft_lstadd_back(token, new_cont(str, 1, type, *state));
 		*state = quote;
@@ -93,7 +91,6 @@ char	*ft_strndup(char *s1, int n)
 	int		i;
 
 	i = 0;
-	printf("s1 :\n");
 	copy = malloc(sizeof(char) * (n + 1));
 	if (!copy)
 		return (NULL);

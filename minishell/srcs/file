@@ -1,0 +1,9 @@
+total 32
+-rw-r--r-- 1 memahote 2022_lyon 1569 Dec 12 19:23 check_quote_input.c
+-rw-r--r-- 1 memahote 2022_lyon 1684 Dec 12 19:28 check_syntax.c
+-rw-r--r-- 1 memahote 2022_lyon    0 Dec 12 19:54 file
+-rw-r--r-- 1 memahote 2022_lyon 4117 Dec 12 19:35 lexer.c
+-rw-r--r-- 1 memahote 2022_lyon 2444 Dec 12 19:22 lexer_utils.c
+-rw-r--r-- 1 memahote 2022_lyon 2324 Dec 12 19:39 list_minishell.c
+-rw-r--r-- 1 memahote 2022_lyon 2349 Dec 12 18:59 main.c
+-rw-r--r-- 1 memahote 2022_lyon    2 Dec 12 19:54 out

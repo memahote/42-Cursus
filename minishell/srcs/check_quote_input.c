@@ -12,29 +12,29 @@
 
 #include "minishell.h"
 
-int check_ifclosed(char *line, int index, int *nb_quote, int quote)
+int	check_ifclosed(char *line, int index, int *nb_quote, int quote)
 {
-	int i;
+	int	i;
 
 	i = index + 1;
 	*nb_quote += 1;
-	while(line[i] && line[i] != quote)
+	while (line[i] && line[i] != quote)
 		i++;
-	if(line[i] == quote)
+	if (line[i] == quote)
 		*nb_quote += 1;
 	return (i - index);
 }
 
 int	check_quote_input(char *line)
 {
-	int i;
+	int	i;
 	int	dquote;
-	int squote;
+	int	squote;
 
 	i = 0;
 	dquote = 0;
 	squote = 0;
-	while(line[i])
+	while (line[i])
 	{
 		if (line[i] == '\"')
 			i += check_ifclosed(line, i, &dquote, '\"');
@@ -42,7 +42,7 @@ int	check_quote_input(char *line)
 			i += check_ifclosed(line, i, &squote, '\'');
 		i++;
 	}
-	if((dquote > 0 && dquote % 2 != 0) || (squote > 0 && squote % 2 != 0))
+	if ((dquote > 0 && dquote % 2 != 0) || (squote > 0 && squote % 2 != 0))
 		return (0);
 	return (1);
 }

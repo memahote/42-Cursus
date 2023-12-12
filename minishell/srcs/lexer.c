@@ -17,15 +17,12 @@
 // each character within the quotes. 
 //A single quote may not occur between single quotes, 
 //even when preceded by a backslash. '
-
-
 //3.1.2.3 Guillemets doubles
 //L'encadrement de caractères entre guillemets doubles ("") préserve la valeur 
 // littérale de tous les caractères à l'intérieur des guillemets, à l'exception 
 // de '$', '', '\'.
-
-//($?) Expands to the exit status of the most recently executed foreground pipeline.
-
+//($?) Expands to the exit status of the most recently executed foreground 
+//pipeline.
 
 int	get_var(t_list **tokens, char *line, enum e_state state)
 {
@@ -44,10 +41,12 @@ int	get_var(t_list **tokens, char *line, enum e_state state)
 	return (i);
 }
 
-int	tokenizer(char *line, int i, enum e_state	*state, t_list **token)
+int	tokenizer(char *line, int i, enum e_state *state, t_list **token)
 {
-	int j = 0;
-	if(!is_special(line[i]))
+	int	j;
+
+	j = 0;
+	if (!is_special(line[i]))
 		j += extract_word(&line[i], *state, token);
 	else if (ft_isspace(line[i]))
 	{
@@ -56,7 +55,7 @@ int	tokenizer(char *line, int i, enum e_state	*state, t_list **token)
 	}
 	else if (line[i] == '$')
 	{
-		if(is_special(line[i + 1]))
+		if (is_special(line[i + 1]))
 		{
 			ft_lstadd_back(token, new_cont(&line[i], 1, WORD, *state));
 			j++;
@@ -84,12 +83,13 @@ int	tokenizer(char *line, int i, enum e_state	*state, t_list **token)
 	}
 	else if (line[i] == '<' || line[i] == '>')
 		j += redir(&line[i], *token, state);
-	return(j);
+	return (j);
 }
+//+de 25ligne
 
 int	redir(char *line, t_list *token, enum e_state *state)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (line[i] == '<')
@@ -130,19 +130,19 @@ int	redir(char *line, t_list *token, enum e_state *state)
 	}
 	return (i);
 }
+//+de 25ligne
 
 t_list	*lexer(char *line)
 {
-	int 			i;
+	int				i;
 	t_list			*token;
 	enum e_state	state;
 
 	i = 0;
 	token = NULL;
 	state = OUTSIDE;
-	while(line[i])
+	while (line[i])
 		i += tokenizer(line, i, &state, &token);
 	del_space(&token);
-	return(token);
+	return (token);
 }
-
