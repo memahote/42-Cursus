@@ -49,7 +49,7 @@ t_list	*new_cont(char *content, int len, enum e_token type, enum e_state state)
 	return (new_elem);
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+void	add_back(t_list **lst, t_list *new)
 {
 	t_list	*current;
 

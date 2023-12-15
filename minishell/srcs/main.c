@@ -32,7 +32,7 @@ int main(int ac, char **av, char **envp)
 	while (i < 2)
 	{
 			line = readline("minishell~>"); 
-			if (!line)
+			if (!line || ft_strcomp(line, "exit") == 0)
 			{
 				printf("exit\n");
 				exit(1);

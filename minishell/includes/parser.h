@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 17:15:09 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/29 17:15:09 by memahote         ###   ########lyon.fr   */
+/*   Created: 2023/12/15 13:37:19 by memahote          #+#    #+#             */
+/*   Updated: 2023/12/15 13:37:19 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef PARSER_H
+# define PARSER_H
 
-# include <stdio.h>
-# include "../libft/libft.h"
-# include <readline/readline.h>
-# include <readline/history.h>
+# include "minishell.h"
 # include "lexer.h"
 
-int	check_quote_input(char *line);
 
-// typedef struct s_cmd 
-// {
-// 	char	*cmd;
-// 	char	**args;
-	
-
-// }	t_cmd;
 
 #endif

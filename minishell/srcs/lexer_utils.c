@@ -19,7 +19,7 @@ int	extract_word(char *str, enum e_state state, t_list **token)
 	i = 0;
 	while (!is_special(str[i]))
 		i++;
-	ft_lstadd_back(token, new_cont(str, i + 1, WORD, state));
+	add_back(token, new_cont(str, i + 1, WORD, state));
 	return (i);
 }
 
@@ -40,16 +40,16 @@ void	check_quote(char *str, t_list **token, enum e_state *state, char flag)
 	}
 	if (*state == OUTSIDE)
 	{
-		ft_lstadd_back(token, new_cont(str, 1, type, *state));
+		add_back(token, new_cont(str, 1, type, *state));
 		*state = quote;
 	}
 	else if (*state == quote)
 	{
 		*state = OUTSIDE;
-		ft_lstadd_back(token, new_cont(str, 1, type, *state));
+		add_back(token, new_cont(str, 1, type, *state));
 	}
 	else
-		ft_lstadd_back(token, new_cont(str, 1, type, *state));
+		add_back(token, new_cont(str, 1, type, *state));
 }
 
 int	ft_isspace(char c)
