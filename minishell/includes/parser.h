@@ -16,6 +16,12 @@
 # include "minishell.h"
 # include "lexer.h"
 
+enum ast_type
+{
+	CMD,
+	PIPE,
+};
+
 typedef struct s_list_redir
 {
 	char *file;
@@ -27,7 +33,7 @@ typedef struct s_tree
 {
 	char *comand;
 	char **args;
-
+	t_list_redir *redir;
 }	t_tree;
 
 #endif

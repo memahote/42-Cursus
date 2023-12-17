@@ -12,9 +12,7 @@
 
 #include "minishell.h"
 
-
-
-int	count_args(t_list *token)
+int	count_args(t_list *token) // Size for malloc command + arg
 {
 	t_list *tmp;
 	int		i;

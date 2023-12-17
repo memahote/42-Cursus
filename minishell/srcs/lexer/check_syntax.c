@@ -23,11 +23,28 @@ int	check_pipe_syntaxe(t_list **token)
 		{
 			if (tmp->prev == NULL || tmp->next == NULL || \
 				tmp->prev->type != -1 || tmp->next->type != -1)
+			{
+				ft_putstr_fd("syntax error near unexpected token `|' .\n", 2);
 				return (0);
+			}
 		}
 		tmp = tmp->next;
 	}
 	return (1);
+}
+
+char	*is_redir(enum e_token type)
+{
+	if (type == REDIR_IN)
+		return ("<");
+	else if (type == REDIR_OUT)
+		return (">");
+	else if (type == HERE_DOC)
+		return ("<<");
+	else if (type == DREDIR_OUT)
+		return (">>");
+	else
+		return (NULL);
 }
 
 int	check_redir_syntax(t_list **token)
@@ -37,10 +54,14 @@ int	check_redir_syntax(t_list **token)
 	tmp = *token;
 	while (tmp)
 	{
-		if (tmp->type == 60 || tmp->type == 62 || tmp->type == 63 || \
-			tmp->type == 64)
+		if (is_redir(tmp->type) != NULL)
 			if (tmp->next == NULL || tmp->next->type != -1)
+			{
+				ft_putstr_fd("syntax error near unexpected token '", 2);
+				ft_putstr_fd(is_redir(tmp->type), 2);
+				ft_putstr_fd("'.\n", 2);
 				return (0);
+			}
 		tmp = tmp->next;
 	}
 	return (1);
@@ -48,10 +69,8 @@ int	check_redir_syntax(t_list **token)
 
 int	check_syntax(t_list **token)
 {
-	if (!check_pipe_syntaxe(token))
+	if (!check_pipe_syntaxe(token) || !check_redir_syntax(token))
 		return (1);
-	else if (!check_redir_syntax(token))
-		return (2);
 	else
 		return (0);
 }
