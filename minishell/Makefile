@@ -7,20 +7,25 @@ NAME			= minishell
 INC_DIR		= 	includes/
 LIB_DIR		= 	libft/
 SRC_DIR		=	srcs/
+LEXER_DIR	=	lexer/
 OBJ_DIR		= 	obj/
 
 
 # ----- FILES ----- #
 
-LIST_SRC	= 	main.c lexer.c lexer_utils.c list_minishell.c check_syntax.c\
+LIST_SRC	= 	main.c 
+
+LEXER_SRC	=	lexer.c lexer_utils.c list_minishell.c check_syntax.c \
 				check_quote_input.c tokenizer.c
 
+# Parser	=
 
 # ----- SHORTCUTS ----- #
 
 INC			= $(addprefix $(INC_DIR), pipex.h)
 LIBFT       = $(addprefix $(LIB_DIR), libft.a)
-SRC			= $(addprefix $(SRC_DIR), $(LIST_SRC))
+LEXER		= $(addprefix $(LEXER_DIR), $(LEXER_SRC))
+SRC			= $(addprefix $(SRC_DIR), $(LIST_SRC) $(LEXER))
 OBJ         = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
 DEP			= $(patsubst %.c, $(OBJ_DIR)%.d, $(SRC))
 
@@ -37,7 +42,6 @@ MAKE            = make -C
 
 all:	$(NAME)
 
-# bonus: $(NAME_BONUS)
 
 $(NAME):	$(LIBFT) $(OBJ)
 			$(CC) $(FLAG) -o $(NAME) $(OBJ) -L $(LIB_DIR) -lft -lreadline

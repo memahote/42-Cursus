@@ -16,6 +16,18 @@
 # include "minishell.h"
 # include "lexer.h"
 
+typedef struct s_list_redir
+{
+	char *file;
+	enum e_token type;
+	s_list_redir *next;
+}	t_list_redir;
 
+typedef struct s_tree
+{
+	char *comand;
+	char **args;
+
+}	t_tree;
 
 #endif
