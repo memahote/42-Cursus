@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "lexer.h"
+# include "parser.h"
 
 int	check_quote_input(char *line);
 

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	count_args(t_list *token) // Size for malloc command + arg
+int	count_args(t_list *token) // Size for malloc command + arg + redir
 {
 	t_list *tmp;
 	int		i;
@@ -21,10 +21,7 @@ int	count_args(t_list *token) // Size for malloc command + arg
 	while (tmp && tmp->type != PIPE_LINE)
 	{
 		if (tmp->type == WORD || tmp->type == ENV)
-		{
 			i++;
-			tmp = tmp->next
-		}
 		else if (tmp->type == SQUOTE)
 		{
 			tmp = tmp->next
@@ -39,8 +36,9 @@ int	count_args(t_list *token) // Size for malloc command + arg
 				tmp = tmp->next;
 			i++;
 		}
-		else
-			tmp = tmp->next
+		tmp = tmp->next
 	}
 	return (i);
 }
+
+int	parser()
