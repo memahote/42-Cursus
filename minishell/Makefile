@@ -8,6 +8,7 @@ INC_DIR		= 	includes/
 LIB_DIR		= 	libft/
 SRC_DIR		=	srcs/
 LEXER_DIR	=	lexer/
+PARSER_DIR	=	parser/
 OBJ_DIR		= 	obj/
 
 
@@ -18,14 +19,15 @@ LIST_SRC	= 	main.c
 LEXER_SRC	=	lexer.c lexer_utils.c list_minishell.c check_syntax.c \
 				check_quote_input.c tokenizer.c
 
-# Parser	=
+PARSER_SRC	=	parser.c redir_list.c
 
 # ----- SHORTCUTS ----- #
 
 INC			= $(addprefix $(INC_DIR), pipex.h)
 LIBFT       = $(addprefix $(LIB_DIR), libft.a)
 LEXER		= $(addprefix $(LEXER_DIR), $(LEXER_SRC))
-SRC			= $(addprefix $(SRC_DIR), $(LIST_SRC) $(LEXER))
+PARSER		= $(addprefix $(PARSER_DIR), $(PARSER_SRC))
+SRC			= $(addprefix $(SRC_DIR), $(LIST_SRC) $(LEXER) $(PARSER))
 OBJ         = $(patsubst %.c, $(OBJ_DIR)%.o, $(SRC))
 DEP			= $(patsubst %.c, $(OBJ_DIR)%.d, $(SRC))
 

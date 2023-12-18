@@ -26,7 +26,7 @@ typedef struct s_list_redir
 {
 	char *file;
 	enum e_token type;
-	s_list_redir *next;
+	struct s_list_redir *next;
 }	t_list_redir;
 
 typedef struct s_fds
@@ -48,8 +48,17 @@ typedef struct s_ast_node
 {
 	enum e_ast_type type;
 	t_cmd		*cmd;
-	s_ast_node	*left;
-	s_ast_node	*right;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
 }	t_ast_node;
+
+//parser
+int	parser(t_list **token);
+
+
+//redir list
+t_list_redir	*new_redir_cont(char *file, enum e_token type);
+void	free_redir_list(t_list_redir **list);
+void	add_back_redir(t_list_redir **lst, t_list_redir *new);
 
 #endif

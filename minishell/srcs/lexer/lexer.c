@@ -65,11 +65,11 @@ int	redir(char *line, t_list *token, enum e_state *state)
 		}
 	}
 	else if (line[i] == '>')
-		i += redir_2(line, token, state, i);
+		i += redir_out(line, token, state, i);
 	return (i);
 }
 
-int	redir_2(char *line, t_list *token, enum e_state *state, int i)
+int	redir_out(char *line, t_list *token, enum e_state *state, int i)
 {
 	if (line[i + 1] == '>')
 	{
@@ -101,5 +101,6 @@ t_list	*lexer(char *line)
 	while (line[i])
 		i += tokenizer(line, i, &state, &token);
 	del_space(&token);
+	del_quotes(&token);
 	return (token);
 }

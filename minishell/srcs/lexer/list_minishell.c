@@ -88,3 +88,27 @@ void	del_space(t_list **head)
 		current = next_node;
 	}
 }
+
+void	del_quotes(t_list **head)
+{
+	t_list	*current;
+	t_list	*next_node;
+
+	current = *head;
+	while (current != NULL)
+	{
+		next_node = current->next;
+		if ((current->type == 34 || current->type == 39) && current->state == 2)
+		{
+			if (current->prev != NULL)
+				current->prev->next = current->next;
+			else
+				*head = current->next;
+			if (current->next != NULL)
+				current->next->prev = current->prev;
+			free(current->content);
+			free(current);
+		}
+		current = next_node;
+	}
+}

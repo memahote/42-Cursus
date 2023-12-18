@@ -51,7 +51,7 @@ typedef struct s_list
 
 //lexer
 // int	tokenizer(char *line, int i, enum e_state	*state, t_list **token);
-int	redir_2(char *line, t_list *token, enum e_state *state, int i);
+int	redir_out(char *line, t_list *token, enum e_state *state, int i);
 int	is_special(char c);
 t_list	*lexer(char *line);
 int	redir(char *line, t_list *token, enum e_state *state);
@@ -69,6 +69,7 @@ t_list	*new_cont(char *content, int len, enum e_token type, enum e_state state);
 void	free_list(t_list **list);
 void	add_back(t_list **lst, t_list *new);
 void 	del_space(t_list **head);
+void	del_quotes(t_list **head);
 
 //tokenizer
 int	handle_word(char *line, enum e_state *state, t_list **token);
@@ -78,5 +79,6 @@ void	handle_quote(char *line, t_list **token, enum e_state *state, int i);
 int	tokenizer(char *line, int i, enum e_state *state, t_list **token);
 
 int	check_syntax(t_list **token);
+char	*is_redir(enum e_token type);
 
 #endif
