@@ -61,4 +61,5 @@ t_list_redir	*new_redir_cont(char *file, enum e_token type);
 void	free_redir_list(t_list_redir **list);
 void	add_back_redir(t_list_redir **lst, t_list_redir *new);
 
+char	*get_env(char *env);
 #endif
