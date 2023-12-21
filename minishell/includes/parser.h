@@ -55,6 +55,12 @@ typedef struct s_ast_node
 //parser
 int	parser(t_list **token);
 
+//parse_token
+char	*parse_quotes(char *arg, t_list *token, enum e_token type);
+
+//utils
+int	count_args(t_list *token);
+char	*get_env(char *env);
 
 //redir list
 t_list_redir	*new_redir_cont(char *file, enum e_token type);
