@@ -19,7 +19,7 @@ char	*get_env(char *env)
 	name = ft_strdup(env + 1);
 	if(ft_strcomp(name, "?") == 0)
 		return("0"); //Faire un itoa de l'exit status quand je l'aurai
-	name = getenv(env);
+	name = getenv(env + 1);
 	return (name);
 }
 

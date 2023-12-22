@@ -12,15 +12,14 @@
 
 #include "parser.h"
 
-char	*parse_quotes(char *arg, t_list *token, enum e_token type) //Recupere tout entre quote en 1 seul arg
+char	*parse_quotes(char *arg, t_list **token, enum e_state state) //Recupere tout entre quote en 1 seul arg
 {
 	t_list	*tmp;
 
-	tmp = token;
-	while (tmp->type != type && tmp)
+	tmp = *token;
+	printf("%d\n", state);
+	while (tmp && tmp->state != OUTSIDE)
 	{
-		if (!arg)
-			arg = ft_strdup("");
 		if (tmp->type == ENV && tmp->state == IN_DQUOTE)
 		{
 			if(get_env(tmp->content) != NULL)

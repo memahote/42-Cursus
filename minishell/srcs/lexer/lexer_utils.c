@@ -19,7 +19,7 @@ int	extract_word(char *str, enum e_state state, t_list **token)
 	i = 0;
 	while (!is_special(str[i]))
 		i++;
-	add_back(token, new_cont(str, i + 1, WORD, state));
+	add_back(token, new_cont(str, i, WORD, state));
 	return (i);
 }
 

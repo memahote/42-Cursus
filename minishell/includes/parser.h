@@ -56,7 +56,7 @@ typedef struct s_ast_node
 int	parser(t_list **token);
 
 //parse_token
-char	*parse_quotes(char *arg, t_list *token, enum e_token type);
+char	*parse_quotes(char *arg, t_list **token, enum e_state state);
 
 //utils
 int	count_args(t_list *token);

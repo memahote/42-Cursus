@@ -101,6 +101,6 @@ t_list	*lexer(char *line)
 	while (line[i])
 		i += tokenizer(line, i, &state, &token);
 	del_space(&token);
-	del_quotes(&token);
+	// del_quotes(&token);
 	return (token);
 }
