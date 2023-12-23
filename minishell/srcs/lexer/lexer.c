@@ -41,27 +41,28 @@ int	get_var(t_list **tokens, char *line, enum e_state state)
 	return (i);
 }
 
-int	redir(char *line, t_list *token, enum e_state *state)
+int	redir(char *line, t_list **token, enum e_state *state)
 {
 	int	i;
 
 	i = 0;
 	if (line[i] == '<')
 	{
+		printf("jss la\n");
 		if (line[i + 1] == '<')
 		{
 			if (*state != OUTSIDE)
-				add_back(&token, new_cont(&line[i], 2, WORD, *state));
+				add_back(token, new_cont(&line[i], 2, WORD, *state));
 			else
-				add_back(&token, new_cont(&line[i], 2, HERE_DOC, *state));
+				add_back(token, new_cont(&line[i], 2, HERE_DOC, *state));
 			i += 2;
 		}
 		else
 		{
 			if (*state != OUTSIDE)
-				add_back(&token, new_cont(&line[i++], 1, WORD, *state));
+				add_back(token, new_cont(&line[i++], 1, WORD, *state));
 			else
-				add_back(&token, new_cont(&line[i++], 1, REDIR_IN, *state));
+				add_back(token, new_cont(&line[i++], 1, REDIR_IN, *state));
 		}
 	}
 	else if (line[i] == '>')
@@ -69,22 +70,22 @@ int	redir(char *line, t_list *token, enum e_state *state)
 	return (i);
 }
 
-int	redir_out(char *line, t_list *token, enum e_state *state, int i)
+int	redir_out(char *line, t_list **token, enum e_state *state, int i)
 {
 	if (line[i + 1] == '>')
 	{
 		if (*state != OUTSIDE)
-			add_back(&token, new_cont(&line[i], 2, WORD, *state));
+			add_back(token, new_cont(&line[i], 2, WORD, *state));
 		else
-			add_back(&token, new_cont(&line[i], 2, DREDIR_OUT, *state));
+			add_back(token, new_cont(&line[i], 2, DREDIR_OUT, *state));
 		i += 2;
 	}
 	else
 	{
 		if (*state != OUTSIDE)
-			add_back(&token, new_cont(&line[i++], 1, WORD, *state));
+			add_back(token, new_cont(&line[i++], 1, WORD, *state));
 		else
-			add_back(&token, new_cont(&line[i++], 1, REDIR_OUT, *state));
+			add_back(token, new_cont(&line[i++], 1, REDIR_OUT, *state));
 	}
 	return (i);
 }
@@ -99,7 +100,9 @@ t_list	*lexer(char *line)
 	token = NULL;
 	state = OUTSIDE;
 	while (line[i])
+	{
 		i += tokenizer(line, i, &state, &token);
+	}
 	del_space(&token);
 	// del_quotes(&token);
 	return (token);

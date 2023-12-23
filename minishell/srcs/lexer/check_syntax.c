@@ -55,6 +55,7 @@ int	check_redir_syntax(t_list **token)
 	while (tmp)
 	{
 		if (is_redir(tmp->type) != NULL)
+		{
 			if (tmp->next == NULL || tmp->next->type != -1)
 			{
 				ft_putstr_fd("syntax error near unexpected token '", 2);
@@ -62,6 +63,7 @@ int	check_redir_syntax(t_list **token)
 				ft_putstr_fd("'.\n", 2);
 				return (0);
 			}
+		}
 		tmp = tmp->next;
 	}
 	return (1);

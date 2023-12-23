@@ -51,10 +51,10 @@ typedef struct s_list
 
 //lexer
 // int	tokenizer(char *line, int i, enum e_state	*state, t_list **token);
-int	redir_out(char *line, t_list *token, enum e_state *state, int i);
+int	redir_out(char *line, t_list **token, enum e_state *state, int i);
 int	is_special(char c);
 t_list	*lexer(char *line);
-int	redir(char *line, t_list *token, enum e_state *state);
+int	redir(char *line, t_list **token, enum e_state *state);
 int	get_var(t_list **tokens, char *line, enum e_state state);
 
 //lexer_utils

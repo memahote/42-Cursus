@@ -41,7 +41,6 @@ typedef struct s_cmd
 	char	**args;
 	char	**env;
 	t_list_redir *redir;
-	t_fds	fds;
 }	t_cmd;
 
 typedef struct s_ast_node
