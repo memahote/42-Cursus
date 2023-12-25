@@ -10,61 +10,55 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+// #ifndef PARSER_H
+// # define PARSER_H
 
-# include "minishell.h"
-# include "lexer.h"
-
-enum e_ast_type
-{
-	CMD,
-	PIPE,
-};
-
-typedef struct s_list_redir
-{
-	char *file;
-	enum e_token type;
-	struct s_list_redir *next;
-}	t_list_redir;
-
-typedef struct s_fds
-{
-	int	fd_in;
-	int	fd_out;
-}	t_fds;
+// # include "minishell.h"
+// # include "lexer.h"
 
 
-typedef struct s_cmd
-{
-	char	**args;
-	char	**env;
-	t_list_redir *redir;
-}	t_cmd;
+// enum e_tree_type
+// {
+// 	CMD,
+// 	PIPE,
+// };
 
-typedef struct s_ast_node
-{
-	enum e_ast_type type;
-	t_cmd		*cmd;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
-}	t_ast_node;
+// typedef struct s_list_redir
+// {
+// 	char *file;
+// 	enum e_token type;
+// 	struct s_list_redir *next;
+// }	t_list_redir;
 
-//parser
-int	parser(t_list **token);
 
-//parse_token
-char	*parse_quotes(char *arg, t_list **token, enum e_state state);
+// typedef struct s_cmd
+// {
+// 	char	**args;
+// 	char	**env;
+// 	t_list_redir *redir;
+// 	int	fd_in;
+// 	int	fd_out;
+// }	t_cmd;
 
-//utils
-int	count_args(t_list *token);
-char	*get_env(char *env);
 
-//redir list
-t_list_redir	*new_redir_cont(char *file, enum e_token type);
-void	free_redir_list(t_list_redir **list);
-void	add_back_redir(t_list_redir **lst, t_list_redir *new);
 
-char	*get_env(char *env);
-#endif
+
+// //parser
+// int	parser(t_list **token);
+
+// //parse_token
+// char	*parse_quotes(char *arg, t_list **token, enum e_state state);
+
+// //utils
+// int	count_args(t_list *token);
+// char	*get_env(char *env);
+// t_tree_node		*new_cmd(char **args, t_list_redir *redir, char **env);
+// t_tree_node	*parse_pipe(t_list **token);
+
+// //redir list
+// t_list_redir	*new_redir_cont(char *file, enum e_token type);
+// void	free_redir_list(t_list_redir **list);
+// void	add_back_redir(t_list_redir **lst, t_list_redir *new);
+
+// char	*get_env(char *env);
+// #endif

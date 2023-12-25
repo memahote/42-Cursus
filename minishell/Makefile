@@ -19,7 +19,8 @@ LIST_SRC	= 	main.c
 LEXER_SRC	=	lexer.c lexer_utils.c list_minishell.c check_syntax.c \
 				check_quote_input.c tokenizer.c
 
-PARSER_SRC	=	parser.c redir_list.c parse_token.c parse_token_utils.c
+PARSER_SRC	=	parser.c redir_list.c parse_token.c parse_token_utils.c \
+				parser_utils.c
 
 # ----- SHORTCUTS ----- #
 
@@ -35,7 +36,7 @@ DEP			= $(patsubst %.c, $(OBJ_DIR)%.d, $(SRC))
 
 CC				= cc
 RM				= rm -rf
-FLAG			= -Wall -Wextra -Werror -g3 
+FLAG			= -Wall -Wextra -Werror -fsanitize=address -g3 
 DEP_FLAGS		= -MMD -MP
 MKDIR           = mkdir -p
 MAKE            = make -C

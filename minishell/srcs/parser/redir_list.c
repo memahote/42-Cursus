@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 #include "lexer.h"
-#include "parser.h"
 
 // void	free_redir_list(t_list_redir **list)
 // {

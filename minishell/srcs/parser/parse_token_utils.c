@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 char	*get_env(char *env)
 {
@@ -22,12 +22,6 @@ char	*get_env(char *env)
 	name = getenv(env + 1);
 	return (name);
 }
-
-// void	one_arg_quotes(t_list *token)
-// {
-// 	if (token->state)
-// 		;
-// }
 
 int	count_args(t_list *token) // Size for malloc command + arg + redir
 {
@@ -50,23 +44,27 @@ int	count_args(t_list *token) // Size for malloc command + arg + redir
 		{
 			i++;
 		}
-		// else if (tmp->type == SQUOTE)
-		// {
-		// 	tmp = tmp->next;
-		// 	while(tmp->type != SQUOTE)
-		// 		tmp = tmp->next;
-		// 	i++;
-		// }
-		// else if (tmp->type == DQUOTE)
-		// {
-		// 	tmp = tmp->next;
-		// 	while(tmp->type != DQUOTE)
-		// 		tmp = tmp->next;
-		// 	i++;
-		// }
 		if(tmp)
 			tmp = tmp->next;
 	}
 	printf("i :%d\n", i);
 	return (i);
+}
+
+t_tree_node	*parse_pipe(t_list **token)
+{
+	t_tree_node	*branch;
+
+	branch = ft_calloc(sizeof(t_tree_node), 1);
+	if (!branch)
+		return (NULL);
+	branch->type = PIPE;
+	branch->content = malloc(sizeof(t_type));
+	branch->content->pipe = malloc(sizeof(t_pipe));
+	branch->content->pipe->left = ft_calloc(sizeof(t_tree_node), 1);
+	branch->content->pipe->right = ft_calloc(sizeof(t_tree_node), 1);
+	if (!branch->content->pipe->right || !branch->content->pipe->left)
+		return (NULL);
+	*token = (*token)->next;
+	return (branch);
 }

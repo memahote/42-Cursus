@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 #include "lexer.h"
-#include "parser.h"
+// #include "parser.h"
 
 void	fill_redirl(t_list_redir **redir_l, t_list **token)
 {
@@ -41,7 +41,7 @@ void print_redir(t_list_redir *redirl)
 }
 
 
-void fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
+int fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
 {
 	t_list *tmp;
 	int 	i;
@@ -81,6 +81,7 @@ void fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
 			tmp = tmp->next;
 	}
 	args[i]=NULL;
+	return (EXIT_SUCCESS);
 }
 
 
@@ -94,8 +95,9 @@ void print_arg(char	**args)
     }
 }
 
-int	parser(t_list **token)
+t_tree_node	*parser_cmd(t_list **token, char **env)
 {
+	t_tree_node		*new;
 	char			**args;
 	int				nb_args;
 	t_list_redir	*redir_l;
@@ -105,11 +107,86 @@ int	parser(t_list **token)
 	nb_args = count_args(*token);
 	args = malloc(sizeof(char *) * (nb_args + 1));
 	if(!args)
-		return (0);
-	fill_cmd(token, args, &redir_l);
+		return (NULL);
+	if(fill_cmd(token, args, &redir_l) == EXIT_FAILURE)
+		return (NULL);
+	new = new_cmd(args, redir_l, env);
 	print_arg(args);
-	// fill_redirl(&redir_l,  token);
-	print_redir(redir_l);
-	return(0);
+	// print_redir(redir_l);
+	return(new);
 }
 
+// int	parser(t_tree *tmp, t_list *token, char **env)
+// {
+// 	t_tree_node	*tree_node;
+
+// 	tree_node = NULL;
+// 	if (!token)
+// 		return (EXIT_FAILURE);
+// 	tree_node = parser_cmd(&token, env);
+// 	if (!tree_node)
+// 		return (EXIT_FAILURE);
+// 	if (!(tmp)->tree_root)
+// 	{
+// 		ft_putstr_fd("la", 2);
+// 		(tmp)->tree_root = tree_node;
+// 	}
+// 	else
+// 	{
+// 		if (!(tmp)->tree_root->content->pipe->right)
+// 			(tmp)->tree_root->content->pipe->right = tree_node;
+// 		else
+// 			(tmp)->tree_root->content->pipe->left = tree_node;
+// 	}
+// 	if (token && token->type == PIPE_LINE)
+// 	{
+// 		tree_node = parse_pipe(&token);
+// 		tree_node->content->pipe->right = (tmp)->tree_root;
+// 		(tmp)->tree_root = tree_node;
+// 	}
+// 	parsertmp, token, env);
+// 	return (EXIT_SUCCESS);
+// }
+
+int	parser(t_tree **tree, t_list *token, char **env)
+{
+	t_tree_node	*tree_node;
+	// t_tree		*tmp;
+
+	tree_node = NULL;
+	// tmp = *tree;
+	// Vérifiez si la liste de tokens est vide
+	if (!token)
+		return (EXIT_FAILURE);
+
+	// Parsez la commande à partir des tokens
+	tree_node = parser_cmd(&token, env);
+
+	// Vérifiez si la commande a été correctement analysée
+	if (!tree_node)
+		return (EXIT_FAILURE);
+	// Si l'arbre est vide, ajoutez la nouvelle commande comme racine
+	// if (!(tmp)->tree_root)
+	// {
+		// (tmp)->tree_root = tree_node;
+	// }
+	// else
+	// {
+	// 	// Si la racine a déjà un côté droit, ajoutez la nouvelle commande comme côté gauche
+	// 	if (!(tmp)->tree_root->content->pipe->right)
+	// 		(tmp)->tree_root->content->pipe->right = tree_node;
+	// 	else
+	// 		(tmp)->tree_root->content->pipe->left = tree_node;
+	// }
+
+	// Si le token suivant est un PIPE_LINE, parsez une nouvelle commande et mettez-la à droite de la racine
+	// if (token && token->type == PIPE_LINE)
+	// {
+	// 	tree_node = parse_pipe(&token);
+	// 	tree_node->content->pipe->right = (tmp)->tree_root;
+	// 	(tmp)->tree_root = tree_node;
+	// }
+
+	// Appel récursif pour traiter le reste des tokens
+	return parser(tree, token, env);
+}

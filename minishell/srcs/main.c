@@ -16,7 +16,7 @@
 #include <readline/history.h>
 #include "../includes/lexer.h"
 #include "../includes/minishell.h"
-#include "../includes/parser.h"
+// #include "../includes/parser.h"
 
 void print_tokens(t_list *token);
 
@@ -24,12 +24,14 @@ int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	(void)envp;
 	char *line;
 	char	*input_line;
 	t_list	*token_list;
+	t_tree	*tree;
 	int i = 0;
 
+	tree = NULL;
+	init_tree(tree);
 	while (i < 2)
 	{
 			line = readline("minishell~>"); 
@@ -52,7 +54,7 @@ int main(int ac, char **av, char **envp)
 				// 	ft_putstr_fd("syntax error near unexpected token \n", 2);
 				check_syntax(&token_list);
 				print_tokens(token_list);
-				parser(&token_list);
+				parser(&tree, token_list, envp);
 			}
 			free (line);
 			free_list(&token_list);

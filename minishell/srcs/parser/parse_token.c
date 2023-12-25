@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "minishell.h"
 
 char	*parse_quotes(char *arg, t_list **token, enum e_state state) //Recupere tout entre quote en 1 seul arg
 {
