@@ -31,7 +31,7 @@ int main(int ac, char **av, char **envp)
 	int i = 0;
 
 	tree = NULL;
-	init_tree(tree);
+	tree = init_tree(tree);
 	while (i < 2)
 	{
 			line = readline("minishell~>"); 
@@ -48,10 +48,6 @@ int main(int ac, char **av, char **envp)
 			else
 			{
 				token_list = lexer(input_line);
-				// if(check_syntax(&token_list) == 1)
-				// 	ft_putstr_fd("syntax error near unexpected token `|'\n", 2);
-				// else if(check_syntax(&token_list) == 2)
-				// 	ft_putstr_fd("syntax error near unexpected token \n", 2);
 				check_syntax(&token_list);
 				print_tokens(token_list);
 				parser(&tree, token_list, envp);

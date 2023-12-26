@@ -36,7 +36,7 @@ DEP			= $(patsubst %.c, $(OBJ_DIR)%.d, $(SRC))
 
 CC				= cc
 RM				= rm -rf
-FLAG			= -Wall -Wextra -Werror -fsanitize=address -g3 
+FLAG			= -Wall -Wextra -Werror -g3 
 DEP_FLAGS		= -MMD -MP
 MKDIR           = mkdir -p
 MAKE            = make -C

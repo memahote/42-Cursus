@@ -43,42 +43,42 @@ void print_redir(t_list_redir *redirl)
 
 int fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
 {
-	t_list *tmp;
+	// t_list *tmp;
 	int 	i;
 
-	tmp = *token;
+	// tmp = *token;
 	i = 0;
 
-	while (tmp && tmp->type != PIPE_LINE)
+	while ((*token) && (*token)->type != PIPE_LINE)
 	{
-		if(tmp->type == WORD && tmp->state == OUTSIDE)
+		if((*token)->type == WORD && (*token)->state == OUTSIDE)
 		{
-			args[i++] = tmp->content;
+			args[i++] = (*token)->content;
 		}
-		else if (tmp->state == IN_DQUOTE || tmp->state == IN_SQUOTE)
+		else if ((*token)->state == IN_DQUOTE || (*token)->state == IN_SQUOTE)
 		{
 			args[i] = ft_strdup("");
-			while(tmp && tmp->state != OUTSIDE)
+			while((*token) && (*token)->state != OUTSIDE)
 			{
-				if (tmp->type == ENV && tmp->state == IN_DQUOTE)
+				if ((*token)->type == ENV && (*token)->state == IN_DQUOTE)
 				{
-					if(get_env(tmp->content) != NULL)
-						args[i] = ft_strjoin(args[i], get_env(tmp->content));
+					if(get_env((*token)->content) != NULL)
+						args[i] = ft_strjoin(args[i], get_env((*token)->content));
 				}
 				else
-					args[i] = ft_strjoin(args[i], tmp->content);
-				tmp = tmp->next;
+					args[i] = ft_strjoin(args[i], (*token)->content);
+				(*token) = (*token)->next;
 			}
 			i++;
 		}
-		else if(tmp->type == REDIR_IN || tmp->type == REDIR_OUT || \
-		tmp->type == HERE_DOC || tmp->type == DREDIR_OUT)
+		else if((*token)->type == REDIR_IN || (*token)->type == REDIR_OUT || \
+		(*token)->type == HERE_DOC || (*token)->type == DREDIR_OUT)
 		{
-			add_back_redir(redir_l, new_redir_cont(tmp->next->content, tmp->type));
-			tmp = tmp->next;
+			add_back_redir(redir_l, new_redir_cont((*token)->next->content, (*token)->type));
+			(*token) = (*token)->next;
 		}
-		if(tmp)
-			tmp = tmp->next;
+		if((*token))
+			(*token) = (*token)->next;
 	}
 	args[i]=NULL;
 	return (EXIT_SUCCESS);
@@ -116,77 +116,39 @@ t_tree_node	*parser_cmd(t_list **token, char **env)
 	return(new);
 }
 
-// int	parser(t_tree *tmp, t_list *token, char **env)
-// {
-// 	t_tree_node	*tree_node;
-
-// 	tree_node = NULL;
-// 	if (!token)
-// 		return (EXIT_FAILURE);
-// 	tree_node = parser_cmd(&token, env);
-// 	if (!tree_node)
-// 		return (EXIT_FAILURE);
-// 	if (!(tmp)->tree_root)
-// 	{
-// 		ft_putstr_fd("la", 2);
-// 		(tmp)->tree_root = tree_node;
-// 	}
-// 	else
-// 	{
-// 		if (!(tmp)->tree_root->content->pipe->right)
-// 			(tmp)->tree_root->content->pipe->right = tree_node;
-// 		else
-// 			(tmp)->tree_root->content->pipe->left = tree_node;
-// 	}
-// 	if (token && token->type == PIPE_LINE)
-// 	{
-// 		tree_node = parse_pipe(&token);
-// 		tree_node->content->pipe->right = (tmp)->tree_root;
-// 		(tmp)->tree_root = tree_node;
-// 	}
-// 	parsertmp, token, env);
-// 	return (EXIT_SUCCESS);
-// }
-
 int	parser(t_tree **tree, t_list *token, char **env)
 {
 	t_tree_node	*tree_node;
-	// t_tree		*tmp;
 
 	tree_node = NULL;
-	// tmp = *tree;
 	// Vérifiez si la liste de tokens est vide
 	if (!token)
 		return (EXIT_FAILURE);
-
 	// Parsez la commande à partir des tokens
 	tree_node = parser_cmd(&token, env);
-
 	// Vérifiez si la commande a été correctement analysée
 	if (!tree_node)
 		return (EXIT_FAILURE);
 	// Si l'arbre est vide, ajoutez la nouvelle commande comme racine
-	// if (!(tmp)->tree_root)
-	// {
-		// (tmp)->tree_root = tree_node;
-	// }
-	// else
-	// {
-	// 	// Si la racine a déjà un côté droit, ajoutez la nouvelle commande comme côté gauche
-	// 	if (!(tmp)->tree_root->content->pipe->right)
-	// 		(tmp)->tree_root->content->pipe->right = tree_node;
-	// 	else
-	// 		(tmp)->tree_root->content->pipe->left = tree_node;
-	// }
-
+	if (!(*tree)->tree_root)
+	{
+		ft_putstr_fd("jss la\n", 2);
+		(*tree)->tree_root = tree_node;
+	}
+	else
+	{
+		// Si la racine a déjà un côté droit, ajoutez la nouvelle commande comme côté gauche
+		if (!(*tree)->tree_root->content->pipe->right)
+			(*tree)->tree_root->content->pipe->right = tree_node;
+		else
+			(*tree)->tree_root->content->pipe->left = tree_node;
+	}
 	// Si le token suivant est un PIPE_LINE, parsez une nouvelle commande et mettez-la à droite de la racine
-	// if (token && token->type == PIPE_LINE)
-	// {
-	// 	tree_node = parse_pipe(&token);
-	// 	tree_node->content->pipe->right = (tmp)->tree_root;
-	// 	(tmp)->tree_root = tree_node;
-	// }
-
-	// Appel récursif pour traiter le reste des tokens
+	if (token && token->type == PIPE_LINE)
+	{
+		tree_node = parse_pipe(&token);
+		tree_node->content->pipe->right = (*tree)->tree_root;
+		(*tree)->tree_root = tree_node;
+	}
 	return parser(tree, token, env);
 }
