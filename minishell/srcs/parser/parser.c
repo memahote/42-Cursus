@@ -95,6 +95,37 @@ void print_arg(char	**args)
     }
 }
 
+void	print_tree_node(t_tree_node *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->content->cmd->args[i])
+	{
+		printf("command arg[%i]: %s\n", i, cmd->content->cmd->args[i]);
+		i++;
+	}
+	print_redir(cmd->content->cmd->redir);
+}
+
+void	print_tree(t_tree_node *tree)
+{
+	if (tree->type == CMD)
+	{
+		printf("\n------------------------\n");
+		printf("CMD Node\n");
+		print_tree_node(tree);
+	}
+	else if (tree->type == PIPE)
+	{
+		print_tree(tree->content->pipe->right);
+		printf("\n------------------------\n");
+		printf("PIPE Node\n");
+		print_tree(tree->content->pipe->left);
+	}
+}
+
+
 t_tree_node	*parser_cmd(t_list **token, char **env)
 {
 	t_tree_node		*new;
@@ -111,7 +142,8 @@ t_tree_node	*parser_cmd(t_list **token, char **env)
 	if(fill_cmd(token, args, &redir_l) == EXIT_FAILURE)
 		return (NULL);
 	new = new_cmd(args, redir_l, env);
-	print_arg(args);
+	print_tree(new);
+	// print_arg(args);
 	// print_redir(redir_l);
 	return(new);
 }
@@ -132,7 +164,6 @@ int	parser(t_tree **tree, t_list *token, char **env)
 	// Si l'arbre est vide, ajoutez la nouvelle commande comme racine
 	if (!(*tree)->tree_root)
 	{
-		ft_putstr_fd("jss la\n", 2);
 		(*tree)->tree_root = tree_node;
 	}
 	else

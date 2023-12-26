@@ -82,12 +82,14 @@ t_tree_node	*parse_pipe(t_list **token);
 
 //redir list
 t_list_redir	*new_redir_cont(char *file, enum e_token type);
-void	free_redir_list(t_list_redir **list);
+// void	free_redir_list(t_list_redir **list);
 void	add_back_redir(t_list_redir **lst, t_list_redir *new);
 
 char	*get_env(char *env);
 
 t_tree	*init_tree(t_tree *tree);
 int	check_quote_input(char *line);
+
+void	free_tree(t_tree_node *node);
 
 #endif

@@ -54,6 +54,8 @@ int main(int ac, char **av, char **envp)
 			}
 			free (line);
 			free_list(&token_list);
+			// free_tree(tree->tree_root);
+			// free(tree);
 			i++;
 	}
 	return (0);
@@ -67,6 +69,7 @@ void print_tokens(t_list *tokens)
         tokens = tokens->next;
     }
 }
+
 
 // voir pq le 1er noeud de la liste est null -> du a init
 // enlever les espace dans la liste chainee -> Fait 
