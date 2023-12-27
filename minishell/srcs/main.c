@@ -32,7 +32,7 @@ int main(int ac, char **av, char **envp)
 
 	tree = NULL;
 	tree = init_tree(tree);
-	while (i < 2)
+	while (i < 1)
 	{
 			line = readline("minishell~>"); 
 			if (!line || ft_strcomp(line, "exit") == 0)
@@ -51,11 +51,13 @@ int main(int ac, char **av, char **envp)
 				check_syntax(&token_list);
 				print_tokens(token_list);
 				parser(&tree, token_list, envp);
+				print_tree(tree->tree_root);
 			}
 			free (line);
 			free_list(&token_list);
+			free_tree(tree->tree_root);
+			free(tree);
 			// free_tree(tree->tree_root);
-			// free(tree);
 			i++;
 	}
 	return (0);

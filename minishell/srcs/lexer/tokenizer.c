@@ -79,9 +79,6 @@ int	tokenizer(char *line, int i, enum e_state *state, t_list **token)
 		j++;
 	}
 	else if (line[i] == '<' || line[i] == '>')
-	{
-		printf("je rentre\n");
 		j += redir(&line[i], token, state);
-	}
 	return (j);
 }

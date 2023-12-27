@@ -19,6 +19,7 @@ char	*get_env(char *env)
 	name = ft_strdup(env + 1);
 	if(ft_strcomp(name, "?") == 0)
 		return("0"); //Faire un itoa de l'exit status quand je l'aurai
+	free(name);
 	name = getenv(env + 1);
 	return (name);
 }
@@ -66,5 +67,6 @@ t_tree_node	*parse_pipe(t_list **token)
 	if (!branch->content->pipe->right || !branch->content->pipe->left)
 		return (NULL);
 	*token = (*token)->next;
+	ft_putstr_fd("FILS DE PIPe\n", 2);
 	return (branch);
 }

@@ -91,5 +91,7 @@ t_tree	*init_tree(t_tree *tree);
 int	check_quote_input(char *line);
 
 void	free_tree(t_tree_node *node);
+void	free_cmd(t_cmd *cmd);
+void	print_tree(t_tree_node *tree);
 
 #endif

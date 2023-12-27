@@ -43,30 +43,39 @@ void print_redir(t_list_redir *redirl)
 
 int fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
 {
-	// t_list *tmp;
+	char	*tmp;
+	char	*tmp_env;
 	int 	i;
 
-	// tmp = *token;
+	tmp = NULL;
+	tmp_env = NULL;
 	i = 0;
 
 	while ((*token) && (*token)->type != PIPE_LINE)
 	{
 		if((*token)->type == WORD && (*token)->state == OUTSIDE)
 		{
-			args[i++] = (*token)->content;
+			args[i++] = ft_strndup((*token)->content, (*token)->len);
 		}
 		else if ((*token)->state == IN_DQUOTE || (*token)->state == IN_SQUOTE)
 		{
 			args[i] = ft_strdup("");
 			while((*token) && (*token)->state != OUTSIDE)
 			{
+				tmp = args[i];
 				if ((*token)->type == ENV && (*token)->state == IN_DQUOTE)
 				{
-					if(get_env((*token)->content) != NULL)
-						args[i] = ft_strjoin(args[i], get_env((*token)->content));
+					tmp_env = get_env((*token)->content);
+					if(tmp_env != NULL)
+					{
+						args[i] = ft_strjoin(args[i], tmp_env);
+					}
+					if (tmp_env)
+						free(tmp_env);
 				}
 				else
 					args[i] = ft_strjoin(args[i], (*token)->content);
+				free(tmp);
 				(*token) = (*token)->next;
 			}
 			i++;
@@ -142,9 +151,11 @@ t_tree_node	*parser_cmd(t_list **token, char **env)
 	if(fill_cmd(token, args, &redir_l) == EXIT_FAILURE)
 		return (NULL);
 	new = new_cmd(args, redir_l, env);
-	print_tree(new);
+	new->type = CMD;
+	// print_tree(new);
 	// print_arg(args);
 	// print_redir(redir_l);
+	ft_putstr_fd("CMD DE SON PERE\n", 2);
 	return(new);
 }
 
@@ -164,22 +175,33 @@ int	parser(t_tree **tree, t_list *token, char **env)
 	// Si l'arbre est vide, ajoutez la nouvelle commande comme racine
 	if (!(*tree)->tree_root)
 	{
+		ft_putstr_fd("Sur ma route \n", 2);
 		(*tree)->tree_root = tree_node;
 	}
 	else
 	{
+		ft_putstr_fd("aled\n", 2);
 		// Si la racine a déjà un côté droit, ajoutez la nouvelle commande comme côté gauche
 		if (!(*tree)->tree_root->content->pipe->right)
+		{
+			ft_putstr_fd("A doite\n", 2);
+			fprintf(stderr, "A droite %s", token->content);
 			(*tree)->tree_root->content->pipe->right = tree_node;
+		}
 		else
+		{
+			ft_putstr_fd("A gauche\n", 2);
 			(*tree)->tree_root->content->pipe->left = tree_node;
+		}
 	}
-	// Si le token suivant est un PIPE_LINE, parsez une nouvelle commande et mettez-la à droite de la racine
 	if (token && token->type == PIPE_LINE)
 	{
 		tree_node = parse_pipe(&token);
+		fprintf(stderr, "Pipe \n %s", token->content);
 		tree_node->content->pipe->right = (*tree)->tree_root;
 		(*tree)->tree_root = tree_node;
 	}
-	return parser(tree, token, env);
+	// Si le token suivant est un PIPE_LINE, parsez une nouvelle commande et mettez-la à droite de la racine
+	parser(tree, token, env);
+	return (EXIT_SUCCESS);
 }

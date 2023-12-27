@@ -48,7 +48,6 @@ int	redir(char *line, t_list **token, enum e_state *state)
 	i = 0;
 	if (line[i] == '<')
 	{
-		printf("jss la\n");
 		if (line[i + 1] == '<')
 		{
 			if (*state != OUTSIDE)

@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 17:06:19 by memahote          #+#    #+#             */
-/*   Updated: 2023/12/26 19:56:15 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/12/27 23:08:23 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	free_cmd(t_cmd *cmd)
 
 	i = 0;
 	while (cmd->args[i])
-		free(cmd->args[i++]);
+	{
+		free(cmd->args[i]);
+		i++;
+	}
 	free(cmd->args);
 	free_redir_list(cmd->redir);
 	free(cmd);
@@ -65,16 +68,24 @@ void	free_tree(t_tree_node *node)
 {
 	if (node->type == CMD)
 	{
+		// ft_putstr_fd("jss la\n", 2);
 		free_cmd(node->content->cmd);
 		free(node->content);
 		free(node);
+		ft_putstr_fd("COCA BIEN FREE CHAKAL\n", 2);
 	}
 	else if (node->type == PIPE)
 	{
+		// ft_putstr_fd("jss la pipe\n", 2);
+		// ft_putstr_fd("entre right\n", 2);
 		free_tree(node->content->pipe->right);
+		// ft_putstr_fd("free right\n", 2);
+		// ft_putstr_fd("entre left\n", 2);
 		free_tree(node->content->pipe->left);
+		// ft_putstr_fd("free left\n", 2);
 		free(node->content->pipe);
 		free(node->content);
 		free(node);
+		ft_putstr_fd("BIEN FREE MON REUF\n", 2);
 	}
 }
