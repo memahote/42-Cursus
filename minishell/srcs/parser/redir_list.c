@@ -13,23 +13,6 @@
 #include "minishell.h"
 #include "lexer.h"
 
-// void	free_redir_list(t_list_redir **list)
-// {
-// 	t_list	*tmp;
-// 	t_list	*next;
-
-// 	if (!*list)
-// 		return ;
-// 	tmp = *list;
-// 	while (tmp)
-// 	{
-// 		next = tmp->next;
-// 		free(tmp->file);
-// 		free(tmp);
-// 		tmp = next;
-// 	}
-// }
-
 t_list_redir	*new_redir_cont(char *file, enum e_token type)
 {
 	t_list_redir	*new_elem;
@@ -56,4 +39,21 @@ void	add_back_redir(t_list_redir **lst, t_list_redir *new)
 	while (current->next != NULL)
 		current = current->next;
 	current->next = new;
+}
+
+void	fill_redirl(t_list_redir **redir_l, t_list **token)
+{
+	t_list	*tmp;
+
+	tmp = *token;
+	while (tmp->type != PIPE_LINE && tmp != NULL)
+	{
+		if (tmp->type == REDIR_IN || tmp->type == REDIR_OUT || \
+		tmp->type == HERE_DOC || tmp->type == DREDIR_OUT)
+		{
+			add_back_redir(redir_l, new_redir_cont(tmp->next->content, \
+			tmp->type));
+		}
+		tmp = tmp->next;
+	}
 }

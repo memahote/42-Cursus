@@ -14,126 +14,57 @@
 #include "lexer.h"
 // #include "parser.h"
 
-void	fill_redirl(t_list_redir **redir_l, t_list **token)
-{
-	t_list	*tmp;
-
-	tmp = *token;
-	while(tmp->type != PIPE_LINE && tmp != NULL)
-	{
-		if(tmp->type == REDIR_IN || tmp->type == REDIR_OUT || \
-		tmp->type == HERE_DOC || tmp->type == DREDIR_OUT)
-		{
-			add_back_redir(redir_l, new_redir_cont(tmp->next->content, \
-			tmp->type));
-		}
-		tmp = tmp->next;
-	}
-}
-
-void print_redir(t_list_redir *redirl) 
-{
-	while (redirl) 
-	{
-        printf("Type redir: %d, file: %s\n", redirl->type, redirl->file);
-        redirl = redirl->next;
-    }
-}
-
-
-int fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
+char	*parse_quotes(char *args, t_list **token)
 {
 	char	*tmp;
 	char	*tmp_env;
-	int 	i;
 
 	tmp = NULL;
 	tmp_env = NULL;
-	i = 0;
-
-	while ((*token) && (*token)->type != PIPE_LINE)
+	while ((*token) && (*token)->state != OUTSIDE)
 	{
-		if((*token)->type == WORD && (*token)->state == OUTSIDE)
+		tmp = args;
+		if ((*token)->type == ENV && (*token)->state == IN_DQUOTE)
 		{
-			args[i++] = ft_strndup((*token)->content, (*token)->len);
+			tmp_env = get_env((*token)->content);
+			if (tmp_env != NULL)
+				args = ft_strjoin(args, tmp_env);
 		}
-		else if ((*token)->state == IN_DQUOTE || (*token)->state == IN_SQUOTE)
-		{
-			args[i] = ft_strdup("");
-			while((*token) && (*token)->state != OUTSIDE)
-			{
-				tmp = args[i];
-				if ((*token)->type == ENV && (*token)->state == IN_DQUOTE)
-				{
-					tmp_env = get_env((*token)->content);
-					if(tmp_env != NULL)
-					{
-						args[i] = ft_strjoin(args[i], tmp_env);
-					}
-					if (tmp_env)
-						free(tmp_env);
-				}
-				else
-					args[i] = ft_strjoin(args[i], (*token)->content);
-				free(tmp);
-				(*token) = (*token)->next;
-			}
-			i++;
-		}
-		else if((*token)->type == REDIR_IN || (*token)->type == REDIR_OUT || \
-		(*token)->type == HERE_DOC || (*token)->type == DREDIR_OUT)
-		{
-			add_back_redir(redir_l, new_redir_cont((*token)->next->content, (*token)->type));
-			(*token) = (*token)->next;
-		}
-		if((*token))
-			(*token) = (*token)->next;
+		else
+			args = ft_strjoin(args, (*token)->content);
+		free(tmp);
+		(*token) = (*token)->next;
 	}
-	args[i]=NULL;
-	return (EXIT_SUCCESS);
+	return (args);
 }
 
-
-void print_arg(char	**args) 
-{
-	int i = 0;
-	while (args[i]) 
-	{
-        printf("arg: %s\n", args[i]);
-		i++;
-    }
-}
-
-void	print_tree_node(t_tree_node *cmd)
+int	fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
 {
 	int	i;
 
 	i = 0;
-	while (cmd->content->cmd->args[i])
+	while ((*token) && (*token)->type != PIPE_LINE)
 	{
-		printf("command arg[%i]: %s\n", i, cmd->content->cmd->args[i]);
-		i++;
+		if ((*token)->type == WORD && (*token)->state == OUTSIDE)
+			args[i++] = ft_strndup((*token)->content, (*token)->len);
+		else if ((*token)->state == IN_DQUOTE || (*token)->state == IN_SQUOTE)
+		{
+			args[i] = ft_strdup("");
+			args[i] = parse_quotes(args[i], token);
+			i++;
+		}
+		else if ((*token)->type == REDIR_IN || (*token)->type == REDIR_OUT || \
+		(*token)->type == HERE_DOC || (*token)->type == DREDIR_OUT)
+		{
+			add_back_redir(redir_l, new_redir_cont((*token)->next->content, \
+			(*token)->type));
+			(*token) = (*token)->next;
+		}
+		if ((*token))
+			(*token) = (*token)->next;
 	}
-	print_redir(cmd->content->cmd->redir);
+	return (args[i] = NULL, EXIT_SUCCESS);
 }
-
-void	print_tree(t_tree_node *tree)
-{
-	if (tree->type == CMD)
-	{
-		printf("\n------------------------\n");
-		printf("CMD Node\n");
-		print_tree_node(tree);
-	}
-	else if (tree->type == PIPE)
-	{
-		print_tree(tree->content->pipe->right);
-		printf("\n------------------------\n");
-		printf("PIPE Node\n");
-		print_tree(tree->content->pipe->left);
-	}
-}
-
 
 t_tree_node	*parser_cmd(t_list **token, char **env)
 {
@@ -142,21 +73,16 @@ t_tree_node	*parser_cmd(t_list **token, char **env)
 	int				nb_args;
 	t_list_redir	*redir_l;
 
-
 	redir_l = NULL;
 	nb_args = count_args(*token);
 	args = malloc(sizeof(char *) * (nb_args + 1));
-	if(!args)
+	if (!args)
 		return (NULL);
-	if(fill_cmd(token, args, &redir_l) == EXIT_FAILURE)
+	if (fill_cmd(token, args, &redir_l) == EXIT_FAILURE)
 		return (NULL);
 	new = new_cmd(args, redir_l, env);
 	new->type = CMD;
-	// print_tree(new);
-	// print_arg(args);
-	// print_redir(redir_l);
-	ft_putstr_fd("CMD DE SON PERE\n", 2);
-	return(new);
+	return (new);
 }
 
 int	parser(t_tree **tree, t_list *token, char **env)
@@ -164,44 +90,26 @@ int	parser(t_tree **tree, t_list *token, char **env)
 	t_tree_node	*tree_node;
 
 	tree_node = NULL;
-	// Vérifiez si la liste de tokens est vide
 	if (!token)
 		return (EXIT_FAILURE);
-	// Parsez la commande à partir des tokens
 	tree_node = parser_cmd(&token, env);
-	// Vérifiez si la commande a été correctement analysée
 	if (!tree_node)
 		return (EXIT_FAILURE);
-	// Si l'arbre est vide, ajoutez la nouvelle commande comme racine
 	if (!(*tree)->tree_root)
-	{
-		ft_putstr_fd("Sur ma route \n", 2);
 		(*tree)->tree_root = tree_node;
-	}
 	else
 	{
-		ft_putstr_fd("aled\n", 2);
-		// Si la racine a déjà un côté droit, ajoutez la nouvelle commande comme côté gauche
 		if (!(*tree)->tree_root->content->pipe->right)
-		{
-			ft_putstr_fd("A doite\n", 2);
-			fprintf(stderr, "A droite %s", token->content);
 			(*tree)->tree_root->content->pipe->right = tree_node;
-		}
 		else
-		{
-			ft_putstr_fd("A gauche\n", 2);
 			(*tree)->tree_root->content->pipe->left = tree_node;
-		}
 	}
 	if (token && token->type == PIPE_LINE)
 	{
 		tree_node = parse_pipe(&token);
-		fprintf(stderr, "Pipe \n %s", token->content);
 		tree_node->content->pipe->right = (*tree)->tree_root;
 		(*tree)->tree_root = tree_node;
 	}
-	// Si le token suivant est un PIPE_LINE, parsez une nouvelle commande et mettez-la à droite de la racine
 	parser(tree, token, env);
 	return (EXIT_SUCCESS);
 }

@@ -68,30 +68,27 @@ typedef struct s_tree
     t_tree_node *tree_root;
 }   t_tree;
 
-//parser
+//			######------ PARSER ------######
+
 int	parser(t_tree **tree, t_list *token, char **env);
-
-//parse_token
-char	*parse_quotes(char *arg, t_list **token, enum e_state state);
-
-//utils
+char	*parse_quotes(char *args, t_list **token);
 int	count_args(t_list *token);
 char	*get_env(char *env);
 t_tree_node		*new_cmd(char **args, t_list_redir *redir, char **env);
 t_tree_node	*parse_pipe(t_list **token);
-
-//redir list
 t_list_redir	*new_redir_cont(char *file, enum e_token type);
-// void	free_redir_list(t_list_redir **list);
 void	add_back_redir(t_list_redir **lst, t_list_redir *new);
-
 char	*get_env(char *env);
-
 t_tree	*init_tree(t_tree *tree);
 int	check_quote_input(char *line);
-
 void	free_tree(t_tree_node *node);
 void	free_cmd(t_cmd *cmd);
+void	fill_redirl(t_list_redir **redir_l, t_list **token);
+
+//			######### PRINT ##########
+void print_arg(char	**args);
+void	print_tree_node(t_tree_node *cmd);
 void	print_tree(t_tree_node *tree);
+void print_redir(t_list_redir *redirl);
 
 #endif

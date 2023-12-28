@@ -19,7 +19,7 @@ LIST_SRC	= 	main.c
 LEXER_SRC	=	lexer.c lexer_utils.c list_minishell.c check_syntax.c \
 				check_quote_input.c tokenizer.c
 
-PARSER_SRC	=	parser.c redir_list.c parse_token.c parse_token_utils.c \
+PARSER_SRC	=	parser.c redir_list.c print_fc.c parse_token_utils.c \
 				parser_utils.c
 
 # ----- SHORTCUTS ----- #
