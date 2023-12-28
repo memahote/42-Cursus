@@ -52,21 +52,66 @@ int	count_args(t_list *token) // Size for malloc command + arg + redir
 	return (i);
 }
 
-t_tree_node	*parse_pipe(t_list **token)
-{
-	t_tree_node	*branch;
+// t_tree_node	*parse_pipe(t_list **token)
+// {
+// 	t_tree_node	*branch;
 
-	branch = ft_calloc(sizeof(t_tree_node), 1);
-	if (!branch)
-		return (NULL);
-	branch->type = PIPE;
-	branch->content = malloc(sizeof(t_type));
-	branch->content->pipe = malloc(sizeof(t_pipe));
-	branch->content->pipe->left = ft_calloc(sizeof(t_tree_node), 1);
-	branch->content->pipe->right = ft_calloc(sizeof(t_tree_node), 1);
-	if (!branch->content->pipe->right || !branch->content->pipe->left)
-		return (NULL);
-	*token = (*token)->next;
-	ft_putstr_fd("FILS DE PIPe\n", 2);
-	return (branch);
+// 	branch = ft_calloc(sizeof(t_tree_node), 1);
+// 	if (!branch)
+// 		return (NULL);
+// 	branch->type = PIPE;
+// 	branch->content = malloc(sizeof(t_type));
+// 	branch->content->pipe = malloc(sizeof(t_pipe));
+// 	branch->content->pipe->left = NULL;
+// 	branch->content->pipe->right = NULL;
+// 	if (!branch->content->pipe->right || !branch->content->pipe->left)
+// 		return (NULL);
+// 	*token = (*token)->next;
+// 	ft_putstr_fd("FILS DE PIPe\n", 2);
+// 	return (branch);
+// }
+
+t_tree_node *parse_pipe(t_list **token)
+{
+    t_tree_node *branch;
+
+    // Allocate memory for the branch
+    branch = ft_calloc(sizeof(t_tree_node), 1);
+    if (!branch)
+        return (NULL);
+
+    // Initialize the branch
+    branch->type = PIPE;
+    branch->content = NULL;
+
+    // Allocate memory for branch->content
+    branch->content = malloc(sizeof(t_type));
+    if (!branch->content)
+    {
+        free(branch);  // Free 'branch' if allocation fails
+        return (NULL);
+    }
+
+    // Initialize branch->content
+    branch->content->pipe = NULL;
+
+    // Allocate memory for branch->content->pipe
+    branch->content->pipe = malloc(sizeof(t_pipe));
+    if (!branch->content->pipe)
+    {
+        free(branch->content);  // Free 'branch->content' if allocation fails
+        free(branch);  // Free 'branch' if allocation fails
+        return (NULL);
+    }
+
+    // Initialize branch->content->pipe
+    branch->content->pipe->left = NULL;
+    branch->content->pipe->right = NULL;
+
+    // Move to the next token
+    *token = (*token)->next;
+    ft_putstr_fd("FILS DE PIPe\n", 2);
+    return (branch);
 }
+
+

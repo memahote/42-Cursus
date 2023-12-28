@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 17:06:19 by memahote          #+#    #+#             */
-/*   Updated: 2023/12/27 23:08:23 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/12/28 14:49:13 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,11 @@ void	free_tree(t_tree_node *node)
 		// ft_putstr_fd("free right\n", 2);
 		// ft_putstr_fd("entre left\n", 2);
 		free_tree(node->content->pipe->left);
-		// ft_putstr_fd("free left\n", 2);
+		// ft_putstr_fd("free left\n", 2); 
 		free(node->content->pipe);
 		free(node->content);
 		free(node);
 		ft_putstr_fd("BIEN FREE MON REUF\n", 2);
 	}
 }
+

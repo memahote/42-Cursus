@@ -37,7 +37,7 @@ t_list_redir	*new_redir_cont(char *file, enum e_token type)
 	new_elem = malloc(sizeof(t_list_redir));
 	if (!new_elem)
 		return (NULL);
-	new_elem->file = file;
+	new_elem->file = ft_strdup(file);
 	new_elem->type = type;
 	new_elem->next = NULL;
 	return (new_elem);
