@@ -57,6 +57,7 @@ int main(int ac, char **av, char **envp)
 			free_list(&token_list);
 			free_tree(tree->tree_root);
 			free(tree);
+			ft_pwd();
 			// free_tree(tree->tree_root);
 			i++;
 	}

@@ -18,6 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "lexer.h"
+# include "limits.h"
 // # include "parser.h"
 
 // Forward declaration
@@ -90,5 +91,7 @@ void print_arg(char	**args);
 void	print_tree_node(t_tree_node *cmd);
 void	print_tree(t_tree_node *tree);
 void print_redir(t_list_redir *redirl);
+
+int	ft_pwd(void);
 
 #endif
