@@ -18,6 +18,8 @@
 #include "../includes/minishell.h"
 // #include "../includes/parser.h"
 
+
+// Ne pas oublier de DUP l'env pour que le minishell est son propre env !
 void print_tokens(t_list *token);
 
 int main(int ac, char **av, char **envp)
