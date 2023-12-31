@@ -21,19 +21,22 @@
 
 // Ne pas oublier de DUP l'env pour que le minishell est son propre env !
 void print_tokens(t_list *token);
+void print_env(t_list_env *env) ;
 
 int main(int ac, char **av, char **envp)
 {
 	(void)ac;
 	(void)av;
-	char *line;
-	char	*input_line;
-	t_list	*token_list;
-	t_tree	*tree;
+	char 		*line;
+	char		*input_line;
+	t_list		*token_list;
+	t_tree		*tree;
+	t_list_env	*env;
 	int i = 0;
 
 	tree = NULL;
 	tree = init_tree(tree);
+	env = NULL;
 	while (i < 1)
 	{
 			line = readline("minishell~>"); 
@@ -44,6 +47,7 @@ int main(int ac, char **av, char **envp)
 			}
 			if(ft_strlen(line) > 0)
 				add_history(line);
+			create_env(envp, &env);
 			input_line = line;
 			if(!check_quote_input(input_line))
 				ft_putstr_fd("Error unclose quote\n", 2);
@@ -55,15 +59,24 @@ int main(int ac, char **av, char **envp)
 				parser(&tree, token_list, envp);
 				print_tree(tree->tree_root);
 			}
+			ft_export(&env, tree->tree_root->content->cmd);
+			print_env(env);
 			free (line);
 			free_list(&token_list);
 			free_tree(tree->tree_root);
 			free(tree);
-			ft_pwd();
-			// free_tree(tree->tree_root);
 			i++;
 	}
 	return (0);
+}
+
+void print_env(t_list_env *env) 
+{
+	while (env) 
+	{
+        printf("Val: %s\n", env->var);
+        env = env->next;
+    }
 }
 
 void print_tokens(t_list *tokens) 
@@ -75,8 +88,4 @@ void print_tokens(t_list *tokens)
     }
 }
 
-
-// voir pq le 1er noeud de la liste est null -> du a init
-// enlever les espace dans la liste chainee -> Fait 
-// check si word avant et apres un pipe -> fait
-// check si word apres les redir ->fait
+// Voir comment gerer les heredoc dans le parsing ou exec ???

@@ -24,6 +24,13 @@
 // Forward declaration
 struct s_tree_node;
 
+typedef	struct s_list_env
+{
+	char	*var;
+	struct s_list_env *prev;
+	struct s_list_env *next;
+}	t_list_env;
+
 enum e_tree_type
 {
     CMD,
@@ -94,4 +101,11 @@ void print_redir(t_list_redir *redirl);
 
 int	ft_pwd(void);
 
+
+//			######## BUILTINS #######
+void	create_env(char **envp, t_list_env **env);
+void	add_back_env(t_list_env **env, t_list_env *new);
+t_list_env	*new_var_env(char *var);
+int	ft_echo(t_cmd *cmd, int fd_out);
+int	ft_export(t_list_env **env, t_cmd *cmd);
 #endif

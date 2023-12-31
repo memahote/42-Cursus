@@ -23,7 +23,7 @@ LEXER_SRC	=	lexer.c lexer_utils.c list_minishell.c check_syntax.c \
 PARSER_SRC	=	parser.c redir_list.c print_fc.c parse_token_utils.c \
 				parser_utils.c
 
-BUILTINS_SRC = ft_pwd.c
+BUILTINS_SRC = ft_pwd.c ft_echo.c ft_env.c ft_export.c ft_unset.c
 
 # ----- SHORTCUTS ----- #
 
