@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 17:06:19 by memahote          #+#    #+#             */
-/*   Updated: 2023/12/28 19:34:07 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2023/12/31 22:38:43 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_tree	*init_tree(t_tree *tree)
 	return (tree);
 }
 
-t_tree_node	*new_cmd(char **args, t_list_redir *redir, char **env)
+t_tree_node	*new_cmd(char **args, t_list_redir *redir, char **env, int len)
 {
 	t_tree_node	*node;
 
@@ -32,6 +32,7 @@ t_tree_node	*new_cmd(char **args, t_list_redir *redir, char **env)
 		return (NULL);
 	node->type = CMD;
 	node->content->cmd->args = args;
+	node->content->cmd->nb_args = len;
 	node->content->cmd->env = env;
 	node->content->cmd->redir = redir;
 	node->content->cmd->fd_in = 0;

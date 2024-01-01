@@ -60,6 +60,13 @@ int	fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
 			(*token)->type));
 			(*token) = (*token)->next;
 		}
+		else if ((*token)->type == ENV)
+		{
+			printf("i %d", i);
+			args[i] = get_env((*token)->content);
+			if (args[i])
+				i++;
+		}
 		if ((*token))
 			(*token) = (*token)->next;
 	}
@@ -80,8 +87,7 @@ t_tree_node	*parser_cmd(t_list **token, char **env)
 		return (NULL);
 	if (fill_cmd(token, args, &redir_l) == EXIT_FAILURE)
 		return (NULL);
-	new = new_cmd(args, redir_l, env);
-	new->type = CMD;
+	new = new_cmd(args, redir_l, env, nb_args);
 	return (new);
 }
 

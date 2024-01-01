@@ -47,6 +47,7 @@ typedef struct s_list_redir
 typedef struct s_cmd
 {
     char    **args;
+	int		nb_args;
     char    **env;
     t_list_redir *redir;
     int fd_in;
@@ -82,7 +83,7 @@ int	parser(t_tree **tree, t_list *token, char **env);
 char	*parse_quotes(char *args, t_list **token);
 int	count_args(t_list *token);
 char	*get_env(char *env);
-t_tree_node		*new_cmd(char **args, t_list_redir *redir, char **env);
+t_tree_node	*new_cmd(char **args, t_list_redir *redir, char **env, int len);
 t_tree_node	*parse_pipe(t_list **token);
 t_list_redir	*new_redir_cont(char *file, enum e_token type);
 void	add_back_redir(t_list_redir **lst, t_list_redir *new);
@@ -108,4 +109,8 @@ void	add_back_env(t_list_env **env, t_list_env *new);
 t_list_env	*new_var_env(char *var);
 int	ft_echo(t_cmd *cmd, int fd_out);
 int	ft_export(t_list_env **env, t_cmd *cmd);
+int	ft_unset(t_list_env **env, t_cmd *cmd);
+int	ft_cd(t_cmd *cmd);
+void	print_env_sort(t_list_env **env);
+
 #endif

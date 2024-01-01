@@ -61,10 +61,11 @@ int main(int ac, char **av, char **envp)
 			}
 			ft_export(&env, tree->tree_root->content->cmd);
 			print_env(env);
+			// ft_cd(tree->tree_root->content->cmd);
 			free (line);
 			free_list(&token_list);
-			free_tree(tree->tree_root);
-			free(tree);
+			// free_tree(tree->tree_root);
+			// free(tree);
 			i++;
 	}
 	return (0);

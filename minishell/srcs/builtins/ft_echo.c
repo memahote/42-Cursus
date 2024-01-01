@@ -6,7 +6,7 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 20:25:34 by memahote          #+#    #+#             */
-/*   Updated: 2023/12/30 22:15:57 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2024/01/01 05:14:59 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,6 @@ int	ft_echo(t_cmd *cmd, int fd_out)
 			ft_putchar_fd(' ', fd_out);
 	}
 	if (n == 0)
-		ft_putchar_fd(' ', fd_out);
+		ft_putchar_fd('\n', fd_out);
 	return (EXIT_SUCCESS);
 }
