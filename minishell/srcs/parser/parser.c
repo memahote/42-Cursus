@@ -12,7 +12,12 @@
 
 #include "minishell.h"
 #include "lexer.h"
-// #include "parser.h"
+
+int	is_redir_2(enum e_token type)
+{
+	return (type == REDIR_IN || type == REDIR_OUT
+		|| type == DREDIR_OUT || type == HERE_DOC);
+}
 
 char	*parse_quotes(char *args, t_list **token)
 {
@@ -38,6 +43,7 @@ char	*parse_quotes(char *args, t_list **token)
 	return (args);
 }
 
+
 int	fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
 {
 	int	i;
@@ -53,8 +59,7 @@ int	fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
 			args[i] = parse_quotes(args[i], token);
 			i++;
 		}
-		else if ((*token)->type == REDIR_IN || (*token)->type == REDIR_OUT || \
-		(*token)->type == HERE_DOC || (*token)->type == DREDIR_OUT)
+		else if (is_redir_2((*token)->type))
 		{
 			add_back_redir(redir_l, new_redir_cont((*token)->next->content, \
 			(*token)->type));
@@ -62,7 +67,6 @@ int	fill_cmd(t_list **token, char **args, t_list_redir **redir_l)
 		}
 		else if ((*token)->type == ENV)
 		{
-			printf("i %d", i);
 			args[i] = get_env((*token)->content);
 			if (args[i])
 				i++;

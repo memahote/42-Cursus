@@ -6,13 +6,12 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 20:20:18 by memahote          #+#    #+#             */
-/*   Updated: 2023/12/28 22:24:11 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2024/01/31 18:01:07 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//char *getcwd(char *buf, size_t size);
 
 int	ft_pwd(void)
 {

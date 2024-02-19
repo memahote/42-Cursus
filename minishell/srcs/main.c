@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main2.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/28 13:00:46 by memahote          #+#    #+#             */
-/*   Updated: 2023/11/28 13:00:46 by memahote         ###   ########lyon.fr   */
+/*   Created: 2024/01/03 00:58:48 by memahote          #+#    #+#             */
+/*   Updated: 2024/01/03 00:58:48 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,66 +16,90 @@
 #include <readline/history.h>
 #include "../includes/lexer.h"
 #include "../includes/minishell.h"
-// #include "../includes/parser.h"
 
-
-// Ne pas oublier de DUP l'env pour que le minishell est son propre env !
 void print_tokens(t_list *token);
 void print_env(t_list_env *env) ;
 
-int main(int ac, char **av, char **envp)
+void	init_data(t_data *data)
 {
-	(void)ac;
-	(void)av;
-	char 		*line;
-	char		*input_line;
-	t_list		*token_list;
-	t_tree		*tree;
-	t_list_env	*env;
-	int i = 0;
+	data->exit_status = 0;
+	data->pid = 0;
+	data->env = NULL;
+	data->tree = NULL;
+	data->token_list = NULL;
+}
 
-	tree = NULL;
-	tree = init_tree(tree);
-	env = NULL;
-	while (i < 1)
+void	start_minishell(t_data *data, char **envp)
+{
+	data->envp = envp;
+	data->tree = init_tree(data->tree);
+	data->env = create_env(envp);
+}
+
+int		ft_prompt(char **line)
+{
+	*line = readline("minishell~>"); 
+	if (!*line)
 	{
-			line = readline("minishell~>"); 
-			if (!line || ft_strcomp(line, "exit") == 0)
-			{
-				printf("exit\n");
-				exit(1);
-			}
-			if(ft_strlen(line) > 0)
-				add_history(line);
-			create_env(envp, &env);
-			input_line = line;
-			if(!check_quote_input(input_line))
-				ft_putstr_fd("Error unclose quote\n", 2);
-			else
-			{
-				token_list = lexer(input_line);
-				check_syntax(&token_list);
-				print_tokens(token_list);
-				parser(&tree, token_list, envp);
-				print_tree(tree->tree_root);
-			}
-			ft_export(&env, tree->tree_root->content->cmd);
-			print_env(env);
-			// ft_cd(tree->tree_root->content->cmd);
-			free (line);
-			free_list(&token_list);
-			// free_tree(tree->tree_root);
-			// free(tree);
-			i++;
+		printf("exit\n");
+		exit(1);
 	}
+	if (strcmp(*line, "") == 0)
+		return (1);
+	if(ft_strlen(*line) > 0)
+		add_history(*line);
 	return (0);
+}
+
+void	minishell(t_data *data, char **envp)
+{
+	char	*line;
+	t_env	*enves;
+
+	line = NULL;
+	enves = create_env(envp);
+	while (42)
+	{
+		start_minishell(data, envp);
+		if (ft_prompt(&line))
+			continue ;
+		if(!check_quote_input(line))
+		{
+				perror("Unclose quote");
+				continue ;
+		}
+		data->token_list = lexer(line);
+		if (!check_syntax(&data->token_list))
+		{
+			if (parser(&data->tree, data->token_list, data->envp) == EXIT_FAILURE)
+				continue ;
+			execute_tree(data->tree->tree_root, enves);
+			// print_tokens(data->token_list);
+			// print_tree(data->tree->tree_root);
+		}
+		else
+		{
+			free(data->token_list);
+		}
+	}
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	t_data	data;
+
+	(void)argv;
+	if (argc !=1 || !*envp)
+		return (1);
+	init_data(&data);
+	minishell(&data, envp);
 }
 
 void print_env(t_list_env *env) 
 {
 	while (env) 
 	{
-        printf("Val: %s\n", env->var);
+        printf("%s=%s\n", env->name, env->value);
         env = env->next;
     }
 }
@@ -88,5 +112,3 @@ void print_tokens(t_list *tokens)
         tokens = tokens->next;
     }
 }
-
-// Voir comment gerer les heredoc dans le parsing ou exec ???

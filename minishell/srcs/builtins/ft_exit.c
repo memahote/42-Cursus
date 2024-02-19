@@ -6,7 +6,8 @@
 /*   By: memahote <memahote@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/31 21:57:47 by memahote          #+#    #+#             */
-/*   Updated: 2023/12/31 21:57:48 by memahote         ###   ########lyon.fr   */
+/*   Updated: 2024/01/31 18:00:51 by memahote         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+// free tout et exit

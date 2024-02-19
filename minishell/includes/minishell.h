@@ -18,18 +18,28 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "lexer.h"
+#include <sys/wait.h>
 # include "limits.h"
-// # include "parser.h"
 
-// Forward declaration
+
 struct s_tree_node;
+struct s_list_env;
 
 typedef	struct s_list_env
 {
-	char	*var;
+	char	*name;
+	char	*value;
 	struct s_list_env *prev;
 	struct s_list_env *next;
 }	t_list_env;
+
+typedef struct s_env
+{
+	t_list_env *head;
+	char		**envp;
+	int			len;
+}	t_env;
+
 
 enum e_tree_type
 {
@@ -77,6 +87,16 @@ typedef struct s_tree
     t_tree_node *tree_root;
 }   t_tree;
 
+typedef struct s_data
+{
+	int		exit_status;
+	int		pid;
+	t_env	*env;
+	t_list	*token_list;
+	t_tree	*tree;
+	char	**envp;
+}		t_data;
+
 //			######------ PARSER ------######
 
 int	parser(t_tree **tree, t_list *token, char **env);
@@ -104,13 +124,28 @@ int	ft_pwd(void);
 
 
 //			######## BUILTINS #######
-void	create_env(char **envp, t_list_env **env);
-void	add_back_env(t_list_env **env, t_list_env *new);
+t_env	*create_env(char **envp);
+void	add_back_env(t_env *env, t_list_env *new);
 t_list_env	*new_var_env(char *var);
 int	ft_echo(t_cmd *cmd, int fd_out);
-int	ft_export(t_list_env **env, t_cmd *cmd);
-int	ft_unset(t_list_env **env, t_cmd *cmd);
+int	ft_strchr_env(char	*str, int c);
+int	ft_export(t_env *env, t_cmd *cmd);
+int	ft_unset(t_env *env, t_cmd *cmd);
 int	ft_cd(t_cmd *cmd);
+int	ft_env(t_env *env, t_cmd *cmd);
 void	print_env_sort(t_list_env **env);
+int	check_builtins(char	*arg);
+void	which_builtins(t_cmd *cmd, t_env *env, int builtins);
+void	print_sorted_env(t_env *env);
+int execute_command(t_cmd *cmd, t_env *env, int p_fd[2]);
+void execute_tree(t_tree_node *node, t_env *env);
+char	*get_path(t_cmd *cmd, char **envp);
+int	execute_cmd(t_cmd *cmd, char **env, int fd[2]);
+void	check_fd_execve(t_cmd *cmd, int fd[2]);
+t_env	*init_env(t_env	*env);
+void	do_redir(t_list_redir *list, int *fd_in, int *fd_out);
+int	ft_strchr_ex(char *s, int c);
 
+//a supp
+void print_env(t_list_env *env);
 #endif
