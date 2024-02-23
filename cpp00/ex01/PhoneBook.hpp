@@ -14,21 +14,22 @@
 # define PHONEBOOK_HPP
 
 #include <iostream>
+#include <iomanip>
 #include "Contact.hpp"
 
 class PhoneBook
 {
 	private:
 	Contact contact[8];
-	
+	int	index;
+
 	public:
 	void helpMenu();
 	void addContact();
-	void printContact();
 	void searchContat();
+	void printContact(Contact contact);
 
 };
-
 
 
 #endif
