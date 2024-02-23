@@ -36,9 +36,9 @@ class Contact
 	std::string get_nname();
 	std::string get_phone_nb();
 	std::string get_secret();
-	
+
 	Contact(void);
 	~Contact(void);
-}
+};
 
 #endif

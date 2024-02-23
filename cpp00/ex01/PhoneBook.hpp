@@ -16,6 +16,7 @@
 #include <iostream>
 #include <iomanip>
 #include "Contact.hpp"
+#include <limits>
 
 class PhoneBook
 {
@@ -24,10 +25,15 @@ class PhoneBook
 	int	index;
 
 	public:
+	PhoneBook();
+	~PhoneBook();
+
 	void helpMenu();
 	void addContact();
 	void searchContat();
 	void printContact(Contact contact);
+	void errorCommand();
+	std::string trunc(std::string input);
 
 };
 

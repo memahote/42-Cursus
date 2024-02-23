@@ -40,7 +40,7 @@ void	Contact::set_nname(std::string nname)
 
 void	Contact::set_phone_nb(std::string phone_nb)
 {
-	this->phone_number = phone_nb
+	this->phone_number = phone_nb;
 }
 
 void	Contact::set_secret(std::string secret)

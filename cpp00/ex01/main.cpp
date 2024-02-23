@@ -10,12 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <iostream>
 #include "PhoneBook.hpp"
-#include "Contact.hpp"
 
 int main(void)
 {
+	std::string input;
+	PhoneBook iphone;
 
-
+	while (1)
+	{
+		if (std::cin.eof()) 
+		{
+            return 1;
+        }
+		std::getline(std::cin, input);
+		if (input == "EXIT")
+			break;
+		else if (input == "ADD")
+			iphone.addContact();
+		else if (input == "SEARCH")
+			iphone.searchContat();
+		else
+			iphone.errorCommand();
+	}
+	return (0);
 }
